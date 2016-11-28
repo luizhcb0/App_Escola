@@ -1,4 +1,5 @@
 class SchoolsController < ApplicationController
+  include StrongParamsHolder
 
   def index
     @schools = School.all
@@ -13,12 +14,15 @@ class SchoolsController < ApplicationController
   end
 
   def create
-    # @school = School.new(school_params)
-    # if @school.save
-    #   redirect_to schools_path
-    # else
-    #   render :new
-    # end
+    @principal = Professor.new(person: Person.new(person_params),
+      login: Login.new(login_params))
+    @school = School.new(school_params)
+    @school.professor = @principal
+    if @school.save
+      redirect_to schools_path
+    else
+      render :new
+    end
   end
 
   def edit
@@ -39,10 +43,4 @@ class SchoolsController < ApplicationController
     @school.destroy
     redirect_to schools_path
   end
-
-  private
-  def school_params
-    params.require(:school).permit(:name, :professor)
-  end
-
 end

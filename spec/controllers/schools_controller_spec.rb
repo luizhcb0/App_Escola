@@ -53,11 +53,39 @@ RSpec.describe SchoolsController, type: :controller do
   end
 
   describe "#create" do
+
     context 'when valid' do
-      xit "should redirect to schools_path" do
+      before(:each) do
+        post :create, school: attributes_for(:school),
+          person: attributes_for(:person), login: attributes_for(:login)
+      end
+      let(:school) { assigns(:school) }
+
+      it "should redirect to schools_path" do
+        expect(response).to redirect_to(schools_path)
       end
 
-      xit "should save school" do
+      it "should save school" do
+        expect(school).to be_persisted
+      end
+
+      it "should save a professor(principal)" do
+        expect(school.professor).to_not be nil
+        expect(school.professor).to be_persisted
+      end
+
+      it "should save a valid professor(principal) person" do
+        expect(school.professor.person).to_not be nil
+        expect(school.professor.person).to be_persisted
+        expect(school.professor.person.name).to eq "Diretora"
+      end
+
+      it "should save a valid professor(principal) login" do
+        expect(school.professor.login).to_not be nil
+        expect(school.professor.login).to be_persisted
+        expect(school.professor.login.username).to eq "Vira Ventos"
+        expect(school.professor.login.password).to eq "12345"
+        expect(school.professor.login.role).to eq 1
       end
     end
   end
