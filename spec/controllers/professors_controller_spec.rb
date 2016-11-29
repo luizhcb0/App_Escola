@@ -1,10 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe ProfessorsController, type: :controller do
+  let(:test_professors) { 2.times.map { create(:professor) } }
 
   describe "GET #index" do
+    before(:each) { get :index }
+
     it "should be success" do
       expect(response).to be_success
+    end
+
+    it "renders the index template" do
+      expect(response).to render_template("index")
+    end
+
+    it "should load all schools" do
+      expect(assigns(:professors)).to match_array test_professors
     end
   end
 
