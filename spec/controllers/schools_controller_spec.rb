@@ -113,7 +113,7 @@ RSpec.describe SchoolsController, type: :controller do
 
     context 'when valid' do
       before(:each) do
-        school = create(:school, :stubed)
+        school = create(:school)
         patch :update, params: {
           school: attributes_for(:school, name: "Teste2"),
           person: attributes_for(:person, name: "outro"),

@@ -109,7 +109,7 @@ RSpec.describe ProfessorsController, type: :controller do
 
     context 'when valid' do
       before(:each) do
-        professor = create(:professor, :stubed)
+        professor = create(:professor)
         patch :update, params: {
           person: attributes_for(:person, name: "outro"),
           login: attributes_for(:login, username: "vv", password: "54321", role: 2),
