@@ -54,7 +54,6 @@ RSpec.describe ProfessorsController, type: :controller do
 
 
   describe "POST #create" do
-
     context 'when valid' do
       before(:each) do post :create, params: {
         person: attributes_for(:person), login: attributes_for(:login) }
@@ -106,7 +105,6 @@ RSpec.describe ProfessorsController, type: :controller do
 
 
   describe "PATCH #update" do
-
     context 'when valid' do
       before(:each) do
         professor = create(:professor)

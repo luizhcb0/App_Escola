@@ -54,7 +54,6 @@ RSpec.describe SchoolsController, type: :controller do
 
 
   describe "POST #create" do
-
     context 'when valid' do
       before(:each) do post :create, params: {
         school: attributes_for(:school),
@@ -110,7 +109,6 @@ RSpec.describe SchoolsController, type: :controller do
   end
 
   describe "PATCH #update" do
-
     context 'when valid' do
       before(:each) do
         school = create(:school)
