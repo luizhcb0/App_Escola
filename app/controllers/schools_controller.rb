@@ -30,12 +30,14 @@ class SchoolsController < ApplicationController
   end
 
   def update
-    # @school = School.find(params[:id])
-    # if @school.update_attributes(school_params)
-    #   redirect_to schools_path(@school.id)
-    # else
-    #   render :edit
-    # end
+    @school = School.find(params[:id])
+    if @school.update_attributes(school_params) &&
+      @school.professor.login.update_attributes(login_params) &&
+      @school.professor.person.update_attributes(person_params)
+      redirect_to schools_path(@school.id)
+    else
+      render :edit
+    end
   end
 
   def destroy

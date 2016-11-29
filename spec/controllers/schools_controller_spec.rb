@@ -52,6 +52,7 @@ RSpec.describe SchoolsController, type: :controller do
     end
   end
 
+
   describe "#create" do
 
     context 'when valid' do
@@ -88,6 +89,11 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school.professor.login.role).to eq 1
       end
     end
+
+    context 'when invalid' do
+      xit "should fail" do
+      end
+    end
   end
 
   describe "#edit" do
@@ -104,7 +110,39 @@ RSpec.describe SchoolsController, type: :controller do
   end
 
   describe "#update" do
-    xit "should be success" do
+
+    context 'when valid' do
+      before(:each) do
+        school = create(:school, :stubed)
+        patch :update, school: attributes_for(:school, name: "Teste2"),
+          person: attributes_for(:person, name: "outro"),
+          login: attributes_for(:login, username: "vv", password: "54321", role: 2),
+          id: school.id
+      end
+      let(:school) { assigns(:school) }
+
+      it "should be success" do
+        expect(response).to redirect_to(schools_path(school.id))
+      end
+
+      it "should update school attributes" do
+        expect(school.name).to eq "Teste2"
+      end
+
+      it "should update person attributes" do
+        expect(school.professor.person.name).to eq "outro"
+      end
+
+      it "should update login attributes" do
+        expect(school.professor.login.username).to eq "vv"
+        expect(school.professor.login.password).to eq "54321"
+        expect(school.professor.login.role).to eq 2
+      end
+    end
+
+    context 'when invalid' do
+      xit "should fail" do
+      end
     end
   end
 
