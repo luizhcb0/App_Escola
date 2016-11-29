@@ -14,10 +14,9 @@ class SchoolsController < ApplicationController
   end
 
   def create
-    @principal = Professor.new(person: Person.new(person_params),
-      login: Login.new(login_params))
     @school = School.new(school_params)
-    @school.professor = @principal
+    @school.build_professor(person: Person.new(person_params),
+       login: Login.new(login_params))
     if @school.save
       redirect_to schools_path
     else
