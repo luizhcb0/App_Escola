@@ -5,15 +5,18 @@ class ProfessorsController < ApplicationController
   end
 
   def show
+    @professor = Professor.find(params[:id])
   end
 
   def new
+    @professor = Professor.new()
   end
 
   def create
   end
 
   def edit
+    @professor = Professor.find(params[:id])
   end
 
   def update

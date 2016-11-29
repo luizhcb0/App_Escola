@@ -20,16 +20,35 @@ RSpec.describe ProfessorsController, type: :controller do
   end
 
   describe "GET #show" do
-    xit "returns http success" do
-      get :show
-      expect(response).to have_http_status(:success)
+    context 'when requested school exists' do
+      let(:professor) { test_professors[rand 2] }
+      before(:each) { get :show, params: { id: professor.id } }
+
+      it "should be success" do
+        expect(response).to be_success
+      end
+
+      it "should load school" do
+        expect(assigns(:professor)).to eq professor
+      end
+    end
+
+    context 'when requested school does not exists' do
+      it 'throws ActiveRecord::RecordNotFound' do
+        expect { get :show, params: { id: -1 } }.to raise_exception ActiveRecord::RecordNotFound
+      end
     end
   end
 
   describe "GET #new" do
-    xit "returns http success" do
-      get :new
-      expect(response).to have_http_status(:success)
+    before(:each) { get :new }
+
+    it "should be success" do
+      expect(response).to be_success
+    end
+
+    it "should pass a school new" do
+      expect(assigns(:professor)).to_not eq nil
     end
   end
 
@@ -41,9 +60,15 @@ RSpec.describe ProfessorsController, type: :controller do
   end
 
   describe "GET #edit" do
-    xit "returns http success" do
-      get :edit
-      expect(response).to have_http_status(:success)
+    let(:professor) { test_professors[rand 2] }
+    before(:each) { get :edit, params: { id: professor.id } }
+
+    it "should be success" do
+      expect(response).to be_success
+    end
+
+    it "should load the school" do
+      expect(assigns(:professor)).to eq professor
     end
   end
 
