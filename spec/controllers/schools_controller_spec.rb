@@ -160,6 +160,9 @@ RSpec.describe SchoolsController, type: :controller do
         expect(School.all).not_to include school
         expect { school.reload }.to raise_exception ActiveRecord::RecordNotFound
       end
+
+      xit "should delete dependents from DB" do
+      end
     end
 
     context 'when requested school does not exists' do
