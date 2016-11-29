@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SchoolsController, type: :controller do
   let(:test_schools) { 2.times.map { create(:school) } }
 
-  describe "#index" do
+  describe "GET #index" do
     before(:each) { get :index }
 
     it "should be success" do
@@ -19,10 +19,10 @@ RSpec.describe SchoolsController, type: :controller do
     end
   end
 
-  describe "#show" do
+  describe "GET #show" do
     context 'when requested school exists' do
       let(:school) { test_schools[rand 2] }
-      before(:each) { get :show, id: school }
+      before(:each) { get :show, params: { id: school.id } }
 
       it "should be success" do
         expect(response).to be_success
@@ -35,12 +35,12 @@ RSpec.describe SchoolsController, type: :controller do
 
     context 'when requested school does not exists' do
       it 'throws ActiveRecord::RecordNotFound' do
-        expect { get :show, id: -1 }.to raise_exception ActiveRecord::RecordNotFound
+        expect { get :show, params: { id: -1 } }.to raise_exception ActiveRecord::RecordNotFound
       end
     end
   end
 
-  describe "#new" do
+  describe "GET #new" do
     before(:each) { get :new }
 
     it "should be success" do
@@ -53,12 +53,12 @@ RSpec.describe SchoolsController, type: :controller do
   end
 
 
-  describe "#create" do
+  describe "POST #create" do
 
     context 'when valid' do
-      before(:each) do
-        post :create, school: attributes_for(:school),
-          person: attributes_for(:person), login: attributes_for(:login)
+      before(:each) do post :create, params: {
+        school: attributes_for(:school),
+        person: attributes_for(:person), login: attributes_for(:login) }
       end
       let(:school) { assigns(:school) }
 
@@ -96,9 +96,9 @@ RSpec.describe SchoolsController, type: :controller do
     end
   end
 
-  describe "#edit" do
+  describe "GET #edit" do
     let(:school) { test_schools[rand 2] }
-    before(:each) { get :edit, id: school.id }
+    before(:each) { get :edit, params: { id: school.id } }
 
     it "should be success" do
       expect(response).to be_success
@@ -109,15 +109,16 @@ RSpec.describe SchoolsController, type: :controller do
     end
   end
 
-  describe "#update" do
+  describe "PATCH #update" do
 
     context 'when valid' do
       before(:each) do
         school = create(:school, :stubed)
-        patch :update, school: attributes_for(:school, name: "Teste2"),
+        patch :update, params: {
+          school: attributes_for(:school, name: "Teste2"),
           person: attributes_for(:person, name: "outro"),
           login: attributes_for(:login, username: "vv", password: "54321", role: 2),
-          id: school.id
+          id: school.id }
       end
       let(:school) { assigns(:school) }
 
@@ -146,10 +147,10 @@ RSpec.describe SchoolsController, type: :controller do
     end
   end
 
-  describe "#destroy" do
+  describe "DELETE #destroy" do
     context 'when requested school exists' do
       let(:school) { test_schools[rand 2] }
-      before(:each) { delete :destroy, id: school.id }
+      before(:each) { delete :destroy, params: { id: school.id } }
 
       it "should redirect to schools_path" do
         expect(response).to redirect_to(schools_path)
@@ -163,7 +164,7 @@ RSpec.describe SchoolsController, type: :controller do
 
     context 'when requested school does not exists' do
       it 'throws ActiveRecord::RecordNotFound' do
-        expect { get :show, id: -1 }.to raise_exception ActiveRecord::RecordNotFound
+        expect { get :show, params: { id: -1 } }.to raise_exception ActiveRecord::RecordNotFound
       end
     end
   end
