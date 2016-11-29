@@ -53,6 +53,38 @@ RSpec.describe StudentsController, type: :controller do
   end
 
   describe "POST #create" do
+    context 'when valid' do
+      before(:each) do post :create, params: {
+        student: attributes_for(:student),
+        person: attributes_for(:person)}
+      end
+      let(:student) { assigns(:student) }
+
+      it "should redirect to students_path" do
+        expect(response).to redirect_to(students_path)
+      end
+
+      it "should save student" do
+        expect(student).to be_persisted
+      end
+
+      it "should save a valid student" do
+        expect(student.person).to_not be nil
+        expect(student.father_name).to eq "Pai"
+        expect(student.mother_name).to eq "Mae"
+      end
+
+      it "should save a valid student person" do
+        expect(student.person).to_not be nil
+        expect(student.person).to be_persisted
+        expect(student.person.name).to eq "Diretora"
+      end
+    end
+
+    context 'when invalid' do
+      xit "should fail" do
+      end
+    end
   end
 
   describe "GET #edit" do
@@ -69,9 +101,59 @@ RSpec.describe StudentsController, type: :controller do
   end
 
   describe "PATCH #update" do
+    context 'when valid' do
+      before(:each) do
+        student = create(:student)
+        patch :update, params: {
+          student: attributes_for(:student, father_name: "Pai2", mother_name: "Mae2"),
+          person: attributes_for(:person, name: "outro"),
+          id: student.id }
+      end
+      let(:student) { assigns(:student) }
+
+      it "should be success" do
+        expect(response).to redirect_to(students_path(student.id))
+      end
+
+      it "should update student attributes" do
+        expect(student.father_name).to eq "Pai2"
+        expect(student.mother_name).to eq "Mae2"
+      end
+
+      it "should update person attributes" do
+        expect(student.person.name).to eq "outro"
+      end
+    end
+
+    context 'when invalid' do
+      xit "should fail" do
+      end
+    end
   end
 
   describe "DELETE #destroy" do
+    context 'when requested student exists' do
+      let(:student) { test_students[rand 2] }
+      before(:each) { delete :destroy, params: { id: student.id } }
+
+      it "should redirect to students_path" do
+        expect(response).to redirect_to(students_path)
+      end
+
+      it "should have deleted the student from the DB" do
+        expect(Student.all).not_to include student
+        expect { student.reload }.to raise_exception ActiveRecord::RecordNotFound
+      end
+
+      xit "should delete dependents from DB" do
+      end
+    end
+
+    context 'when requested student does not exists' do
+      it 'throws ActiveRecord::RecordNotFound' do
+        expect { get :show, params: { id: -1 } }.to raise_exception ActiveRecord::RecordNotFound
+      end
+    end
   end
 
 end
