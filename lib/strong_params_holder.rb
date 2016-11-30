@@ -18,4 +18,8 @@ module StrongParamsHolder
   def student_params
     params.require(:student).permit(:person, :father_name, :mother_name, :address, :birthday)
   end
+
+  def classroom_params
+    params.require(:classroom).permit(:name, :shift)
+  end
 end
