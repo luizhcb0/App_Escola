@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   resources :schools
   resources :professors
   resources :students
+  resources :classrooms
 
 end
