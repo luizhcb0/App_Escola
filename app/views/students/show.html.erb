@@ -1,2 +1,13 @@
-<h1>Students#show</h1>
-<p>Find me in app/views/students/show.html.erb</p>
+
+<table>
+  <tr><td>Name:</td><td><%= @student.person.name %></td></tr>
+  <tr><td>Email:</td><td><%= @student.person.email %></td></tr>
+  <tr><td>Phone:</td><td><%= @student.person.phone %></td></tr>
+
+  <tr><td>Father's Name:</td><td><%= @student.father_name %></td></tr>
+  <tr><td>Mother's Name:</td><td><%= @student.mother_name %></td></tr>
+  <tr><td>Address:</td><td><%= @student.address %></td></tr>
+  <tr><td>Birthday:</td><td><%= @student.birthday %></td></tr>
+
+  <tr><td><%= link_to 'Edit', edit_student_path(@student.id) %></td></tr>
+</table>
