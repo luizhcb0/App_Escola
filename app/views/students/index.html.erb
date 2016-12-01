@@ -1,2 +1,17 @@
-<h1>Students#index</h1>
-<p>Find me in app/views/students/index.html.erb</p>
+
+<h1>Students</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+  <% @students.each do |student| %>
+    <tr>
+      <td><%= student.person.name %></td>
+      <td><%= link_to 'Show', student_path(student) %></td>
+      <td><%= link_to 'Edit', edit_student_path(student) %></td>
+    </tr>
+  <% end %>
+  <td><%= link_to 'New', new_student_path %></td>
+</table>
