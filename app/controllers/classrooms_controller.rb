@@ -28,7 +28,7 @@ class ClassroomsController < ApplicationController
 
   def update
     @classroom = Classroom.find(params[:id])
-    if @classroom.update_attributes(classroom_params) &&
+    if @classroom.update_attributes(classroom_params)
       redirect_to classrooms_path(@classroom.id)
     else
       render :edit
