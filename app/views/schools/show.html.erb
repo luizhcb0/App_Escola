@@ -1,0 +1,13 @@
+
+<h1><%= @school.name %></h1>
+
+<table>
+  <tr><td>Name:</td><td><%= @school.professor.person.name %></td></tr>
+  <tr><td>Email:</td><td><%= @school.professor.person.email %></td></tr>
+  <tr><td>Phone:</td><td><%= @school.professor.person.phone %></td></tr>
+
+  <tr><td>Username:</td><td><%= @school.professor.login.username %></td></tr>
+  <tr><td>Password:</td><td><%= @school.professor.login.password %></td></tr>
+  <tr><td>Role:</td><td><%= @school.professor.login.role %></td></tr>
+  <tr><td><%= link_to 'Edit', edit_school_path(@school.id) %></td></tr>
+</table>
