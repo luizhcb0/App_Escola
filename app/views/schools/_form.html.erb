@@ -1,0 +1,23 @@
+
+<%= form_for @school do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= fields_for @school.professor.nil? ? :person : @school.professor.person do |person_f| %>
+      <%= render "people/person_fields", :f => person_f %>
+    <% end %>
+  </p>
+
+  <p>
+    <%= fields_for @school.professor.nil? ? :login : @school.professor.login do |login_f| %>
+      <%= render "logins/login_fields", :f => login_f %>
+    <% end %>
+  </p>
+
+  <p>
+    <%= f.submit "Save" %>
+  </p>
+<% end %>
