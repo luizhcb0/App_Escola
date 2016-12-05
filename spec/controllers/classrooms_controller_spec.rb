@@ -103,7 +103,7 @@ RSpec.describe ClassroomsController, type: :controller do
         expect(response).to redirect_to(classrooms_path(classroom.id))
       end
 
-      it "should update person attributes" do
+      it "should update attributes" do
         expect(classroom.name).to eq "salinha"
         expect(classroom.shift).to eq "vespertino"
       end
