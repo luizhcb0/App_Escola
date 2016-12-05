@@ -14,7 +14,7 @@ RSpec.describe ClassroomsController, type: :controller do
       expect(response).to render_template("index")
     end
 
-    it "should load all schools" do
+    it "should load all classrooms" do
       expect(assigns(:classrooms)).to match_array test_classrooms
     end
   end
@@ -55,7 +55,7 @@ RSpec.describe ClassroomsController, type: :controller do
 
   describe "POST #create" do
     context 'when valid' do
-      before(:each) do post :create
+      before(:each) do post :create, params: { classroom: attributes_for(:classroom) }
       end
       let(:classroom) { assigns(:classroom) }
 
@@ -67,6 +67,7 @@ RSpec.describe ClassroomsController, type: :controller do
         expect(classroom).to_not be nil
         expect(classroom).to be_persisted
       end
+    end
 
     context 'when invalid' do
       xit "should fail" do
@@ -93,8 +94,7 @@ RSpec.describe ClassroomsController, type: :controller do
       before(:each) do
         classroom = create(:classroom)
         patch :update, params: {
-          name: "salinha",
-          shift: "vespertino",
+          classroom: attributes_for(:classroom ,name: "salinha", shift: "vespertino"),
           id: classroom.id }
       end
       let(:classroom) { assigns(:classroom) }
@@ -125,7 +125,7 @@ RSpec.describe ClassroomsController, type: :controller do
       end
 
       it "should have deleted the classroom from the DB" do
-        expect(classroom.all).not_to include classroom
+        expect(Classroom.all).not_to include classroom
         expect { classroom.reload }.to raise_exception ActiveRecord::RecordNotFound
       end
 

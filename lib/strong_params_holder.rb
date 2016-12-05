@@ -20,6 +20,6 @@ module StrongParamsHolder
   end
 
   def classroom_params
-    params.require(:classroom).permit(:name, :shift, {:professor_ids => []}, {:student_ids => []}, {:activity_ids => []})
+    params.require(:classroom).permit(:name, :shift, :professor_ids => [], :student_ids => [], :activity_ids => [])
   end
 end
