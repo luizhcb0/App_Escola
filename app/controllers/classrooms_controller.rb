@@ -8,7 +8,7 @@ class ClassroomsController < ApplicationController
   def show
     @classroom = Classroom.find(params[:id])
     @students = Student.find(@classroom.student_ids)
-    @professors = @classroom.professors
+    @professors = Professor.find(@classroom.professor_ids)
     @activities = Activity.find(@classroom.activity_ids)
 
   end

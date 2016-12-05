@@ -6,12 +6,17 @@
     <%= f.text_field :shift %><br>
     <%= f.label :professor %><br>
 
-    <%= f.collection_select :professor_ids, @professors, :id, :id, {},
+    <%= f.collection_select :professor_ids, Professor.all, :id, :id, {},
     {:multiple => true}%><br>
 
     <%= f.label :student %><br>
 
-    <%= f.collection_select :student_ids, @students, :id, :id, {},
+    <%= f.collection_select :student_ids, Student.all, :id, :id, {},
+    {:multiple => true}%><br>
+
+    <%= f.label :activity %><br>
+
+    <%= f.collection_select :activity_ids, Activity.all, :id, :id, {},
     {:multiple => true}%><br>
 
   <p>
