@@ -12,7 +12,7 @@ module StrongParamsHolder
   end
 
   def login_params
-    params.require(:login).permit(:username, :password, :role)
+    params.require(:login).permit(:username, :password, :password_confirmation, :role)
   end
 
   def student_params
@@ -20,6 +20,7 @@ module StrongParamsHolder
   end
 
   def classroom_params
-    params.require(:classroom).permit(:name, :shift, {:professor_ids => []}, {:student_ids => []}, {:activity_ids => []})
+    params.require(:classroom).permit(:name, :shift, {:professor_ids => []},
+      {:student_ids => []}, {:activity_ids => []})
   end
 end

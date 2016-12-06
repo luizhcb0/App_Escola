@@ -84,7 +84,7 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school.professor.login).to_not be nil
         expect(school.professor.login).to be_persisted
         expect(school.professor.login.username).to eq "Vira Ventos"
-        expect(school.professor.login.password).to eq "12345"
+        expect(school.professor.login.authenticate("12345678")).to eq school.professor.login
         expect(school.professor.login.role).to eq 1
       end
     end
@@ -115,7 +115,8 @@ RSpec.describe SchoolsController, type: :controller do
         patch :update, params: {
           school: attributes_for(:school, name: "Teste2"),
           person: attributes_for(:person, name: "outro"),
-          login: attributes_for(:login, username: "vv", password: "54321", role: 2),
+          login: attributes_for(:login, username: "vv", password: "54321",
+            password_confirmation: "54321", role: 2),
           id: school.id }
       end
       let(:school) { assigns(:school) }

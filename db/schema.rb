@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 20161121170303) do
   end
 
   create_table "logins", force: :cascade do |t|
-    t.string  "username", null: false
-    t.string  "password", null: false
-    t.integer "role",     null: false
+    t.string  "username",        null: false
+    t.string  "password_digest", null: false
+    t.integer "role",            null: false
   end
 
   create_table "messages", force: :cascade do |t|
