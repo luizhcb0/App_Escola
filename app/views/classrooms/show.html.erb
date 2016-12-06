@@ -3,7 +3,15 @@
 <table>
   <tr><td>Name:</td><td><%= @classroom.name %></td></tr>
   <tr><td>Shift:</td><td><%= @classroom.shift %></td></tr>
-  <tr><td>Professor:</td><td><%= @professors.person.name %></td></tr>
+  <tr><td>Professor:</td>
+    <% @classroom.professors.each do |pf| %>
+      <td>
+        <%= pf.person.name %>
+      </td>
+    <% end %>
+  </tr>
+  <tr><td>Student:</td><td><%= @classroom.student_ids %></td></tr>
+  <tr><td>Activity:</td><td><%= @classroom.activity_ids %></td></tr>
 
   <tr><td><%= link_to 'Edit', edit_classroom_path(@classroom.id) %></td></tr>
 </table>
