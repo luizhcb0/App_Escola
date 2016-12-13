@@ -11,6 +11,7 @@
       <td><%= student.person.name %></td>
       <td><%= link_to 'Show', student_path(student) %></td>
       <td><%= link_to 'Edit', edit_student_path(student) %></td>
+      <td><%= link_to 'Delete', student_path(student), method: :delete %></td>
     </tr>
   <% end %>
   <td><%= link_to 'New', new_student_path %></td>

@@ -11,6 +11,7 @@
       <td><%= school.name %></td>
       <td><%= link_to 'Show', school_path(school) %></td>
       <td><%= link_to 'Edit', edit_school_path(school) %></td>
+      <td><%= link_to 'Delete', school_path(school), method: :delete %></td>
     </tr>
   <% end %>
   <td><%= link_to 'New', new_school_path %></td>

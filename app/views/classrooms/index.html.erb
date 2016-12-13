@@ -10,6 +10,7 @@
       <td><%= classroom.name %></td>
       <td><%= link_to 'Show', classroom_path(classroom) %></td>
       <td><%= link_to 'Edit', edit_classroom_path(classroom) %></td>
+      <td><%= link_to 'Delete', classroom_path(classroom), method: :delete %></td>
     </tr>
   <% end %>
   <td><%= link_to 'New', new_classroom_path %></td>

@@ -6,19 +6,19 @@
     <%= f.text_field :shift %><br>
     <%= f.label :professor %><br>
 
-    <%= f.collection_select :professor_ids, Professor.all, :id, :id, {},
-    {:multiple => true}%><br>
+    <% array = Professor.all.map { |professor| [professor.person.name, professor.id] } %>
+    <%= select_tag "classroom[professor_ids][]", options_for_select(array) %>
+
+    <br><%= f.label :student %><br>
+
+    <% array = Student.all.map { |student| [student.person.name, student.id] } %>
+    <%= select_tag "classroom[student_ids][]", options_for_select(array) %>
 
 
-    <%= f.label :student %><br>
+    <br><%= f.label :activity %><br>
 
-    <%= f.collection_select :student_ids, Student.all, :id, :id, {},
-    {:multiple => true}%><br>
-
-    <%= f.label :activity %><br>
-
-    <%= f.collection_select :activity_ids, Activity.all, :id, :id, {},
-    {:multiple => true}%><br>
+    <% array = Activity.all.map { |activity| [activity.person.name, activity.id] } %>
+    <%= select_tag "classroom[activity_ids][]", options_for_select(array) %>
 
   <p>
     <%= f.submit "Save" %>
