@@ -12,47 +12,47 @@ require 'rails_helper'
 # end
 RSpec.describe SessionsHelper, type: :helper do
 
-  describe "#log_in(login)" do
-    it "should set session with login.id" do
-      login = build(:login, id: 1)
-      log_in(login)
-      expect(session[:login_id]).to eq login.id
+  describe "#log_in(user)" do
+    it "should set session with user.id" do
+      user = build(:user, id: 1)
+      log_in(user)
+      expect(session[:user_id]).to eq user.id
     end
   end
 
   describe "#log_out" do
     it "should clear session" do
-      session[:login_id] = 1
-      expect(session[:login_id]).to eq 1
+      session[:user_id] = 1
+      expect(session[:user_id]).to eq 1
       log_out
-      expect(session[:login_id]).to eq nil
+      expect(session[:user_id]).to eq nil
     end
 
     it "should clear current_user" do
-      @current_login = build(:login, id: 1)
-      expect(@current_login).to_not eq nil
+      @current_user = build(:user, id: 1)
+      expect(@current_user).to_not eq nil
       log_out
-      expect(@current_login).to eq nil
+      expect(@current_user).to eq nil
     end
   end
 
-  describe "#current_login" do
+  describe "#current_user" do
     it "should return nil if the session id is empty" do
-      expect(current_login).to eq nil
+      expect(current_user).to eq nil
     end
 
-    it "should return the login which the session login_id is set" do
-      login_array = 2.times.map { create(:login) }
-      login = login_array[rand 2]
-      session[:login_id] = login.id
-      expect(current_login).to eq login
+    it "should return the user which the session login_id is set" do
+      user_array = 2.times.map { create(:user) }
+      user = user_array[rand 2]
+      session[:user_id] = user.id
+      expect(current_user).to eq user
     end
   end
 
   describe "#logged_in?" do
-    it "should return if a login have been added to current login" do
+    it "should return if a login have been added to current user" do
       expect(logged_in?).to eq false
-      session[:login_id] = create(:login).id
+      session[:user_id] = create(:user).id
       expect(logged_in?).to eq true
     end
   end

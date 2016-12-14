@@ -57,7 +57,7 @@ RSpec.describe SchoolsController, type: :controller do
     context 'when valid' do
       before(:each) do post :create, params: {
         school: attributes_for(:school),
-        person: attributes_for(:person), login: attributes_for(:login) }
+        person: attributes_for(:person), user: attributes_for(:user) }
       end
       let(:school) { assigns(:school) }
 
@@ -80,12 +80,13 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school.professor.person.name).to eq "Diretora"
       end
 
-      it "should save a valid professor(principal) login" do
-        expect(school.professor.login).to_not be nil
-        expect(school.professor.login).to be_persisted
-        expect(school.professor.login.username).to eq "Vira Ventos"
-        expect(school.professor.login.authenticate("12345678")).to eq school.professor.login
-        expect(school.professor.login.role).to eq 1
+      it "should save a valid professor(principal) user" do
+        expect(school.professor.user).to_not be nil
+        expect(school.professor.user).to be_persisted
+        expect(school.professor.user.name).to eq "User"
+        expect(school.professor.user.email).to eq "email@gmail.com"
+        expect(school.professor.user.authenticate("12345678")).to eq school.professor.user
+        expect(school.professor.user.role).to eq 1
       end
     end
 
@@ -115,8 +116,8 @@ RSpec.describe SchoolsController, type: :controller do
         patch :update, params: {
           school: attributes_for(:school, name: "Teste2"),
           person: attributes_for(:person, name: "outro"),
-          login: attributes_for(:login, username: "vv", password: "54321",
-            password_confirmation: "54321", role: 2),
+          user: attributes_for(:user, name: "User2", email: "test@gmail.com",
+            password: "54321", password_confirmation: "54321", role: 2),
           id: school.id }
       end
       let(:school) { assigns(:school) }
@@ -133,10 +134,11 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school.professor.person.name).to eq "outro"
       end
 
-      it "should update login attributes" do
-        expect(school.professor.login.username).to eq "vv"
-        expect(school.professor.login.password).to eq "54321"
-        expect(school.professor.login.role).to eq 2
+      it "should update user attributes" do
+        expect(school.professor.user.name).to eq "User2"
+        expect(school.professor.user.email).to eq "test@gmail.com"
+        expect(school.professor.user.password).to eq "54321"
+        expect(school.professor.user.role).to eq 2
       end
     end
 

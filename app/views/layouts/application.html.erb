@@ -10,8 +10,8 @@
 
   <body>
     <div id="center">
-      <% if current_login %>
-        <%= current_login.username %>
+      <% if current_user %>
+        <%= current_user.name %>
         <%= link_to "Sign out", session_path, method: :delete %>
       <% else %>
         <%= link_to "Sign in", new_session_path %>

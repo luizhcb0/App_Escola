@@ -56,7 +56,7 @@ RSpec.describe ProfessorsController, type: :controller do
   describe "POST #create" do
     context 'when valid' do
       before(:each) do post :create, params: {
-        person: attributes_for(:person), login: attributes_for(:login) }
+        person: attributes_for(:person), user: attributes_for(:user) }
       end
       let(:professor) { assigns(:professor) }
 
@@ -75,12 +75,13 @@ RSpec.describe ProfessorsController, type: :controller do
         expect(professor.person.name).to eq "Diretora"
       end
 
-      it "should save a valid professor login" do
-        expect(professor.login).to_not be nil
-        expect(professor.login).to be_persisted
-        expect(professor.login.username).to eq "Vira Ventos"
-        expect(professor.login.authenticate("12345678")).to be professor.login
-        expect(professor.login.role).to eq 1
+      it "should save a valid professor user" do
+        expect(professor.user).to_not be nil
+        expect(professor.user).to be_persisted
+        expect(professor.user.name).to eq "User"
+        expect(professor.user.email).to eq "email@gmail.com"
+        expect(professor.user.authenticate("12345678")).to be professor.user
+        expect(professor.user.role).to eq 1
       end
     end
 
@@ -110,8 +111,8 @@ RSpec.describe ProfessorsController, type: :controller do
         professor = create(:professor)
         patch :update, params: {
           person: attributes_for(:person, name: "outro"),
-          login: attributes_for(:login, username: "vv", password: "54321",
-            password_confirmation: "54321", role: 2),
+          user: attributes_for(:user, name: "User2", email: "test@gmail.com",
+            password: "54321", password_confirmation: "54321", role: 2),
           id: professor.id }
       end
       let(:professor) { assigns(:professor) }
@@ -124,10 +125,11 @@ RSpec.describe ProfessorsController, type: :controller do
         expect(professor.person.name).to eq "outro"
       end
 
-      it "should update login attributes" do
-        expect(professor.login.username).to eq "vv"
-        expect(professor.login.password).to eq "54321"
-        expect(professor.login.role).to eq 2
+      it "should update user attributes" do
+        expect(professor.user.name).to eq "User2"
+        expect(professor.user.email).to eq "test@gmail.com"
+        expect(professor.user.password).to eq "54321"
+        expect(professor.user.role).to eq 2
       end
     end
 

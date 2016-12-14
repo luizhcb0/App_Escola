@@ -7,8 +7,8 @@
   </p>
 
   <p>
-    <%= fields_for @professor.login.nil? ? :login : @professor.login do |login_f| %>
-      <%= render "logins/login_fields", :f => login_f %>
+    <%= fields_for @professor.user.nil? ? :user : @professor.user do |user_f| %>
+      <%= render "users/user_fields", :f => user_f %>
     <% end %>
   </p>
 

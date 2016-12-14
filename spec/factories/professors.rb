@@ -2,6 +2,6 @@
 FactoryGirl.define do
   factory :professor do
     person
-    login
+    user
   end
 end

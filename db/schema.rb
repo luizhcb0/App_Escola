@@ -45,12 +45,6 @@ ActiveRecord::Schema.define(version: 20161121170303) do
     t.integer "student_id",   null: false
   end
 
-  create_table "logins", force: :cascade do |t|
-    t.string  "username",        null: false
-    t.string  "password_digest", null: false
-    t.integer "role",            null: false
-  end
-
   create_table "messages", force: :cascade do |t|
     t.integer  "professor_id", null: false
     t.string   "text"
@@ -87,9 +81,9 @@ ActiveRecord::Schema.define(version: 20161121170303) do
 
   create_table "professors", force: :cascade do |t|
     t.integer "person_id", null: false
-    t.integer "login_id",  null: false
-    t.index ["login_id"], name: "index_professors_on_login_id", using: :btree
+    t.integer "user_id",   null: false
     t.index ["person_id"], name: "index_professors_on_person_id", using: :btree
+    t.index ["user_id"], name: "index_professors_on_user_id", using: :btree
   end
 
   create_table "schools", force: :cascade do |t|
@@ -98,17 +92,25 @@ ActiveRecord::Schema.define(version: 20161121170303) do
     t.index ["professor_id"], name: "index_schools_on_professor_id", using: :btree
   end
 
-  create_table "student_logins", force: :cascade do |t|
+  create_table "student_users", force: :cascade do |t|
     t.integer "student_id", null: false
-    t.integer "login_id",   null: false
-    t.index ["login_id"], name: "index_student_logins_on_login_id", using: :btree
-    t.index ["student_id"], name: "index_student_logins_on_student_id", using: :btree
+    t.integer "user_id",    null: false
+    t.index ["student_id"], name: "index_student_users_on_student_id", using: :btree
+    t.index ["user_id"], name: "index_student_users_on_user_id", using: :btree
   end
 
   create_table "students", force: :cascade do |t|
     t.string "name",     null: false
     t.string "address"
     t.date   "birthday"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string  "name",            null: false
+    t.string  "phone"
+    t.string  "email",           null: false
+    t.string  "password_digest", null: false
+    t.integer "role",            null: false
   end
 
 end

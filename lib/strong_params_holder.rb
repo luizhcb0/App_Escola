@@ -11,8 +11,8 @@ module StrongParamsHolder
     params.require(:person).permit(:name, :email, :phone)
   end
 
-  def login_params
-    params.require(:login).permit(:username, :password, :password_confirmation, :role)
+  def user_params
+    params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation, :role)
   end
 
   def student_params

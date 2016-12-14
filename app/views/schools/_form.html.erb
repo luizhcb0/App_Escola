@@ -12,8 +12,8 @@
   </p>
 
   <p>
-    <%= fields_for @school.professor.nil? ? :login : @school.professor.login do |login_f| %>
-      <%= render "logins/login_fields", :f => login_f %>
+    <%= fields_for @school.professor.nil? ? :user : @school.professor.user do |user_f| %>
+      <%= render "users/user_fields", :f => user_f %>
     <% end %>
   </p>
 

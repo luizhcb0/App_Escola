@@ -3,9 +3,9 @@ class SessionsController < ApplicationController
 
   # if exists, signs in the given user/login
   def create
-    @login = Login.find_by(username: params[:username])
-    if @login and @login.authenticate(params[:password])
-      log_in(@login)
+    @user = User.find_by(email: params[:email])
+    if @user and @user.authenticate(params[:password])
+      log_in(@user)
       redirect_to schools_path
     else
       render :new   # re-renders the sign in page

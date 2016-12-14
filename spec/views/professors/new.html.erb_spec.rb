@@ -14,7 +14,7 @@ RSpec.describe "professors/new.html.erb", type: :view do
     expect(view).to render_template(:partial => "_person_fields")
   end
 
-  it "should render login_fields partial" do
-    expect(view).to render_template(:partial => "_login_fields")
+  it "should render user_fields partial" do
+    expect(view).to render_template(:partial => "_user_fields")
   end
 end

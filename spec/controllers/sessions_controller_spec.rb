@@ -9,60 +9,60 @@ RSpec.describe SessionsController, type: :controller do
       expect(response).to be_success
     end
 
-    it "should render new template(the login template)" do
+    it "should render new template(the user template)" do
       expect(response).to render_template("new")
     end
   end
 
   describe "POST #create" do
-    before(:each) { create(:login) }
-    let(:login) { assigns(:login) }
+    before(:each) { create(:user) }
+    let(:user) { assigns(:user) }
 
     context "when valid" do
-      before(:each) { post :create, params: attributes_for(:login) }
+      before(:each) { post :create, params: attributes_for(:user) }
 
       it "should redirect successfully" do
         expect(response).to redirect_to schools_path #change it latter
       end
 
-      it "should set session login_id with the right id" do
-        expect(session[:login_id]).to eq login.id
+      it "should set session user_id with the right id" do
+        expect(session[:user_id]).to eq user.id
       end
     end
 
     context "when invalid" do
-      before(:each) { post :create, params: attributes_for(:login,
-        username: "invalid", password: "notright") }
+      before(:each) { post :create, params: attributes_for(:user,
+        email: "invalid", password: "notright") }
 
-      it "should render new template(the login template)" do
+      it "should render new template(the user template)" do
         expect(response).to render_template("new")
       end
 
-      it "shouldn't set the session login_id" do
-        expect(session[:login_id]).to eq nil
+      it "shouldn't set the session user_id" do
+        expect(session[:user_id]).to eq nil
       end
     end
 
     context "when only password is invalid" do
-      before(:each) { post :create, params: attributes_for(:login,
+      before(:each) { post :create, params: attributes_for(:user,
         password: "notright") }
 
-      it "should render new template(the login template)" do
+      it "should render new template(the user template)" do
         expect(response).to render_template("new")
       end
 
-      it "shouldnt login with the wrong password" do
-        expect(session[:login_id]).to eq nil
+      it "shouldnt user with the wrong password" do
+        expect(session[:user_id]).to eq nil
       end
     end
   end
 
   describe "DELETE #destroy" do
-    it "should delete the session login_id" do
-      session[:login_id] = 1
-      expect(session[:login_id]).to eq 1
+    it "should delete the session user_id" do
+      session[:user_id] = 1
+      expect(session[:user_id]).to eq 1
       delete :destroy
-      expect(session[:login_id]).to eq nil
+      expect(session[:user_id]).to eq nil
     end
 
     it "should redirect to new session path" do
