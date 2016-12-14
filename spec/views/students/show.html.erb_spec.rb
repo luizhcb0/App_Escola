@@ -7,8 +7,6 @@ RSpec.describe "students/show.html.erb", type: :view do
   }
 
   it "should show school atributes" do
-    expect(rendered).to match(/Diretora/)     # person name
-    expect(rendered).to match(/Pai/)          # father_name
-    expect(rendered).to match(/Mae/)          # mother_name
+    expect(rendered).to match(/Student/)     # name
   end
 end

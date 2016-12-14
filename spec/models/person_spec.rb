@@ -7,6 +7,5 @@ RSpec.describe Person, type: :model do
 
   describe "Associations" do
     it { should have_one(:professor) }
-    it { should have_one(:student) }
   end
 end

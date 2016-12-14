@@ -54,10 +54,7 @@ RSpec.describe StudentsController, type: :controller do
 
   describe "POST #create" do
     context 'when valid' do
-      before(:each) do post :create, params: {
-        student: attributes_for(:student),
-        person: attributes_for(:person)}
-      end
+      before(:each) { post :create, params: { student: attributes_for(:student) } }
       let(:student) { assigns(:student) }
 
       it "should redirect to students_path" do
@@ -69,15 +66,7 @@ RSpec.describe StudentsController, type: :controller do
       end
 
       it "should save a valid student" do
-        expect(student.person).to_not be nil
-        expect(student.father_name).to eq "Pai"
-        expect(student.mother_name).to eq "Mae"
-      end
-
-      it "should save a valid student person" do
-        expect(student.person).to_not be nil
-        expect(student.person).to be_persisted
-        expect(student.person.name).to eq "Diretora"
+        expect(student.name).to eq "Student"
       end
     end
 
@@ -105,9 +94,7 @@ RSpec.describe StudentsController, type: :controller do
       before(:each) do
         student = create(:student)
         patch :update, params: {
-          student: attributes_for(:student, father_name: "Pai2", mother_name: "Mae2"),
-          person: attributes_for(:person, name: "outro"),
-          id: student.id }
+          student: attributes_for(:student, name: "Student2"), id: student.id }
       end
       let(:student) { assigns(:student) }
 
@@ -116,12 +103,7 @@ RSpec.describe StudentsController, type: :controller do
       end
 
       it "should update student attributes" do
-        expect(student.father_name).to eq "Pai2"
-        expect(student.mother_name).to eq "Mae2"
-      end
-
-      it "should update person attributes" do
-        expect(student.person.name).to eq "outro"
+        expect(student.name).to eq "Student2"
       end
     end
 

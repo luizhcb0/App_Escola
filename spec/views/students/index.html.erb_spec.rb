@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "students/index.html.erb", type: :view do
   before(:each) { assign(:students, [
-    Student.new(id: 1, person: Person.new(name: "Student1")),
-    Student.new(id: 2, person: Person.new(name: "Student2")),
-    Student.new(id: 3, person: Person.new(name: "Student3")) ])
+    Student.new(id: 1, name: "Student1"),
+    Student.new(id: 2, name: "Student2"),
+    Student.new(id: 3, name: "Student3") ])
     render
   }
 

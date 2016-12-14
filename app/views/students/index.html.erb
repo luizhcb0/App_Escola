@@ -8,7 +8,7 @@
 
   <% @students.each do |student| %>
     <tr>
-      <td><%= student.person.name %></td>
+      <td><%= student.name %></td>
       <td><%= link_to 'Show', student_path(student) %></td>
       <td><%= link_to 'Edit', edit_student_path(student) %></td>
       <td><%= link_to 'Delete', student_path(student), method: :delete %></td>
