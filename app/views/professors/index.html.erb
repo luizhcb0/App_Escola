@@ -8,7 +8,7 @@
 
   <% @professors.each do |professor| %>
     <tr>
-      <td><%= professor.person.name %></td>
+      <td><%= professor.user.name %></td>
       <td><%= link_to 'Show', professor_path(professor) %></td>
       <td><%= link_to 'Edit', edit_professor_path(professor) %></td>
       <td><%= link_to 'Delete', professor_path(professor), method: :delete %></td>

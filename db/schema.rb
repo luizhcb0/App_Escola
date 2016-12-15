@@ -73,16 +73,8 @@ ActiveRecord::Schema.define(version: 20161121170303) do
     t.index ["activity_id"], name: "index_options_on_activity_id", using: :btree
   end
 
-  create_table "people", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "phone"
-  end
-
   create_table "professors", force: :cascade do |t|
-    t.integer "person_id", null: false
-    t.integer "user_id",   null: false
-    t.index ["person_id"], name: "index_professors_on_person_id", using: :btree
+    t.integer "user_id", null: false
     t.index ["user_id"], name: "index_professors_on_user_id", using: :btree
   end
 

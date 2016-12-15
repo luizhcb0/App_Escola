@@ -56,8 +56,7 @@ RSpec.describe SchoolsController, type: :controller do
   describe "POST #create" do
     context 'when valid' do
       before(:each) do post :create, params: {
-        school: attributes_for(:school),
-        person: attributes_for(:person), user: attributes_for(:user) }
+        school: attributes_for(:school), user: attributes_for(:user) }
       end
       let(:school) { assigns(:school) }
 
@@ -72,12 +71,6 @@ RSpec.describe SchoolsController, type: :controller do
       it "should save a professor(principal)" do
         expect(school.professor).to_not be nil
         expect(school.professor).to be_persisted
-      end
-
-      it "should save a valid professor(principal) person" do
-        expect(school.professor.person).to_not be nil
-        expect(school.professor.person).to be_persisted
-        expect(school.professor.person.name).to eq "Diretora"
       end
 
       it "should save a valid professor(principal) user" do
@@ -115,7 +108,6 @@ RSpec.describe SchoolsController, type: :controller do
         school = create(:school)
         patch :update, params: {
           school: attributes_for(:school, name: "Teste2"),
-          person: attributes_for(:person, name: "outro"),
           user: attributes_for(:user, name: "User2", email: "test@gmail.com",
             password: "54321", password_confirmation: "54321", role: 2),
           id: school.id }
@@ -128,10 +120,6 @@ RSpec.describe SchoolsController, type: :controller do
 
       it "should update school attributes" do
         expect(school.name).to eq "Teste2"
-      end
-
-      it "should update person attributes" do
-        expect(school.professor.person.name).to eq "outro"
       end
 
       it "should update user attributes" do

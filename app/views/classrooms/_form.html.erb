@@ -6,7 +6,7 @@
     <%= f.text_field :shift %><br>
     <%= f.label :professor %><br>
 
-    <% array = Professor.all.map { |professor| [professor.person.name, professor.id] } %>
+    <% array = Professor.all.map { |professor| [professor.user.name, professor.id] } %>
     <%= select_tag "classroom[professor_ids][]", options_for_select(array) %>
 
     <br><%= f.label :student %><br>
@@ -17,7 +17,7 @@
 
     <br><%= f.label :activity %><br>
 
-    <% array = Activity.all.map { |activity| [activity.person.name, activity.id] } %>
+    <% array = Activity.all.map { |activity| [activity.name, activity.id] } %>
     <%= select_tag "classroom[activity_ids][]", options_for_select(array) %>
 
   <p>

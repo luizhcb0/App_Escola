@@ -1,12 +1,6 @@
 
 <%= form_for @professor do |f| %>
   <p>
-    <%= fields_for @professor.person.nil? ? :person : @professor.person do |person_f| %>
-      <%= render "people/person_fields", :f => person_f %>
-    <% end %>
-  </p>
-
-  <p>
     <%= fields_for @professor.user.nil? ? :user : @professor.user do |user_f| %>
       <%= render "users/user_fields", :f => user_f %>
     <% end %>

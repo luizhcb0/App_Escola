@@ -4,13 +4,7 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </p>
-
-  <p>
-    <%= fields_for @school.professor.nil? ? :person : @school.professor.person do |person_f| %>
-      <%= render "people/person_fields", :f => person_f %>
-    <% end %>
-  </p>
-
+  
   <p>
     <%= fields_for @school.professor.nil? ? :user : @school.professor.user do |user_f| %>
       <%= render "users/user_fields", :f => user_f %>

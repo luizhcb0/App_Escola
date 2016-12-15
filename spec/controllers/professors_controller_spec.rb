@@ -55,9 +55,7 @@ RSpec.describe ProfessorsController, type: :controller do
 
   describe "POST #create" do
     context 'when valid' do
-      before(:each) do post :create, params: {
-        person: attributes_for(:person), user: attributes_for(:user) }
-      end
+      before(:each) { post :create, params: { user: attributes_for(:user) } }
       let(:professor) { assigns(:professor) }
 
       it "should redirect to professors_path" do
@@ -67,12 +65,6 @@ RSpec.describe ProfessorsController, type: :controller do
       it "should save the professor" do
         expect(professor).to_not be nil
         expect(professor).to be_persisted
-      end
-
-      it "should save a valid professor person" do
-        expect(professor.person).to_not be nil
-        expect(professor.person).to be_persisted
-        expect(professor.person.name).to eq "Diretora"
       end
 
       it "should save a valid professor user" do
@@ -110,7 +102,6 @@ RSpec.describe ProfessorsController, type: :controller do
       before(:each) do
         professor = create(:professor)
         patch :update, params: {
-          person: attributes_for(:person, name: "outro"),
           user: attributes_for(:user, name: "User2", email: "test@gmail.com",
             password: "54321", password_confirmation: "54321", role: 2),
           id: professor.id }
@@ -119,10 +110,6 @@ RSpec.describe ProfessorsController, type: :controller do
 
       it "should be success" do
         expect(response).to redirect_to(professors_path(professor.id))
-      end
-
-      it "should update person attributes" do
-        expect(professor.person.name).to eq "outro"
       end
 
       it "should update user attributes" do

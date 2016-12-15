@@ -2,10 +2,6 @@
 <h1><%= @school.name %></h1>
 
 <table>
-  <tr><td>Name:</td><td><%= @school.professor.person.name %></td></tr>
-  <tr><td>Email:</td><td><%= @school.professor.person.email %></td></tr>
-  <tr><td>Phone:</td><td><%= @school.professor.person.phone %></td></tr>
-
   <tr><td>Name:</td><td><%= @school.professor.user.name %></td></tr>
   <tr><td>Phone:</td><td><%= @school.professor.user.phone %></td></tr>
   <tr><td>Email:</td><td><%= @school.professor.user.email %></td></tr>
