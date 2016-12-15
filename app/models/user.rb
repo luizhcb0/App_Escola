@@ -8,4 +8,12 @@ class User < ApplicationRecord
   # there must be a password on create
   validates :password, presence: true, on: :create
   validates :name, :email, :role, presence: true
+
+
+  # Sets the user role with the specified role name. If doesn't find it the
+  # correspondent role in the database, creates a new one and sets with it.
+  def with_role(role_name)
+    self.role = Role.where(name: role_name).first_or_create
+    self # returns the user
+  end
 end

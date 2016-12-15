@@ -14,8 +14,7 @@ class ProfessorsController < ApplicationController
   end
 
   def create
-    @professor = Professor.new(user: User.new(user_params))
-    @professor.user.role = Role.where(name: "professor").first_or_create
+    @professor = Professor.new(user: User.new(user_params).with_role("professor"))
     if @professor.save
       redirect_to professors_path
     else
