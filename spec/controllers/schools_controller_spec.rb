@@ -79,7 +79,7 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school.professor.user.name).to eq "User"
         expect(school.professor.user.email).to eq "email@gmail.com"
         expect(school.professor.user.authenticate("12345678")).to eq school.professor.user
-        expect(school.professor.user.role).to eq 1
+        expect(school.professor.user.role.name).to eq "principal"
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.describe SchoolsController, type: :controller do
         patch :update, params: {
           school: attributes_for(:school, name: "Teste2"),
           user: attributes_for(:user, name: "User2", email: "test@gmail.com",
-            password: "54321", password_confirmation: "54321", role: 2),
+            password: "54321", password_confirmation: "54321"),
           id: school.id }
       end
       let(:school) { assigns(:school) }
@@ -126,7 +126,6 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school.professor.user.name).to eq "User2"
         expect(school.professor.user.email).to eq "test@gmail.com"
         expect(school.professor.user.password).to eq "54321"
-        expect(school.professor.user.role).to eq 2
       end
     end
 

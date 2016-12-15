@@ -16,6 +16,7 @@ class SchoolsController < ApplicationController
   def create
     @school = School.new(school_params)
     @school.build_professor(user: User.new(user_params))
+    @school.professor.user.role = Role.where( name: "principal").first_or_create
     if @school.save
       redirect_to schools_path
     else

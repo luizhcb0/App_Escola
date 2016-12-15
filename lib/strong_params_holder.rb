@@ -8,7 +8,7 @@ module StrongParamsHolder
   end
 
   def user_params
-    params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation, :role)
+    params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation)
   end
 
   def student_params
@@ -16,6 +16,7 @@ module StrongParamsHolder
   end
 
   def classroom_params
-    params.require(:classroom).permit(:name, :shift, :professor_ids => [], :student_ids => [], :activity_ids => [])
+    params.require(:classroom).permit(:name, :shift, :professor_ids => [],
+      :student_ids => [], :activity_ids => [])
   end
 end

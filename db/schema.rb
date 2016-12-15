@@ -78,6 +78,10 @@ ActiveRecord::Schema.define(version: 20161121170303) do
     t.index ["user_id"], name: "index_professors_on_user_id", using: :btree
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name", null: false
+  end
+
   create_table "schools", force: :cascade do |t|
     t.string  "name"
     t.integer "professor_id", null: false
@@ -102,7 +106,8 @@ ActiveRecord::Schema.define(version: 20161121170303) do
     t.string  "phone"
     t.string  "email",           null: false
     t.string  "password_digest", null: false
-    t.integer "role",            null: false
+    t.integer "role_id",         null: false
+    t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 
 end
