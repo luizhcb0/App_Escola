@@ -56,7 +56,7 @@ RSpec.describe SchoolsController, type: :controller do
   describe "POST #create" do
     context 'when valid' do
       before(:each) do post :create, params: {
-        school: attributes_for(:school), user: attributes_for(:user) }
+        school: attributes_for(:school), user: attributes_for(:user, :fixed) }
       end
       let(:school) { assigns(:school) }
 
@@ -77,7 +77,7 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school.professor.user).to_not be nil
         expect(school.professor.user).to be_persisted
         expect(school.professor.user.name).to eq "User"
-        expect(school.professor.user.email).to eq "email@gmail.com"
+        expect(school.professor.user.email).to eq "email@example.com"
         expect(school.professor.user.authenticate("12345678")).to eq school.professor.user
         expect(school.professor.user.role.name).to eq "principal"
       end

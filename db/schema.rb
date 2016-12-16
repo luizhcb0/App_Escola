@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20161121170303) do
 
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
+    t.index ["name"], name: "index_roles_on_name", using: :btree
   end
 
   create_table "schools", force: :cascade do |t|
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(version: 20161121170303) do
     t.string  "email",           null: false
     t.string  "password_digest", null: false
     t.integer "role_id",         null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 

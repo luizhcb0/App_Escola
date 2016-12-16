@@ -55,7 +55,7 @@ RSpec.describe ProfessorsController, type: :controller do
 
   describe "POST #create" do
     context 'when valid' do
-      before(:each) { post :create, params: { user: attributes_for(:user) } }
+      before(:each) { post :create, params: { user: attributes_for(:user, :fixed) } }
       let(:professor) { assigns(:professor) }
 
       it "should redirect to professors_path" do
@@ -71,7 +71,7 @@ RSpec.describe ProfessorsController, type: :controller do
         expect(professor.user).to_not be nil
         expect(professor.user).to be_persisted
         expect(professor.user.name).to eq "User"
-        expect(professor.user.email).to eq "email@gmail.com"
+        expect(professor.user.email).to eq "email@example.com"
         expect(professor.user.authenticate("12345678")).to be professor.user
         expect(professor.user.role.name).to eq "professor"
       end

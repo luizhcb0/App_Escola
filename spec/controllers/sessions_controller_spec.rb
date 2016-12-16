@@ -15,11 +15,11 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe "POST #create" do
-    before(:each) { create(:user) }
+    before(:each) { create(:user, :fixed) }
     let(:user) { assigns(:user) }
 
     context "when valid" do
-      before(:each) { post :create, params: attributes_for(:user) }
+      before(:each) { post :create, params: attributes_for(:user, :fixed) }
 
       it "should redirect successfully" do
         expect(response).to redirect_to schools_path #change it latter
@@ -44,7 +44,7 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     context "when only password is invalid" do
-      before(:each) { post :create, params: attributes_for(:user,
+      before(:each) { post :create, params: attributes_for(:user, :fixed,
         password: "notright") }
 
       it "should render new template(the user template)" do

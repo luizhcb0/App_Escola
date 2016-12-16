@@ -8,6 +8,7 @@ class User < ApplicationRecord
   # there must be a password on create
   validates :password, presence: true, on: :create
   validates :name, :email, :role, presence: true
+  validates :email, uniqueness: true
 
 
   # Sets the user role with the specified role name. If doesn't find it the
