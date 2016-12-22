@@ -16,3 +16,11 @@
   <% end %>
   <td><%= link_to 'New', new_professor_path %></td>
 </table>
+
+<table>
+  <% if current_user %>
+    <tr>
+      <td><%= link_to 'Send Message', :action => "send_message" %></td>
+    </tr>
+  <% end %>
+</table>

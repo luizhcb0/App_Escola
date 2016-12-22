@@ -1,0 +1,17 @@
+
+<h1>Send Message</h1>
+
+<%= form_for @message, url: {action: "save_message"}, html: {} do |f| %>
+
+  <%= label_tag(:to) %>
+
+  <% array = Student.all.map { |student| [student.name, student.id] } %>
+  <%= select_tag "message[student_ids][]", options_for_select(array) %><br>
+
+  <%= f.hidden_field :professor_id, :value => current_user.id %>
+
+  <%= label_tag(:text) %><br>
+  <%= f.text_area :text %><br>
+
+  <%= submit_tag("Send") %>
+<% end %>

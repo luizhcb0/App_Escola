@@ -40,4 +40,17 @@ class ProfessorsController < ApplicationController
     @professor.destroy
     redirect_to professors_path
   end
+
+  def send_message
+    @message = Message.new()
+  end
+
+  def save_message
+    @message = Message.new(message_params)
+    if @message.save
+      redirect_to professors_path
+    else
+      render :send_message
+    end
+  end
 end
