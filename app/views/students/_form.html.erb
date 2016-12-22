@@ -10,6 +10,12 @@
   </p>
 
   <p>
+    <%= fields_for :user, @user do |user_f| %>
+      <%= render "users/user_fields", :f => user_f %>
+    <% end %>
+  </p>
+
+  <p>
     <%= f.submit "Save" %>
   </p>
 <% end %>

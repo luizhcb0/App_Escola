@@ -7,14 +7,17 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
+    @user = @student.users.first
   end
 
   def new
-    @student = Student.new()
+    @student = Student.new
+    @user = User.new
   end
 
   def create
     @student = Student.new(student_params)
+    @student.users.build(user_params).with_role("student")
     if @student.save
       redirect_to students_path
     else
@@ -24,11 +27,13 @@ class StudentsController < ApplicationController
 
   def edit
     @student = Student.find(params[:id])
+    @user = @student.users.first
   end
 
   def update
     @student = Student.find(params[:id])
-    if @student.update_attributes(student_params)
+    if @student.users.first.update_attributes(user_params) &&
+      @student.update_attributes(student_params)
       redirect_to students_path(@student.id)
     else
       render :edit
