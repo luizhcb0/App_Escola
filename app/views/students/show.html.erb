@@ -4,11 +4,7 @@
   <tr><td>Address:</td><td><%= @student.address %></td></tr>
   <tr><td>Birthday:</td><td><%= @student.birthday %></td></tr>
 
-  <tr><td>Name:</td><td><%= @user.name %></td></tr>
-  <tr><td>Phone:</td><td><%= @user.phone %></td></tr>
-  <tr><td>Email:</td><td><%= @user.email %></td></tr>
-  <tr><td>Password:</td><td><%= @user.password %></td></tr>
-  <tr><td>Role:</td><td><%= @user.role.name %></td></tr>
+  <p> <%= render "users/user_show", user: @user %> </p>
 
   <tr><td><%= link_to 'Edit', edit_student_path(@student.id) %></td></tr>
 </table>

@@ -2,10 +2,6 @@
 <h1><%= @school.name %></h1>
 
 <table>
-  <tr><td>Name:</td><td><%= @school.professor.user.name %></td></tr>
-  <tr><td>Phone:</td><td><%= @school.professor.user.phone %></td></tr>
-  <tr><td>Email:</td><td><%= @school.professor.user.email %></td></tr>
-  <tr><td>Password:</td><td><%= @school.professor.user.password %></td></tr>
-  <tr><td>Role:</td><td><%= @school.professor.user.role.name %></td></tr>
+  <p> <%= render "users/user_show", user: @school.professor.user %> </p>
   <tr><td><%= link_to 'Edit', edit_school_path(@school.id) %></td></tr>
 </table>

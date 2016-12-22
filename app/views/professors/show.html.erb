@@ -1,9 +1,5 @@
 
 <table>
-  <tr><td>Name:</td><td><%= @professor.user.name %></td></tr>
-  <tr><td>Phone:</td><td><%= @professor.user.phone %></td></tr>
-  <tr><td>Email:</td><td><%= @professor.user.email %></td></tr>
-  <tr><td>Password:</td><td><%= @professor.user.password %></td></tr>
-  <tr><td>Role:</td><td><%= @professor.user.role.name %></td></tr>
+  <p> <%= render "users/user_show", user: @professor.user %> </p>
   <tr><td><%= link_to 'Edit', edit_professor_path(@professor.id) %></td></tr>
 </table>
