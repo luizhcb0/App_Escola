@@ -62,10 +62,10 @@ RSpec.describe StudentsController, type: :controller do
   end
 
   describe "POST #create" do
+    let(:student) { assigns(:student) }
     context 'when valid' do
       before(:each) { post :create, params: {
         student: attributes_for(:student), user: attributes_for(:user) } }
-      let(:student) { assigns(:student) }
 
       it "should redirect to students_path" do
         expect(response).to redirect_to(students_path)
@@ -85,9 +85,12 @@ RSpec.describe StudentsController, type: :controller do
       end
     end
 
-    context 'when invalid' do
-      xit "should fail" do
-      end
+    context 'when email is invalid' do
+      before(:each) { post :create, params: { student: attributes_for(:student),
+        user: attributes_for(:user, email: "abc.com") } }
+
+      it { expect(response).to render_template(:new) }
+      it { expect(student).to_not be_persisted }
     end
   end
 
@@ -110,6 +113,7 @@ RSpec.describe StudentsController, type: :controller do
   end
 
   describe "PATCH #update" do
+    let(:student) { assigns(:student) }
     context 'when valid' do
       before(:each) do
         student = create(:student, users: [(create(:user))])
@@ -117,7 +121,6 @@ RSpec.describe StudentsController, type: :controller do
           student: attributes_for(:student, name: "Student2"),
           user: attributes_for(:user, name: "User2"), id: student.id }
       end
-      let(:student) { assigns(:student) }
 
       it "should be success" do
         expect(response).to redirect_to(students_path(student.id))
@@ -132,8 +135,24 @@ RSpec.describe StudentsController, type: :controller do
       end
     end
 
-    context 'when invalid' do
-      xit "should fail" do
+    context 'when email is invalid' do
+      before(:each) do
+        student = create(:student, users: [(create(:user))])
+        patch :update, params: {
+          student: attributes_for(:student, name: "Student2"),
+          user: attributes_for(:user, name: "User2", email: "abc.com"),
+          id: student.id }
+      end
+
+      it { expect(response).to render_template(:edit) }
+
+      it "shouldn't change student" do
+        expect(student.reload.name).to_not eq "Student2"
+      end
+
+      it "shouldn't change student user" do
+        expect(student.reload.users.first.name).to_not eq "User2"
+        expect(student.users.first.email).to_not eq "abc.com"
       end
     end
   end
