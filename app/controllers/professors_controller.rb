@@ -15,7 +15,7 @@ class ProfessorsController < ApplicationController
 
   def create
     @professor = Professor.new(user: User.new(user_params).with_role("professor"))
-    if @professor.save
+    if @professor.user.save && @professor.save
       redirect_to professors_path
     else
       render :new

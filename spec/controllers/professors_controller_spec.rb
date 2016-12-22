@@ -54,9 +54,9 @@ RSpec.describe ProfessorsController, type: :controller do
 
 
   describe "POST #create" do
+    let(:professor) { assigns(:professor) }
     context 'when valid' do
       before(:each) { post :create, params: { user: attributes_for(:user, :fixed) } }
-      let(:professor) { assigns(:professor) }
 
       it "should redirect to professors_path" do
         expect(response).to redirect_to(professors_path)
@@ -77,9 +77,11 @@ RSpec.describe ProfessorsController, type: :controller do
       end
     end
 
-    context 'when invalid' do
-      xit "should fail" do
-      end
+    context 'when email is invalid' do
+      before(:each) { post :create, params: { user: attributes_for(:user, email: "abc.com") } }
+
+      it { expect(response).to render_template(:new) }
+      it { expect(professor).to_not be_persisted }
     end
   end
 
@@ -98,6 +100,7 @@ RSpec.describe ProfessorsController, type: :controller do
 
 
   describe "PATCH #update" do
+    let(:professor) { assigns(:professor) }
     context 'when valid' do
       before(:each) do
         professor = create(:professor)
@@ -106,7 +109,6 @@ RSpec.describe ProfessorsController, type: :controller do
             password: "654321", password_confirmation: "654321"),
           id: professor.id }
       end
-      let(:professor) { assigns(:professor) }
 
       it "should be success" do
         expect(response).to redirect_to(professors_path(professor.id))
@@ -119,8 +121,19 @@ RSpec.describe ProfessorsController, type: :controller do
       end
     end
 
-    context 'when invalid' do
-      xit "should fail" do
+    context 'when email is invalid' do
+      before(:each) do
+        professor = create(:professor)
+        patch :update, params: { user: attributes_for(:user,
+          name: "User2", email: "abc.com"), id: professor.id }
+      end
+
+      it { expect(response).to render_template(:edit) }
+
+      it "shouldn't change professor" do
+        professor.reload
+        expect(professor.user.name).to_not eq "User2"
+        expect(professor.user.email).to_not eq "abc.com"
       end
     end
   end
