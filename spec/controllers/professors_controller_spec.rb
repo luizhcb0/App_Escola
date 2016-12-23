@@ -131,8 +131,7 @@ RSpec.describe ProfessorsController, type: :controller do
       it { expect(response).to render_template(:edit) }
 
       it "shouldn't change professor" do
-        professor.reload
-        expect(professor.user.name).to_not eq "User2"
+        expect(professor.reload.user.name).to_not eq "User2"
         expect(professor.user.email).to_not eq "abc.com"
       end
     end

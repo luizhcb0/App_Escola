@@ -54,10 +54,10 @@ RSpec.describe ClassroomsController, type: :controller do
 
 
   describe "POST #create" do
+    let(:classroom) { assigns(:classroom) }
+
     context 'when valid' do
-      before(:each) do post :create, params: { classroom: attributes_for(:classroom) }
-      end
-      let(:classroom) { assigns(:classroom) }
+      before(:each) { post :create, params: { classroom: attributes_for(:classroom) } }
 
       it "should redirect to classrooms_path" do
         expect(response).to redirect_to(classrooms_path)
@@ -70,8 +70,11 @@ RSpec.describe ClassroomsController, type: :controller do
     end
 
     context 'when invalid' do
-      xit "should fail" do
-      end
+      before(:each) { post :create, params: {
+        classroom: attributes_for(:classroom, name: "") } }
+
+      it { expect(response).to render_template(:new) }
+      it { expect(classroom).to_not be_persisted }
     end
   end
 
@@ -90,6 +93,8 @@ RSpec.describe ClassroomsController, type: :controller do
 
 
   describe "PATCH #update" do
+    let(:classroom) { assigns(:classroom) }
+
     context 'when valid' do
       before(:each) do
         classroom = create(:classroom)
@@ -97,7 +102,6 @@ RSpec.describe ClassroomsController, type: :controller do
           classroom: attributes_for(:classroom ,name: "salinha", shift: "vespertino"),
           id: classroom.id }
       end
-      let(:classroom) { assigns(:classroom) }
 
       it "should be success" do
         expect(response).to redirect_to(classrooms_path(classroom.id))
@@ -110,7 +114,17 @@ RSpec.describe ClassroomsController, type: :controller do
     end
 
     context 'when invalid' do
-      xit "should fail" do
+      before(:each) do
+        classroom = create(:classroom)
+        patch :update, params: {
+          classroom: attributes_for(:classroom ,name: "", shift: "vespertino"),
+          id: classroom.id }
+      end
+
+      it { expect(response).to render_template(:edit) }
+
+      it "shouldn't change classroom" do
+        expect(classroom.reload.shift).to_not eq "vespertino"
       end
     end
   end
