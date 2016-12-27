@@ -4,5 +4,7 @@ class CreateStudentUsers < ActiveRecord::Migration[5.0]
       t.belongs_to :student, null: false, index: true
       t.belongs_to :user, null: false, index: true
     end
+    add_foreign_key :student_users, :students, on_delete: :cascade
+    add_foreign_key :student_users, :users, on_delete: :cascade
   end
 end

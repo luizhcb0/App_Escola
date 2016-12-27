@@ -3,5 +3,6 @@ class CreateProfessors < ActiveRecord::Migration[5.0]
     create_table :professors do |t|
       t.belongs_to :user, null: false, index: true
     end
+    add_foreign_key :professors, :users, on_delete: :cascade
   end
 end

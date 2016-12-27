@@ -4,5 +4,6 @@ class CreateSchools < ActiveRecord::Migration[5.0]
       t.string :name
       t.belongs_to :professor, null: false, index: true
     end
+    add_foreign_key :schools, :professors, on_delete: :cascade
   end
 end

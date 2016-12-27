@@ -5,5 +5,7 @@ class CreateOptionStudents < ActiveRecord::Migration[5.0]
       t.belongs_to :option, null: false, index: true
       t.timestamps
     end
+    add_foreign_key :option_students, :students, on_delete: :cascade
+    add_foreign_key :option_students, :options, on_delete: :cascade
   end
 end

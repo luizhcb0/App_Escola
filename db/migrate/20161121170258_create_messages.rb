@@ -5,5 +5,6 @@ class CreateMessages < ActiveRecord::Migration[5.0]
       t.string :text
       t.timestamps :date
     end
+    add_foreign_key :messages, :professors, on_delete: :cascade
   end
 end

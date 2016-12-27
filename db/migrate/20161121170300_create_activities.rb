@@ -4,5 +4,6 @@ class CreateActivities < ActiveRecord::Migration[5.0]
       t.string :name
       t.belongs_to :activity_category, null: false, index: true
     end
+    add_foreign_key :activities, :activity_categories, on_delete: :cascade
   end
 end

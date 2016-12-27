@@ -4,5 +4,6 @@ class CreateOptions < ActiveRecord::Migration[5.0]
       t.string :name
       t.belongs_to :activity, null: false, index: true
     end
+    add_foreign_key :options, :activities, on_delete: :cascade
   end
 end

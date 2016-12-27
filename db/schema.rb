@@ -112,4 +112,21 @@ ActiveRecord::Schema.define(version: 20161121170303) do
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 
+  add_foreign_key "activities", "activity_categories", on_delete: :cascade
+  add_foreign_key "activities_classrooms", "activities", on_delete: :cascade
+  add_foreign_key "activities_classrooms", "classrooms", on_delete: :cascade
+  add_foreign_key "classrooms_professors", "classrooms", on_delete: :cascade
+  add_foreign_key "classrooms_professors", "professors", on_delete: :cascade
+  add_foreign_key "classrooms_students", "classrooms", on_delete: :cascade
+  add_foreign_key "classrooms_students", "students", on_delete: :cascade
+  add_foreign_key "messages", "professors", on_delete: :cascade
+  add_foreign_key "messages_students", "messages", on_delete: :cascade
+  add_foreign_key "messages_students", "students", on_delete: :cascade
+  add_foreign_key "option_students", "options", on_delete: :cascade
+  add_foreign_key "option_students", "students", on_delete: :cascade
+  add_foreign_key "options", "activities", on_delete: :cascade
+  add_foreign_key "professors", "users", on_delete: :cascade
+  add_foreign_key "schools", "professors", on_delete: :cascade
+  add_foreign_key "student_users", "students", on_delete: :cascade
+  add_foreign_key "student_users", "users", on_delete: :cascade
 end
