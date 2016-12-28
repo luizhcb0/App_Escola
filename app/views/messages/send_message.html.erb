@@ -1,4 +1,4 @@
-
+<!-- Iso não está sendo usado. Só como meio de mostrar como mostrar como funciona as rotas -->
 <h1>Send Message</h1>
 
 <%= form_for @message, url: {action: "save_message"}, html: {} do |f| %>
@@ -8,7 +8,10 @@
   <% array = Student.all.map { |student| [student.name, student.id] } %>
   <%= select_tag "message[student_ids][]", options_for_select(array) %><br>
 
-  <%= f.hidden_field :professor_id, :value => current_user.id %>
+  <% teste = Professor.where(user: current_user.id).first %>
+  <%= teste.id %>
+
+  <%= f.hidden_field :professor_id, :value => teste.id %>
 
   <%= label_tag(:text) %><br>
   <%= f.text_area :text %><br>

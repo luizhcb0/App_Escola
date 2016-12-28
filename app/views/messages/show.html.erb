@@ -1,0 +1,9 @@
+<h1><%= @message.id %></h1>
+<h5><%= @message.created_at.to_s(:long)%></h5>
+
+<table>
+  <tr><td>From:</td><td><%= @message.professor.user.name %></td></tr>
+  <tr><td>To:</td><td><%= @message.students.first.users.first.name %></td></tr>
+  <tr><td>Text:</td><td><%= @message.text %></td></tr>
+
+</table>

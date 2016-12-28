@@ -16,3 +16,25 @@
   <% end %>
   <td><%= link_to 'New', new_student_path %></td>
 </table>
+
+<table>
+  <tr>
+    <th>Messages</th>
+  </tr>
+  <% if current_user %>
+    <% if current_user.role.name == 'student' %>
+      <tr>
+        <% @messages.each do |message| %>
+          <% if message.student_ids == (current_user.students.ids) %>
+            <tr>
+              <td><%= message.professor_id %></td>
+              <td><%= message.text %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+
+
+</table>

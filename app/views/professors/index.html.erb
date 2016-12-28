@@ -19,8 +19,12 @@
 
 <table>
   <% if current_user %>
-    <tr>
-      <td><%= link_to 'Send Message', :action => "send_message" %></td>
-    </tr>
+    <% if current_user.role.name == 'professor' %>
+      <tr>
+       <!-- action: "send_message" == :action => "send_message" -->
+        <td><%= link_to 'Send Message', action: "send_message" %></td>
+      </tr>
+    <% end %>
   <% end %>
+
 </table>

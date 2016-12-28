@@ -3,6 +3,7 @@ class StudentsController < ApplicationController
 
   def index
     @students = Student.all
+    @messages = Message.all
   end
 
   def show
@@ -45,4 +46,9 @@ class StudentsController < ApplicationController
     @student.destroy
     redirect_to students_path
   end
+
+  def view
+    @messages = Message.all
+  end
+
 end

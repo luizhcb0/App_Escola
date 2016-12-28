@@ -47,7 +47,7 @@ RSpec.describe ClassroomsController, type: :controller do
       expect(response).to be_success
     end
 
-    it "should pass a school new" do
+    it "should pass a classroom new" do
       expect(assigns(:classroom)).to_not eq nil
     end
   end

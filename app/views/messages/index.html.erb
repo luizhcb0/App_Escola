@@ -1,0 +1,20 @@
+
+<h1>Messages</h1>
+
+
+<%= link_to "Newest", :sort => "created_at DESC" %>
+<%= link_to "Oldest", :sort => "created_at ASC" %>
+
+<table>
+  <% @messages = @messages.order(created_at: "DESC") %>
+  <% @messages.each do |message| %>
+    <tr>
+      <td><%= message.text %></td>
+      <td><%= link_to 'Show', message_path(message) %></td>
+      <td><%= link_to 'Edit', edit_message_path(message) %></td>
+      <td><%= link_to 'Delete', message_path(message), method: :delete %></td>
+      <td><%= message.created_at.to_s(:short)%></td>
+    </tr>
+  <% end %>
+  <td><%= link_to 'New Message', new_message_path %></td>
+</table>

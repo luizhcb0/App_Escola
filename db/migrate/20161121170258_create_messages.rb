@@ -3,7 +3,7 @@ class CreateMessages < ActiveRecord::Migration[5.0]
     create_table :messages do |t|
       t.belongs_to :professor, null: false, index: true
       t.string :text
-      t.timestamps :date
+      t.timestamps
     end
     add_foreign_key :messages, :professors, on_delete: :cascade
   end

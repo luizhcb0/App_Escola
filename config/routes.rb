@@ -6,11 +6,15 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
 
   resources :schools
-  resources :professors do
-    get 'send_message', :on => :collection
-    post 'save_message', :on => :collection
-  end
+  resources :professors
+  # para motrar como uma url child não ser confundida com um ID
+  # resources :professors do
+  #   get 'send_message', :on => :collection
+  #   post 'save_message', :on => :collection
+  # end
+  #
   resources :students
   resources :classrooms
+  resources :messages
 
 end
