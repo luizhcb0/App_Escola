@@ -1,160 +1,236 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
-  let(:test_messages) { 2.times.map { create (:message) } }
+  let (:test_msg_professor) { 2.times.map { create(:message, professor: test_professor) } }
+  let (:test_msg_student) { 2.times.map { create(:message, students: [test_student]) } }
 
-  describe "GET #index" do
-    before(:each) {
-      user = FactoryGirl.create(:user)
-      controller.session[:user_id] = user.id
+  let (:test_professor) { create(:professor, user: create(:user, role: create(:role, name: "professor"))) }
+  let (:test_student) { create(:student, users: [create(:user, role: create(:role, name: "student"))]) }
+
+  describe "GET #index for professor" do
+
+    before(:each) do
+      session[:user_id] = test_professor.user.id
       get :index
-    }
+    end
 
     it "should be success" do
       expect(response).to be_success
     end
 
-    it "renders the index template" do
+    it "should render the index template" do
       expect(response).to render_template("index")
     end
 
-    it "should load all messages from that session" do
-      expect(assigns(:messages)).to match_array test_messages
+    it "should load all messages on from this session" do
+      expect(assigns(:messages)).to match_array test_msg_professor
     end
+
   end
 
-  describe "GET #show" do
-    context 'when requested message exists' do
-      let(:message) { test_messages[rand 2] }
-      before(:each) { get :show, params: { id: message.id } }
+  describe "GET #index for student" do
+
+    before(:each) do
+      session[:user_id] = test_student.users.first.id
+      get :index
+    end
+
+    it "should be success" do
+      expect(response).to be_success
+    end
+
+    it "should render the index template" do
+      expect(response).to render_template("index")
+    end
+
+    it "should load all messages on from this session" do
+      expect(assigns(:messages)).to match_array test_msg_student
+    end
+
+  end
+
+  describe "GET show" do
+    context "when requested message exists" do
+      let(:message) { create (:message) }
+      before(:each) {
+        get :show, params: {id: message.id}
+      }
 
       it "should be success" do
         expect(response).to be_success
       end
 
-      it "should load the message" do
+      it "should load message" do
         expect(assigns(:message)).to eq message
       end
     end
 
-    context 'when requested message does not exists' do
-      it 'throws ActiveRecord::RecordNotFound' do
-        expect { get :show, params: { id: -1 } }.to raise_exception ActiveRecord::RecordNotFound
+    context "when requested message does not exist" do
+      it "throws ActiveRecord::RecordNotFound" do
+        expect{ get :show, params: { id: -1} }.to raise_exception ActiveRecord::RecordNotFound
       end
     end
+
   end
 
   describe "GET #new" do
-    before(:each) { get :new }
+    before(:each) do
+      get :new
+    end
 
     it "should be success" do
       expect(response).to be_success
     end
 
-    it "should pass a message new" do
+    it "should pass a new message" do
       expect(assigns(:message)).to_not eq nil
     end
   end
 
   describe "POST #create" do
-    let(:message) { assigns(:message) }
+    let(:message) {assigns(:message)}
 
-    context 'when valid' do
-      before(:each) { post :create, params: { message: attributes_for(:message) } }
-
-      it "should redirect to messages_path" do
-        expect(response).to redirect_to(messagess_path)
+    context "when valid" do
+      before(:each) do
+        session[:user_id] = test_professor.user.id
+        # post :create, params: { message: build(:message).attributes }
+        post :create, params: { message: attributes_for(:message, professor_id: test_professor.id) }
       end
 
-      it "should save the message" do
-        expect(message).to_not be nil
+      it "should redirect to messages_path" do
+        expect(response).to redirect_to(messages_path)
+      end
+
+      it "should save message" do
         expect(message).to be_persisted
       end
 
-      context 'when invalid' do
-        before(:each) {
-          post :create, params: {
-            message: attributes_for(:message, text: "Mensagem teste")
-          }
+      it "should have the correct professor_id from user session" do
+        expect(message.professor_id).to eq test_professor.id
+      end
+    end
+
+    context "when text is invalid" do
+      before(:each) do
+        post :create, params: {
+          message: attributes_for(:message, text: "", professor_id: test_professor.id)
         }
+      end
 
-        it { expect(response).to render_template(:new) }
-        it { expect(message).to_not be_persisted }
+      it "should render index" do
+        expect(response).to render_template("index")
       end
     end
 
-    describe "GET #edit" do
-      let(:message) { test_messages[rand 2] }
-      before(:each) { get :edit, params: { id: message.id } }
-
-      it "should be success" do
-        expect(response).to be_success
+    context "when professor_id is missing" do
+      before(:each) do
+        post :create, params: {
+          message: attributes_for(:message)
+        }
       end
 
-      it "should load the message" do
-        expect(assigns(:message)).to eq message
-      end
-    end
-
-    describe "PATCH #update" do
-      let(:message) { assigns(:message) }
-
-      context 'when valid' do
-        before(:each) do
-          message = create(:message)
-          patch :update, params: {
-            message: attributes_for(:message ,text: "Mensagem teste"),
-            id: message.id }
-        end
-
-        it "should be success" do
-          expect(response).to redirect_to(messages_path(message.id))
-        end
-
-        it "should update attributes" do
-          expect(message.name).to eq "Mensagem teste"
-        end
-      end
-
-      context 'when invalid' do
-        before(:each) do
-          message = create(:message)
-          patch :update, params: {
-            message: attributes_for(:message),
-            id: message.id }
-        end
-
-        it { expect(response).to render_template(:edit) }
-
-        it "shouldn't change message" do
-          expect(message.reload.text).to_not eq ""
-        end
+      it "should render index" do
+        expect(response).to render_template("index")
       end
     end
 
-    describe "DELETE #destroy" do
-      context 'when requested message exists' do
-        let(:message) { test_messages[rand 2] }
-        before(:each) { delete :destroy, params: { id: message.id } }
+  end
 
-        it "should redirect to messages_path" do
-          expect(response).to redirect_to(messages_path)
-        end
+  describe "GET #edit" do
+    let(:message) {test_msg_professor[rand 2]}
 
-        it "should have deleted the message from the DB" do
-          expect(Message.all).not_to include message
-          expect { message.reload }.to raise_exception ActiveRecord::RecordNotFound
-        end
+    before(:each) do
+      get :edit, params: {
+        id: message.id
+      }
+    end
 
-        xit "should delete dependents from DB" do
-        end
-      end
+    it "should be success" do
+      expect(response).to be_success
+    end
 
-      context 'when requested message does not exists' do
-        it 'throws ActiveRecord::RecordNotFound' do
-          expect { get :show, params: { id: -1 } }.to raise_exception ActiveRecord::RecordNotFound
-        end
-      end
+# Why the :message came from test_messages[rand 2] would be equal to message?
+    it "should load the message" do
+      expect(assigns(:message)).to eq message
     end
   end
+
+  describe "PATCH #update" do
+    let(:message) { assigns(:message) }
+
+# Did not understand syntax
+    context "when valid" do
+      before(:each) do
+        message = create(:message)
+        patch :update, params: {
+          message: attributes_for(:message, text: "mudei", professor_id: test_professor.id),
+          id: message.id
+        }
+      end
+
+      it "should be success" do
+        expect(response).to redirect_to(messages_path(message.id))
+      end
+
+      it "should update attributes" do
+        expect(message.text).to eq "mudei"
+        expect(message.professor_id).to eq test_professor.id
+      end
+
+      xit "should update students" do
+        #Factory with students: [:student]
+      end
+
+    end
+
+    context "when invalid" do
+      before(:each) do
+        message = create(:message)
+        patch :update, params: {
+          message: attributes_for(:message, text: ""),
+          id: message.id
+        }
+      end
+
+      it "should render edit" do
+        expect(response).to render_template(:edit)
+      end
+
+      it "should not change message" do
+        expect(message.reload.text).not_to eq ""
+      end
+    end
+
+  end
+
+  describe "DELETE #destroy" do
+
+    context "when requested message exists" do
+      let(:message) { test_msg_professor[rand 2] }
+
+      before(:each) do
+        delete :destroy, params: {
+          id: message.id
+        }
+      end
+
+      it "should redirect to messages_path" do
+        expect(response).to redirect_to(messages_path)
+      end
+
+      it "should delete the message from DB" do
+        expect(Message.all).not_to include message
+        expect{message.reload}.to raise_exception ActiveRecord::RecordNotFound
+      end
+    end
+
+    context "when requested message does not exist" do
+
+      it "throws ActiveRecord::RecordNotFound" do
+        expect {get :show, params: {id: -1}}.to raise_exception ActiveRecord::RecordNotFound
+      end
+    end
+
+  end
+
 end

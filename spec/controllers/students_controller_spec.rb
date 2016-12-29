@@ -114,6 +114,7 @@ RSpec.describe StudentsController, type: :controller do
 
   describe "PATCH #update" do
     let(:student) { assigns(:student) }
+    
     context 'when valid' do
       before(:each) do
         student = create(:student, users: [(create(:user))])

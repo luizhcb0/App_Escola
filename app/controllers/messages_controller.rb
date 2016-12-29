@@ -38,8 +38,8 @@ class MessagesController < ApplicationController
 
   def update
     @message = Message.find(params[:id])
-    if @message.update_attributes(user_params)
-      redirect_to messagess_path(@message.id)
+    if @message.update_attributes(message_params)
+      redirect_to messages_path(@message.id)
     else
       render :edit
     end

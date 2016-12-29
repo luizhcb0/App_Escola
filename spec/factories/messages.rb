@@ -1,7 +1,7 @@
 
 FactoryGirl.define do
   factory :message do
-    text    "Messagem"
+    text  "Mensagem"
     professor
   end
 end
