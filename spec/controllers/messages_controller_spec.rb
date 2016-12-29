@@ -94,7 +94,13 @@ RSpec.describe MessagesController, type: :controller do
       before(:each) do
         session[:user_id] = test_professor.user.id
         # post :create, params: { message: build(:message).attributes }
-        post :create, params: { message: attributes_for(:message, professor_id: test_professor.id) }
+        post :create, params: {
+           message: attributes_for(
+            :message,
+            professor_id: test_professor.id,
+            student_ids: [test_student.id]
+          )
+        }
       end
 
       it "should redirect to messages_path" do
@@ -107,6 +113,10 @@ RSpec.describe MessagesController, type: :controller do
 
       it "should have the correct professor_id from user session" do
         expect(message.professor_id).to eq test_professor.id
+      end
+
+      it "should send the message to the correct students" do
+        expect(message.student_ids).to eq [test_student.id]
       end
     end
 
@@ -149,7 +159,8 @@ RSpec.describe MessagesController, type: :controller do
       expect(response).to be_success
     end
 
-# Why the :message came from test_messages[rand 2] would be equal to message?
+# :message came from controller and message came from let
+# Search how assigns works
     it "should load the message" do
       expect(assigns(:message)).to eq message
     end
@@ -158,12 +169,16 @@ RSpec.describe MessagesController, type: :controller do
   describe "PATCH #update" do
     let(:message) { assigns(:message) }
 
-# Did not understand syntax
     context "when valid" do
       before(:each) do
         message = create(:message)
         patch :update, params: {
-          message: attributes_for(:message, text: "mudei", professor_id: test_professor.id),
+          message: attributes_for(
+            :message,
+            text: "mudei",
+            professor_id: test_professor.id,
+            student_ids: [test_student.id]
+          ),
           id: message.id
         }
       end
@@ -177,8 +192,8 @@ RSpec.describe MessagesController, type: :controller do
         expect(message.professor_id).to eq test_professor.id
       end
 
-      xit "should update students" do
-        #Factory with students: [:student]
+      it "should update students" do
+        expect(message.student_ids).to eq [test_student.id]
       end
 
     end
