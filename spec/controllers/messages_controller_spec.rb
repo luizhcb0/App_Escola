@@ -127,8 +127,8 @@ RSpec.describe MessagesController, type: :controller do
         }
       end
 
-      it "should render index" do
-        expect(response).to render_template("index")
+      it "should render new" do
+        expect(response).to render_template("new")
       end
     end
 
@@ -139,8 +139,8 @@ RSpec.describe MessagesController, type: :controller do
         }
       end
 
-      it "should render index" do
-        expect(response).to render_template("index")
+      it "should render new" do
+        expect(response).to render_template("new")
       end
     end
 
