@@ -1,0 +1,14 @@
+
+<h1>Options</h1>
+
+<table>
+  <% @activity_categories.each do |activity_category| %>
+    <tr>
+      <td><%= activity_category.name %></td>
+      <td><%= link_to 'Show', activity_category_path(activity_category) %></td>
+      <td><%= link_to 'Edit', edit_activity_category_path(activity_category) %></td>
+      <td><%= link_to 'Delete', activity_category_path(activity_category), method: :delete %></td>
+    </tr>
+  <% end %>
+  <td><%= link_to 'New Option', new_activity_category_path %></td>
+</table>
