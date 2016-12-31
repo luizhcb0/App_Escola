@@ -1,0 +1,14 @@
+
+<h1>Options</h1>
+
+<table>
+  <% @options.each do |option| %>
+    <tr>
+      <td><%= option.name %></td>
+      <td><%= link_to 'Show', option_path(option) %></td>
+      <td><%= link_to 'Edit', edit_option_path(option) %></td>
+      <td><%= link_to 'Delete', option_path(option), method: :delete %></td>
+    </tr>
+  <% end %>
+  <td><%= link_to 'New Option', new_option_path %></td>
+</table>

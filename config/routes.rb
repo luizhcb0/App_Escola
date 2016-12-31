@@ -17,5 +17,7 @@ Rails.application.routes.draw do
   resources :classrooms
   resources :messages
   resources :activities
+  resources :options
+  resources :activity_categories
 
 end

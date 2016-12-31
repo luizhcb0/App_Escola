@@ -1,7 +1,7 @@
 
 FactoryGirl.define do
   factory :option do
-    name    "Opcao"
+    name    "Cagou muito"
     activity
   end
 end

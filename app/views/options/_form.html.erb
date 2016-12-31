@@ -1,0 +1,10 @@
+<%= form_for @option do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %><br>
+    <%= f.label :activity %><br>
+    <%= select_tag "option[activity_id]", options_for_select(activity_array) %><br>
+  <p>
+    <%= f.submit "Send" %>
+  </p>
+<% end %>

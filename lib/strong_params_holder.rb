@@ -27,4 +27,8 @@ module StrongParamsHolder
   def activity_params
     params.require(:activity).permit(:name, :activity_category_id, :classroom_ids => [])
   end
+
+  def option_params
+    params.require(:option).permit(:name, :activity_id, :students_ids => [])
+  end
 end

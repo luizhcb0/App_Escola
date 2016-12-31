@@ -48,7 +48,7 @@ RSpec.describe ActivitiesController, type: :controller do
     end
 
     context "when requested activity does not exist" do
-      it "thores ActiveRecord::RecordNotFound exception" do
+      it "throws ActiveRecord::RecordNotFound exception" do
         expect{get :show, params: {id: -1} }.to raise_exception ActiveRecord::RecordNotFound
       end
     end
