@@ -70,7 +70,9 @@ ActiveRecord::Schema.define(version: 20161121170303) do
   create_table "options", force: :cascade do |t|
     t.string  "name"
     t.integer "activity_id", null: false
+    t.integer "option_id"
     t.index ["activity_id"], name: "index_options_on_activity_id", using: :btree
+    t.index ["option_id"], name: "index_options_on_option_id", using: :btree
   end
 
   create_table "professors", force: :cascade do |t|
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(version: 20161121170303) do
   add_foreign_key "option_students", "options", on_delete: :cascade
   add_foreign_key "option_students", "students", on_delete: :cascade
   add_foreign_key "options", "activities", on_delete: :cascade
+  add_foreign_key "options", "options", on_delete: :cascade
   add_foreign_key "professors", "users", on_delete: :cascade
   add_foreign_key "schools", "professors", on_delete: :cascade
   add_foreign_key "student_users", "students", on_delete: :cascade
