@@ -9,7 +9,7 @@ RSpec.describe Option, type: :model do
     it { should belong_to(:activity) }
     it { should have_many(:option_students) }
     it { should have_many(:students) }
-    it { should have_many(:sub_options) }
+    it { should have_many(:suboptions) }
     it { should belong_to(:parent) }
   end
 
@@ -26,6 +26,7 @@ RSpec.describe Option, type: :model do
       option = create(:option)
       option_child = create(:option, parent: option)
       option.destroy
+      expect(Option.all).to_not include option
       expect(Option.all).to_not include option_child
     end
   end

@@ -1,5 +1,5 @@
 
-<h1>Options</h1>
+<h1>Categories</h1>
 
 <table>
   <% @activity_categories.each do |activity_category| %>
@@ -10,5 +10,5 @@
       <td><%= link_to 'Delete', activity_category_path(activity_category), method: :delete %></td>
     </tr>
   <% end %>
-  <td><%= link_to 'New Option', new_activity_category_path %></td>
+  <td><%= link_to 'New Category', new_activity_category_path %></td>
 </table>

@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe OptionsController, type: :controller do
-  let(:test_option) {
+  let (:test_option) { 2.times.map { create(:option, activity: create(:activity), parent: nil) } }
+  let(:test_children) {
     2.times.map {
-      create(:option, activity: create(:activity))
+      create(:option, activity: create(:activity), parent: test_option[0])
     }
   }
 
@@ -20,8 +21,12 @@ RSpec.describe OptionsController, type: :controller do
       expect(response).to render_template("index")
     end
 
-    it "should load all options" do
+    it "should load just parent options" do
       expect(assigns(:options)).to match_array test_option
+    end
+
+    it "should not load all options" do
+      expect(assigns(:options)).to_not match_array test_children
     end
   end
 

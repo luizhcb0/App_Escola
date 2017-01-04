@@ -4,7 +4,17 @@
     <%= f.text_field :name %><br>
     <%= f.label :activity %><br>
     <%= select_tag "option[activity_id]", options_for_select(activity_array) %><br>
+  </p>
+  <div id="sub_options">
+    <%= render 'sub_option' %>
+    <%= render 'sub_option' %>
+  </div>
+  <button id="add" type="button" name="button" onclick="addSub()">Add Sub Option</button>
   <p>
     <%= f.submit "Send" %>
   </p>
 <% end %>
+
+<div style="display: none;" id="new_sub_option_form">
+    <%= render partial: "sub_option", locals: {option: false} %>
+</div>

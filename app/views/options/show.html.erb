@@ -3,3 +3,14 @@
 <table>
   <tr><td>Activity:</td><td><%= @option.activity.name %></td></tr>
 </table>
+<table>
+  <% if !@option.sub_options.empty? %>
+    <tr>
+      <td>Sub Options:</td>
+    </tr>
+      <% @option.sub_options.each do |child| %>
+      <tr><td><%= child.name %></td></tr>
+      <% end %>
+  <% end %>
+  <tr><td><%= link_to 'Edit', edit_option_path(@option.id) %></td></tr>
+</table>

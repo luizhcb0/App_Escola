@@ -3,9 +3,9 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
     <%= f.label :category %><br>
-    <%= select_tag "activty[activity_category_id]", options_for_select(category_array) %><br>
+    <%= select_tag "activity[activity_category_id]", options_for_select(category_array) %><br>
     <%= f.label :classroom %><br>
-    <%= select_tag "activty[classroom_ids][]", options_for_select(classroom_array) %><br>
+    <%= select_tag "activity[classroom_ids][]", options_for_select(classroom_array) %><br>
   <p>
     <%= f.submit "Send" %>
   </p>
