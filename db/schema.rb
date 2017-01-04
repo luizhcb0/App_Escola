@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20161121170303) do
   create_table "option_students", force: :cascade do |t|
     t.integer  "student_id", null: false
     t.integer  "option_id",  null: false
+    t.text     "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["option_id"], name: "index_option_students_on_option_id", using: :btree
