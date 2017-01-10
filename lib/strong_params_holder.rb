@@ -29,7 +29,12 @@ module StrongParamsHolder
   end
 
   def option_params
-    params.require(:option).permit(:name, :activity_id, :students_ids => [])
+    if !params[:option][:suboptions_attributes].nil?
+      params[:option][:suboptions_attributes].each_value do |subops|
+        subops[:activity_id] = params[:option][:activity_id]
+      end
+    end
+    params.require(:option).permit(:name, :activity_id, :students_ids => [], suboptions_attributes: [:id, :name, :activity_id, :_destroy])
   end
 
   def activity_category_params

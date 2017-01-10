@@ -11,18 +11,11 @@ class OptionsController < ApplicationController
 
   def new
     @option = Option.new()
+    #1.times { @option.suboptions.build}
   end
 
   def create
     @option = Option.new(option_params)
-    @sub_options = params[:sub_options]
-
-    if !@sub_options.nil?
-      @sub_options.each do |child|
-        @child = Option.new(name: child, activity_id: option_params[:activity_id])
-        @option.sub_options << @child
-      end
-    end
     if @option.save
       redirect_to options_path
     else

@@ -4,11 +4,11 @@
   <tr><td>Activity:</td><td><%= @option.activity.name %></td></tr>
 </table>
 <table>
-  <% if !@option.sub_options.empty? %>
+  <% if !@option.suboptions.empty? %>
     <tr>
       <td>Sub Options:</td>
     </tr>
-      <% @option.sub_options.each do |child| %>
+      <% @option.suboptions.each do |child| %>
       <tr><td><%= child.name %></td></tr>
       <% end %>
   <% end %>

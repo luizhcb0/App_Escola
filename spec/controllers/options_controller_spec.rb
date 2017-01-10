@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe OptionsController, type: :controller do
   let (:test_option) { 2.times.map { create(:option, activity: create(:activity), parent: nil) } }
+  let (:test_activity) { create(:activity, activity_category: create(:activity_category), classrooms: [create(:classroom)]) }
   let(:test_children) {
     2.times.map {
       create(:option, activity: create(:activity), parent: test_option[0])
@@ -72,10 +73,15 @@ RSpec.describe OptionsController, type: :controller do
 
   describe "POST #create" do
     let(:option) { assigns(:option) }
+    let(:option_child) { build(:suboption) }
 
     context "when valid" do
       before(:each) do
-        post :create, params: { option: build(:option).attributes }
+        post :create, params: {
+          option: attributes_for(:option, name: "opt", activity_id: test_activity.id,
+            suboptions_attributes: [attributes_for(:suboption)]
+          )
+        }
       end
 
       it "should redirect to options_path" do
@@ -85,11 +91,24 @@ RSpec.describe OptionsController, type: :controller do
       it "should save the option" do
         expect(option).to be_persisted
       end
+
+      it "should  the option" do
+        expect(option.suboptions[0].name).to eq "Cagou Muito"
+      end
+
+      it "should save suboptions" do
+        expect(option_child).to be_persisted
+        expect(Option.all).to include option_child
+      end
+
+      it "should have saved the same activity_id for parent and children" do
+        expect(option_child.activity_id).to eq option.activity_id
+      end
     end
 
     context "when invalid" do
       before(:each) do
-        post :create, params: { option: attributes_for(:option, name: "") }
+        post :create, params: { option: attributes_for(:option, name: "", suboptions: [create(:option)]) }
       end
 
       it "should render new template" do
@@ -98,6 +117,10 @@ RSpec.describe OptionsController, type: :controller do
 
       it "should not save the option" do
         expect(option).to_not be_persisted
+      end
+
+      it "should not save suboptions" do
+        expect(Option.all).to_not include option.suboptions[0]
       end
     end
 
@@ -124,12 +147,13 @@ RSpec.describe OptionsController, type: :controller do
   describe "PATCH #update" do
     let(:option) { assigns(:option) }
     let(:activity) { create(:activity) }
+    let(:option_child) { create(:option) }
 
     context "when valid" do
       before(:each) do
         option = create(:option)
         patch :update, params: {
-          option: attributes_for(:option, name: "Urina", activity_id: activity.id),
+          option: attributes_for(:option, name: "Urina", activity_id: activity.id, suboptions: [option_child]),
           id: option.id
         }
       end
@@ -141,6 +165,7 @@ RSpec.describe OptionsController, type: :controller do
       it "should update attributes" do
         expect(option.name).to eq "Urina"
         expect(option.activity_id).to eq activity.id
+        expect(option.suboptions).to eq [option_child]
       end
     end
 
@@ -160,13 +185,15 @@ RSpec.describe OptionsController, type: :controller do
       it "should not update attributes" do
         expect(option.reload.name).to_not eq ""
         expect(option.reload.activity_id).to_not eq activity.id
+        expect(option.reload.suboptions).to_not eq activity.id
       end
     end
   end
 
   describe "DELETE #destroy" do
     context "when requested option exists" do
-      let(:option) {test_option[rand 2]}
+      let(:child) { create(:option) }
+      let(:option) { create(:option, suboptions: [child])}
 
       before(:each) do
         delete :destroy, params: {id: option.id}
@@ -179,6 +206,11 @@ RSpec.describe OptionsController, type: :controller do
       it "should delete the requested option from DB" do
         expect(Option.all).to_not include option
         expect{option.reload}.to raise_exception ActiveRecord::RecordNotFound
+      end
+
+      it "should delete suboptions from DB" do
+        expect(Option.all).to_not include child
+        expect{child.reload}.to raise_exception ActiveRecord::RecordNotFound
       end
     end
 
