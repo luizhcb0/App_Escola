@@ -10,17 +10,10 @@ class Option < ApplicationRecord
   validates :name, presence: true
 
   # after_initialize :set_defaults
-  before_create :set_defaults
-  before_update :set_updates
+  before_create :set_suboptions_activity
+  before_update :set_suboptions_activity
 
-
-  def set_defaults
-    self.suboptions.each do |sbp|
-      sbp.activity_id = self.activity_id
-    end
-  end
-
-  def set_updates
+  def set_suboptions_activity
     suboptions.each do |child|
       child.activity_id = self.activity_id
     end
