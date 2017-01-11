@@ -73,13 +73,12 @@ RSpec.describe OptionsController, type: :controller do
 
   describe "POST #create" do
     let(:option) { assigns(:option) }
-    let(:option_child) { build(:suboption) }
 
     context "when valid" do
       before(:each) do
         post :create, params: {
           option: attributes_for(:option, name: "opt", activity_id: test_activity.id,
-            suboptions_attributes: [attributes_for(:suboption)]
+            suboptions_attributes: [build(:option).attributes]
           )
         }
       end
@@ -89,7 +88,7 @@ RSpec.describe OptionsController, type: :controller do
       end
 
       it "should save the option" do
-        expect(option).to be_persisted
+        expect(option.suboptions.first).to be_persisted
       end
 
       it "should  the option" do
@@ -97,18 +96,22 @@ RSpec.describe OptionsController, type: :controller do
       end
 
       it "should save suboptions" do
-        expect(option_child).to be_persisted
-        expect(Option.all).to include option_child
+        expect(option.suboptions.first).to be_persisted
+        expect(Option.all).to include option.suboptions.first
       end
 
       it "should have saved the same activity_id for parent and children" do
-        expect(option_child.activity_id).to eq option.activity_id
+        expect(option.suboptions.first.activity_id).to eq option.activity_id
       end
     end
 
     context "when invalid" do
       before(:each) do
-        post :create, params: { option: attributes_for(:option, name: "", suboptions: [create(:option)]) }
+        post :create, params: {
+          option: attributes_for(:option, name: "", activity_id: test_activity.id,
+            suboptions_attributes: [build(:option).attributes]
+          )
+        }
       end
 
       it "should render new template" do
@@ -120,6 +123,7 @@ RSpec.describe OptionsController, type: :controller do
       end
 
       it "should not save suboptions" do
+        expect(option.suboptions.first).to_not be_persisted
         expect(Option.all).to_not include option.suboptions[0]
       end
     end
@@ -153,7 +157,10 @@ RSpec.describe OptionsController, type: :controller do
       before(:each) do
         option = create(:option)
         patch :update, params: {
-          option: attributes_for(:option, name: "Urina", activity_id: activity.id, suboptions: [option_child]),
+          option: attributes_for(
+            :option, name: "Urina", activity_id: activity.id,
+              suboptions_attributes: [build(:option).attributes]
+          ),
           id: option.id
         }
       end
@@ -165,7 +172,7 @@ RSpec.describe OptionsController, type: :controller do
       it "should update attributes" do
         expect(option.name).to eq "Urina"
         expect(option.activity_id).to eq activity.id
-        expect(option.suboptions).to eq [option_child]
+        expect(option.suboptions.first.name).to eq "Cagou Muito"
       end
     end
 
@@ -173,7 +180,10 @@ RSpec.describe OptionsController, type: :controller do
       before(:each) do
         option = create(:option)
         patch :update, params: {
-          option: attributes_for(:option, name: "", activity_id: activity.id),
+          option: attributes_for(
+            :option, name: "", activity_id: activity.id,
+              suboptions_attributes: [build(:option).attributes]
+          ),
           id: option.id
         }
       end
@@ -185,7 +195,7 @@ RSpec.describe OptionsController, type: :controller do
       it "should not update attributes" do
         expect(option.reload.name).to_not eq ""
         expect(option.reload.activity_id).to_not eq activity.id
-        expect(option.reload.suboptions).to_not eq activity.id
+        expect(option.reload.suboptions).to eq []
       end
     end
   end
@@ -193,7 +203,8 @@ RSpec.describe OptionsController, type: :controller do
   describe "DELETE #destroy" do
     context "when requested option exists" do
       let(:child) { create(:option) }
-      let(:option) { create(:option, suboptions: [child])}
+      let(:child2) { create(:option) }
+      let(:option) { create(:option, suboptions: [child, child2])}
 
       before(:each) do
         delete :destroy, params: {id: option.id}
@@ -211,6 +222,8 @@ RSpec.describe OptionsController, type: :controller do
       it "should delete suboptions from DB" do
         expect(Option.all).to_not include child
         expect{child.reload}.to raise_exception ActiveRecord::RecordNotFound
+        expect(Option.all).to_not include child2
+        expect{child2.reload}.to raise_exception ActiveRecord::RecordNotFound
       end
     end
 

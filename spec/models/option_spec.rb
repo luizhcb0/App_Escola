@@ -10,7 +10,21 @@ RSpec.describe Option, type: :model do
     it { should have_many(:option_students) }
     it { should have_many(:students) }
     it { should have_many(:suboptions) }
+    it { should belong_to(:parent) }
     it { should accept_nested_attributes_for(:suboptions) }
+  end
+
+  describe "Callbacks" do
+    it "before_create" do
+      suboption = create(:option)
+      option = create(:option, suboptions:[suboption])
+      option.run_callbacks(:create) {false}
+      expect(option.suboptions.first.activity_id).to eq suboption.activity_id
+    end
+
+    xit "before_update" do
+
+    end
   end
 
   describe "Delete - Associations consistency" do
@@ -24,20 +38,20 @@ RSpec.describe Option, type: :model do
 
     it "should delete references to suboptions from options" do
       option = create(:option)
-      suboption = create(:suboption, option: option)
+      suboption = create(:option, parent: option)
       option.destroy
       expect(Option.all).to_not include option
-      expect(Suboption.all).to_not include suboption
+      expect(Option.all).to_not include suboption
     end
   end
 
   describe "Consistency" do
     it "should have saved parent and child" do
-      option_child = create(:suboption)
+      option_child = create(:option)
       option = create(:option, suboptions: [option_child])
       option.save
       expect(Option.all).to include option
-      expect(Suboption.all).to include option_child
+      expect(Option.all).to include option_child
     end
   end
 
