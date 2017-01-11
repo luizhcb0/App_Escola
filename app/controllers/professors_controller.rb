@@ -41,10 +41,13 @@ class ProfessorsController < ApplicationController
     redirect_to professors_path
   end
 
+  # Methods used to send a messages to students:
+  # send_message is used as a "new message"
   def send_message
     @message = Message.new()
   end
 
+  # save_message is used as n "create message"
   def save_message
     @message = Message.new(message_params)
     if @message.save
