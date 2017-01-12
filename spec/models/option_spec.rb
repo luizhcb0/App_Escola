@@ -19,11 +19,15 @@ RSpec.describe Option, type: :model do
       suboption = create(:option)
       option = create(:option, suboptions:[suboption])
       option.run_callbacks(:create) {false}
-      expect(option.suboptions.first.activity_id).to eq suboption.activity_id
+      expect(option.suboptions.first.activity_id).to eq option.activity_id
     end
 
-    xit "before_update" do
-
+    it "before_update" do
+      suboption = create(:option)
+      option = create(:option, suboptions:[suboption])
+      option.update(activity_id: 5)
+      option.run_callbacks(:update) {false}
+      expect(option.suboptions.first.activity_id).to eq option.activity_id
     end
   end
 
