@@ -7,8 +7,7 @@ RSpec.describe Option, type: :model do
 
   describe "Associations" do
     it { should belong_to(:activity) }
-    it { should have_many(:option_students) }
-    it { should have_many(:students) }
+    it { should have_many(:report_options) }
     it { should have_many(:suboptions) }
     it { should belong_to(:parent) }
     it { should accept_nested_attributes_for(:suboptions) }
@@ -19,21 +18,27 @@ RSpec.describe Option, type: :model do
       suboption = create(:option)
       option = create(:option, suboptions:[suboption])
       option.run_callbacks(:create) {false}
-      expect(option.suboptions.first.activity_id).to eq suboption.activity_id
+      expect(option.suboptions.first.activity_id).to eq option.activity_id
     end
 
-    xit "before_update" do
-
+    it "before_update" do
+      suboption = create(:option)
+      option = create(:option, suboptions:[suboption])
+      option.update(activity_id: 5)
+      option.run_callbacks(:update) {false}
+      expect(option.suboptions.first.activity_id).to eq option.activity_id
     end
   end
 
   describe "Delete - Associations consistency" do
-    it "should delete the references to options from students" do
+    it "should delete the references to options from report_options" do
       option = create(:option)
-      student = create(:student, options: [option])
-      expect(student.reload.options.size).to eq 1
+      student = create(:student)
+      report_option = create(:report_option, option: option)
+      report = create(:report, student: student, report_options: [report_option])
+      expect(report.reload.report_options.size).to eq 1
       option.destroy
-      expect(student.reload.options.size).to eq 0
+      expect(report.reload.report_options.size).to eq 0
     end
 
     it "should delete references to suboptions from options" do
