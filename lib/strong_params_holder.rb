@@ -29,10 +29,18 @@ module StrongParamsHolder
   end
 
   def option_params
-    params.require(:option).permit(:name, :activity_id, :students_ids => [], suboptions_attributes: [:id, :name, :activity_id, :_destroy])
+    params.require(:option).permit(:name, :activity_id,
+      suboptions_attributes: [:id, :name, :activity_id, :_destroy]
+    )
   end
 
   def activity_category_params
     params.require(:activity_category).permit(:name)
+  end
+
+  def report_params
+    params.require(:report).permit(:student_id,
+      report_options_attributes: [:id, :option_id, :note, :_destroy]
+    )
   end
 end

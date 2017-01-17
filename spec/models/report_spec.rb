@@ -9,7 +9,6 @@ RSpec.describe Report, type: :model do
 
   describe "Delete - Associations consistency" do
     it "should delete the references to reports from students" do
-      option = create(:option)
       student = create(:student)
       report = create(:report, student: student)
       expect(report).to_not eq nil

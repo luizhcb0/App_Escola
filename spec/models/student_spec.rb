@@ -21,5 +21,13 @@ RSpec.describe Student, type: :model do
       student.destroy
       expect(User.all).to_not include user
     end
+
+    it "should delete reports of the student" do
+      student = create(:student)
+      report = create(:report, student: student)
+      expect(Report.all).to include report
+      student.destroy
+      expect(Report.all).to_not include report
+    end
   end
 end

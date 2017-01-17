@@ -156,6 +156,8 @@ RSpec.describe ActivityCategoriesController, type: :controller do
   describe "DELETE #destroy" do
     context "when requested category exists" do
       let (:category) { test_category[rand 2] }
+      let! (:activity) { create(:activity, activity_category: category) }
+      let! (:option) { create(:option, activity: activity) }
 
       before(:each) do
         delete :destroy, params: { id: category.id }
@@ -170,8 +172,10 @@ RSpec.describe ActivityCategoriesController, type: :controller do
         expect{ category.reload }.to raise_exception ActiveRecord::RecordNotFound
       end
 
-      xit "should delete all dependents from DB" do
-
+      it "should delete all dependents from DB" do
+        expect(ActivityCategory.all).to_not include category
+        expect(Activity.all).not_to include activity
+        expect(Option.all).to_not include option
       end
 
     end

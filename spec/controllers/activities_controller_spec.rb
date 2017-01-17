@@ -172,7 +172,9 @@ RSpec.describe ActivitiesController, type: :controller do
 
   describe "DELETE #destroy" do
     context "when requested activity exists" do
-      let(:activity) {test_activity[rand 2]}
+      let(:activity) { test_activity[rand 2] }
+      let!(:option) {create(:option, activity: activity, parent: nil)}
+      # let! = executes let before each test
 
       before(:each) do
         delete :destroy, params: {
@@ -189,7 +191,9 @@ RSpec.describe ActivitiesController, type: :controller do
         expect{activity.reload}.to raise_exception ActiveRecord::RecordNotFound
       end
 
-      xit "should delete dependents from DB" do
+      it "should delete dependents from DB" do
+        expect(Activity.all).not_to include activity
+        expect(Option.all).to_not include option
       end
 
     end

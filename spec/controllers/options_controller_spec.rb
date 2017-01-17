@@ -88,10 +88,10 @@ RSpec.describe OptionsController, type: :controller do
       end
 
       it "should save the option" do
-        expect(option.suboptions.first).to be_persisted
+        expect(option).to be_persisted
       end
 
-      it "should  the option" do
+      it "should have saved the correct suboption" do
         expect(option.suboptions[0].name).to eq "Cagou Muito"
       end
 
