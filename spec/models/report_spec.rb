@@ -4,6 +4,7 @@ RSpec.describe Report, type: :model do
   describe "Associations" do
     it { should belong_to(:student) }
     it { should have_and_belong_to_many(:options) }
+    it { should have_many(:report_notes) }
   end
 
   describe "Delete - Associations consistency" do

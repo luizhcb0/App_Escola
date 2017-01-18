@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117202345) do
+ActiveRecord::Schema.define(version: 20170118190850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170117202345) do
 
   create_table "messages", force: :cascade do |t|
     t.integer  "professor_id", null: false
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["professor_id"], name: "index_messages_on_professor_id", using: :btree
@@ -74,6 +74,14 @@ ActiveRecord::Schema.define(version: 20170117202345) do
   create_table "professors", force: :cascade do |t|
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_professors_on_user_id", using: :btree
+  end
+
+  create_table "report_notes", force: :cascade do |t|
+    t.integer "activity_id", null: false
+    t.integer "report_id",   null: false
+    t.text    "text"
+    t.index ["activity_id"], name: "index_report_notes_on_activity_id", using: :btree
+    t.index ["report_id"], name: "index_report_notes_on_report_id", using: :btree
   end
 
   create_table "reports", force: :cascade do |t|
@@ -132,6 +140,8 @@ ActiveRecord::Schema.define(version: 20170117202345) do
   add_foreign_key "options_reports", "options", on_delete: :cascade
   add_foreign_key "options_reports", "reports", on_delete: :cascade
   add_foreign_key "professors", "users", on_delete: :cascade
+  add_foreign_key "report_notes", "activities", on_delete: :cascade
+  add_foreign_key "report_notes", "reports", on_delete: :cascade
   add_foreign_key "reports", "students", on_delete: :cascade
   add_foreign_key "schools", "professors", on_delete: :cascade
   add_foreign_key "student_users", "students", on_delete: :cascade

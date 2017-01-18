@@ -9,6 +9,7 @@ RSpec.describe Activity, type: :model do
     it { should belong_to(:activity_category) }
     it { should have_many(:options) }
     it { should have_and_belong_to_many(:classrooms) }
+    it { should have_many(:report_notes) }
   end
 
   describe "Delete - Associations consistency" do
