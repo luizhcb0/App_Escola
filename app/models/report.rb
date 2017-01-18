@@ -1,6 +1,4 @@
 class Report < ApplicationRecord
-  belongs_to :student, dependent: :delete
-  has_many :report_options, dependent: :destroy
-
-  accepts_nested_attributes_for :report_options, allow_destroy: true
+  belongs_to :student
+  has_and_belongs_to_many :options
 end

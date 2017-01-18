@@ -1,13 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ReportsController, type: :controller do
-  let(:test_report) {
-    2.times.map {
-      create(:report, student: create(:student), report_options_attributes: [
-        {option: create(:option), note: "ole" }
-      ])
-    }
-  }
+  let(:test_report) { 2.times.map { create(:report) } }
 
   describe "GET #index" do
     before(:each) do
@@ -67,15 +61,13 @@ RSpec.describe ReportsController, type: :controller do
 
   describe "POST #create" do
     let(:report) { assigns(:report) }
-    let(:test_option) { create(:option) }
-    let(:test_student) { create(:student) }
+    let(:option) { create(:option) }
+    let(:student) { create(:student) }
 
     context "when valid" do
       before(:each) do
         post :create, params: {
-          report: attributes_for(:report, student_id: test_student.id,
-          report_options_attributes: [build(:report_option).attributes]
-          )
+          report: attributes_for(:report, student_id: student.id, option_ids: [option.id])
         }
       end
 
@@ -87,27 +79,18 @@ RSpec.describe ReportsController, type: :controller do
         expect(report).to be_persisted
       end
 
-      it "should save report_options" do
-        expect(report.report_options.first).to be_persisted
-        expect(ReportOption.all).to include report.report_options.first
+      it "should save report.options reference" do
+        expect(report.options.first).to eq option
       end
 
-      it "should have saved the correct report_option" do
-        expect(report.report_options[0].note).to eq "essa nota"
-      end
-
-      it "should have saved with correct references" do
-        expect(report.report_options.first.report_id).to eq report.id
+      it "should save options.report reference" do
+        expect(option.reports.first).to eq report
       end
     end
 
     context "when invalid" do
       before(:each) do
-        post :create, params: {
-          report: attributes_for(:report,
-          report_options_attributes: [build(:report_option).attributes]
-          )
-        }
+        post :create, params: { report: attributes_for(:report, student_id: nil) }
       end
 
       it "should render new template" do
@@ -139,18 +122,15 @@ RSpec.describe ReportsController, type: :controller do
   end
 
   describe "PATCH #update" do
-    let(:report) {assigns(:report)}
-    let(:test_student) { create(:student) }
-    let(:report_option) { build(:report_option) }
+    let(:report) { assigns(:report) }
+    let(:student) { create(:student) }
+    let(:option) { create(:option) }
 
     context "when valid" do
       before(:each) do
         report = create(:report)
         patch :update, params: {
-          report: attributes_for(
-            :report, student_id: test_student.id,
-            report_options_attributes: [build(:report_option).attributes]
-          ),
+          report: attributes_for(:report, student_id: student.id, option_ids: [option.id]),
           id: report.id
         }
       end
@@ -160,8 +140,8 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       it "should update attributes" do
-        expect(report.student_id).to eq test_student.id
-        expect(report.report_options[0].note).to eq "essa nota"
+        expect(report.reload.student).to eq student
+        expect(report.options.first).to eq option
       end
     end
 
@@ -169,10 +149,7 @@ RSpec.describe ReportsController, type: :controller do
       before(:each) do
         report = create(:report)
         patch :update, params: {
-          report: attributes_for(
-            :report, student_id: -1,
-            report_options: [report_option]
-          ),
+          report: attributes_for(:report, student_id: -1, option_ids: [option.id]),
           id: report.id
         }
       end
@@ -182,18 +159,16 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       it "should not update attributes" do
-        expect(report.student_id).to_not eq test_student.id
-        expect(report.report_options.size).to eq 0
+        expect(report.reload.student).to_not eq student
+        expect(report.options.size).to eq 0
       end
     end
   end
 
   describe "DELETE #destroy" do
     context "when requested report exists" do
-      let(:report) { create(:report, report_options_attributes: [
-        {option: create(:option), note: "bilu" }
-      ]) }
-
+      let(:option) { create(:option) }
+      let(:report) { create(:report, option_ids: [option.id]) }
 
       before(:each) do
         delete :destroy, params: { id: report.id }
@@ -208,8 +183,8 @@ RSpec.describe ReportsController, type: :controller do
         expect{report.reload}.to raise_exception ActiveRecord::RecordNotFound
       end
 
-      it "should delete report_options from DB" do
-        expect(ReportOption.all).to_not include report.report_options[0]
+      it "should delete report from option on DB" do
+        expect(option.reports.size).to eq 0
       end
     end
 

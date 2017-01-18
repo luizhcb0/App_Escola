@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe Report, type: :model do
   describe "Associations" do
     it { should belong_to(:student) }
-    it { should have_many(:report_options) }
-    it { should accept_nested_attributes_for(:report_options) }
+    it { should have_and_belong_to_many(:options) }
   end
 
   describe "Delete - Associations consistency" do
@@ -17,16 +16,12 @@ RSpec.describe Report, type: :model do
       expect(Report.all).to_not include report
     end
 
-    it "should delete the references to report_options from reports" do
+    it "should delete the references to reports from options" do
       option = create(:option)
-      student = create(:student)
-      report_option = create(:report_option, option: option)
-      report = create(:report, student: student, report_options: [report_option])
-      expect(report).to_not eq nil
-      expect(Report.all).to include report
+      report = create(:report, options:[option])
+      expect(option.reload.reports.size).to eq 1
       report.destroy
-      expect(Report.all).to_not include report
-      expect(ReportOption.all).to_not include report_option
+      expect(option.reload.reports.size).to eq 0
     end
 
   end
