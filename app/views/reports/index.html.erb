@@ -1,0 +1,24 @@
+
+<h1>Reports</h1>
+
+
+<%= link_to "Newest", :sort => "created_at DESC" %>
+<%= link_to "Oldest", :sort => "created_at ASC" %>
+
+<table>
+  <tr>
+    <td>Student</td>
+    <td>Date</td>
+  </tr>
+  <% @reports = @reports.order(created_at: "DESC") %>
+  <% @reports.each do |report| %>
+    <tr>
+      <td><%= report.student.name %></td>
+      <td><%= report.created_at.to_s(:short)%></td>
+      <td><%= link_to 'Show', report_path(report) %></td>
+      <td><%= link_to 'Edit', edit_report_path(report) %></td>
+      <td><%= link_to 'Delete', report_path(report), method: :delete %></td>
+    </tr>
+  <% end %>
+  <td><%= link_to 'New Message', new_report_path %></td>
+</table>
