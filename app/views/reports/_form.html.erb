@@ -1,0 +1,11 @@
+<%= form_for @report do |f| %>
+  <p>
+    <%= f.label :student %><br>
+    <% array = Student.all.map { |student| [student.name, student.id] } %>
+    <%= select_tag "report[student_id]", options_for_select(array) %>
+
+    <!-- needs to create the options and notes -->
+  <p>
+    <%= f.submit "Send" %>
+  </p>
+<% end %>
