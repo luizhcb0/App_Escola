@@ -1,0 +1,21 @@
+
+<h2><%= @report.id %></h2>
+<h3><%= @report.student.name %></h3>
+<h5><%= @report.created_at.to_s(:long)%></h5>
+
+<table>
+  <% @report.options.each do |option| %>
+    <tr>
+      <td><%= option.activity.name %></td>
+      <td><%= option.name %></td>
+    </tr>
+  <% end %>
+
+  <% @report.report_notes.each do |note| %>
+    <tr><td><%= note.activity.name %></td></tr>
+    <tr><td><%= note.text %></td></tr>
+  <% end %>
+
+  <tr><td><%= link_to 'Edit', edit_report_path(@report.id) %></td></tr>
+
+</table>
