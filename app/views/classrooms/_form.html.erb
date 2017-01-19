@@ -11,7 +11,7 @@
 
     <br><%= f.label :student %><br>
 
-    <% array = Student.all.map { |student| [student.person.name, student.id] } %>
+    <% array = Student.all.map { |student| [student.name, student.id] } %>
     <%= select_tag "classroom[student_ids][]", options_for_select(array) %>
 
 

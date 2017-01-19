@@ -8,7 +8,8 @@ class MessagesController < ApplicationController
         @messages = Message.where(professor_id: current_user.professor.id).order(params[:sort])
 
       elsif current_user.role.name == 'student'
-        @messages = Message.includes(:students).where(students: {id: current_user.students.ids}).order(params[:sort])
+        @messages = Message.includes(:students).where(
+          students: {id: current_user.students.ids}).order(params[:sort])
       end
     else
       redirect_to new_session_path
