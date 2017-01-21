@@ -29,8 +29,8 @@ module StrongParamsHolder
   end
 
   def option_params
-    params.require(:option).permit(:name, :activity_id,
-      suboptions_attributes: [:id, :name, :activity_id, :_destroy]
+    params.require(:option).permit(:name, :activity_id, :multiple,
+      suboptions_attributes: [:id, :name, :option_id, :_destroy]
     )
   end
 

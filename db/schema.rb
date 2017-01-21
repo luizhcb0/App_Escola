@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118190850) do
+ActiveRecord::Schema.define(version: 20170121051148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,10 +60,9 @@ ActiveRecord::Schema.define(version: 20170118190850) do
 
   create_table "options", force: :cascade do |t|
     t.string  "name"
+    t.boolean "multiple"
     t.integer "activity_id", null: false
-    t.integer "option_id"
     t.index ["activity_id"], name: "index_options_on_activity_id", using: :btree
-    t.index ["option_id"], name: "index_options_on_option_id", using: :btree
   end
 
   create_table "options_reports", id: false, force: :cascade do |t|
@@ -115,6 +114,12 @@ ActiveRecord::Schema.define(version: 20170118190850) do
     t.date   "birthday"
   end
 
+  create_table "suboptions", force: :cascade do |t|
+    t.string  "name"
+    t.integer "option_id"
+    t.index ["option_id"], name: "index_suboptions_on_option_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string  "name",            null: false
     t.string  "phone"
@@ -136,7 +141,6 @@ ActiveRecord::Schema.define(version: 20170118190850) do
   add_foreign_key "messages_students", "messages", on_delete: :cascade
   add_foreign_key "messages_students", "students", on_delete: :cascade
   add_foreign_key "options", "activities", on_delete: :cascade
-  add_foreign_key "options", "options", on_delete: :cascade
   add_foreign_key "options_reports", "options", on_delete: :cascade
   add_foreign_key "options_reports", "reports", on_delete: :cascade
   add_foreign_key "professors", "users", on_delete: :cascade
@@ -146,4 +150,5 @@ ActiveRecord::Schema.define(version: 20170118190850) do
   add_foreign_key "schools", "professors", on_delete: :cascade
   add_foreign_key "student_users", "students", on_delete: :cascade
   add_foreign_key "student_users", "users", on_delete: :cascade
+  add_foreign_key "suboptions", "options", on_delete: :cascade
 end

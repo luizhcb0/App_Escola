@@ -4,7 +4,7 @@
   <tr><td>Activity:</td><td><%= @option.activity.name %></td></tr>
 </table>
 <table>
-  <% if !@option.suboptions.empty? %>
+  <% if @option.suboptions.present? %>
     <tr>
       <td>Sub Options:</td>
     </tr>
@@ -12,5 +12,10 @@
       <tr><td><%= child.name %></td></tr>
       <% end %>
   <% end %>
+  <tr>
+    <td>Multiple Select:</td>
+    <td><%= @option.multiple %></td>
+  </tr>
+
   <tr><td><%= link_to 'Edit', edit_option_path(@option.id) %></td></tr>
 </table>

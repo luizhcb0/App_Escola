@@ -18,6 +18,13 @@
       </div>
     </div>
   </div>
+  <div>
+    <p>Multiple Select</p>
+    <%= f.radio_button :multiple, true %>
+    <%= f.label :yes %><br>
+    <%= f.radio_button :multiple, false %>
+    <%= f.label :no %><br>
+  </div>
 
   <p>
     <%= f.submit "Send" %>

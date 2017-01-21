@@ -10,6 +10,9 @@ class ReportsController < ApplicationController
   end
 
   def new
+    @categories = ActivityCategory.all
+    @activities = Activity.all
+    @options = Option.all
     @report = Report.new
   end
 
@@ -23,6 +26,9 @@ class ReportsController < ApplicationController
   end
 
   def edit
+    @categories = ActivityCategory.all
+    @activities = Activity.all
+    @options = Option.all
     @report = Report.find(params[:id])
   end
 

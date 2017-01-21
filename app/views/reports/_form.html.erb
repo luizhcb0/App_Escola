@@ -3,8 +3,26 @@
     <%= f.label :student %><br>
     <% array = Student.all.map { |student| [student.name, student.id] } %>
     <%= select_tag "report[student_id]", options_for_select(array) %>
+  </p>
+  <div class="">
+    <% @categories.each do |category| %>
+      <div class="category">
+        <%= category.name %>
+        <% @activities.where(activity_category_id: category.id).each do |activity| %>
+          <div class="activity">
+            <%= activity.name %>
+            <% @options.where(activity_id: activity.id).each do |option| %>
+              <div class="option">
+                <%= f.label option.name %>
+                <%= f.check_box "option_ids", {:multiple => true}, option.id, nil  %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
-    <!-- needs to create the options and notes -->
   <p>
     <%= f.submit "Send" %>
   </p>

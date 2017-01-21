@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe OptionsController, type: :controller do
-  let (:test_option) { 2.times.map { create(:option, activity: create(:activity), parent: nil) } }
+  let (:test_option) { 2.times.map { create(:option, activity: create(:activity)) } }
   let (:test_activity) { create(:activity, activity_category: create(:activity_category), classrooms: [create(:classroom)]) }
   let(:test_children) {
     2.times.map {
-      create(:option, activity: create(:activity), parent: test_option[0])
+      create(:suboption)
     }
   }
 
@@ -26,9 +26,6 @@ RSpec.describe OptionsController, type: :controller do
       expect(assigns(:options)).to match_array test_option
     end
 
-    it "should not load all options" do
-      expect(assigns(:options)).to_not match_array test_children
-    end
   end
 
   describe "GET #show" do
@@ -78,7 +75,7 @@ RSpec.describe OptionsController, type: :controller do
       before(:each) do
         post :create, params: {
           option: attributes_for(:option, name: "opt", activity_id: test_activity.id,
-            suboptions_attributes: [build(:option).attributes]
+            suboptions_attributes: [build(:suboption).attributes]
           )
         }
       end
@@ -92,17 +89,17 @@ RSpec.describe OptionsController, type: :controller do
       end
 
       it "should have saved the correct suboption" do
-        expect(option.suboptions[0].name).to eq "Cagou Muito"
+        expect(option.suboptions[0].name).to eq "sub"
       end
 
       it "should save suboptions" do
         expect(option.suboptions.first).to be_persisted
-        expect(Option.all).to include option.suboptions.first
+        expect(Suboption.all).to include option.suboptions.first
       end
 
-      it "should have saved the same activity_id for parent and children" do
-        expect(option.suboptions.first.activity_id).to eq option.activity_id
-      end
+      # it "should have saved the same activity_id for parent and children" do
+      #   expect(option.suboptions.first.activity_id).to eq option.activity_id
+      # end
     end
 
     context "when invalid" do
@@ -124,7 +121,7 @@ RSpec.describe OptionsController, type: :controller do
 
       it "should not save suboptions" do
         expect(option.suboptions.first).to_not be_persisted
-        expect(Option.all).to_not include option.suboptions[0]
+        expect(Suboption.all).to_not include option.suboptions[0]
       end
     end
 
@@ -159,7 +156,7 @@ RSpec.describe OptionsController, type: :controller do
         patch :update, params: {
           option: attributes_for(
             :option, name: "Urina", activity_id: activity.id,
-              suboptions_attributes: [build(:option).attributes]
+              suboptions_attributes: [build(:suboption).attributes]
           ),
           id: option.id
         }
@@ -172,7 +169,7 @@ RSpec.describe OptionsController, type: :controller do
       it "should update attributes" do
         expect(option.name).to eq "Urina"
         expect(option.activity_id).to eq activity.id
-        expect(option.suboptions.first.name).to eq "Cagou Muito"
+        expect(option.suboptions.first.name).to eq "sub"
       end
     end
 
@@ -202,8 +199,8 @@ RSpec.describe OptionsController, type: :controller do
 
   describe "DELETE #destroy" do
     context "when requested option exists" do
-      let(:child) { create(:option) }
-      let(:child2) { create(:option) }
+      let(:child) { create(:suboption) }
+      let(:child2) { create(:suboption) }
       let(:option) { create(:option, suboptions: [child, child2])}
 
       before(:each) do
@@ -220,9 +217,9 @@ RSpec.describe OptionsController, type: :controller do
       end
 
       it "should delete suboptions from DB" do
-        expect(Option.all).to_not include child
+        expect(Suboption.all).to_not include child
         expect{child.reload}.to raise_exception ActiveRecord::RecordNotFound
-        expect(Option.all).to_not include child2
+        expect(Suboption.all).to_not include child2
         expect{child2.reload}.to raise_exception ActiveRecord::RecordNotFound
       end
     end

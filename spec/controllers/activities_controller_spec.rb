@@ -173,7 +173,7 @@ RSpec.describe ActivitiesController, type: :controller do
   describe "DELETE #destroy" do
     context "when requested activity exists" do
       let(:activity) { test_activity[rand 2] }
-      let!(:option) {create(:option, activity: activity, parent: nil)}
+      let!(:option) {create(:option, activity: activity)}
       # let! = executes let before each test
 
       before(:each) do

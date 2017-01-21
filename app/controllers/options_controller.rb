@@ -2,7 +2,7 @@ class OptionsController < ApplicationController
   include StrongParamsHolder
 
   def index
-    @options = Option.where(option_id: nil)
+    @options = Option.all
   end
 
   def show
