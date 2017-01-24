@@ -7,6 +7,7 @@ RSpec.describe Suboption, type: :model do
 
   describe "Associations" do
     it { should belong_to(:option) }
+    it { should have_and_belong_to_many(:reports) }
   end
 
   describe "Delete - Associations consistency" do
@@ -17,6 +18,14 @@ RSpec.describe Suboption, type: :model do
       suboption.destroy
       expect(option.suboptions).to eq []
       expect(Suboption.all).to_not include suboption
+    end
+
+    it "should delete the references to suboptions from reports" do
+      suboption = create(:suboption)
+      report = create(:report, suboptions: [suboption])
+      expect(report.reload.suboptions.size).to eq 1
+      suboption.destroy
+      expect(report.reload.suboptions.size).to eq 0
     end
 
     it "should delete references to suboptions from options" do

@@ -1,6 +1,6 @@
 class Option < ApplicationRecord
   belongs_to :activity
-  has_and_belongs_to_many :reports
+
   # self-assocition of options and suboptions
   # has_many :suboptions, class_name: "Option", foreign_key: "option_id"
   # belongs_to :parent, class_name: "Option", optional: true, foreign_key: "option_id"

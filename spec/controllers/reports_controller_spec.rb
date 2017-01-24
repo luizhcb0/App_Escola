@@ -61,13 +61,13 @@ RSpec.describe ReportsController, type: :controller do
 
   describe "POST #create" do
     let(:report) { assigns(:report) }
-    let(:option) { create(:option) }
+    let(:suboption) { create(:suboption) }
     let(:student) { create(:student) }
 
     context "when valid" do
       before(:each) do
         post :create, params: {
-          report: attributes_for(:report, student_id: student.id, option_ids: [option.id])
+          report: attributes_for(:report, student_id: student.id, suboption_ids: [suboption.id])
         }
       end
 
@@ -79,12 +79,12 @@ RSpec.describe ReportsController, type: :controller do
         expect(report).to be_persisted
       end
 
-      it "should save report.options reference" do
-        expect(report.options.first).to eq option
+      it "should save report.suboptions reference" do
+        expect(report.suboptions.first).to eq suboption
       end
 
-      it "should save options.report reference" do
-        expect(option.reports.first).to eq report
+      it "should save suboptions.report reference" do
+        expect(suboption.reports.first).to eq report
       end
     end
 
@@ -124,13 +124,13 @@ RSpec.describe ReportsController, type: :controller do
   describe "PATCH #update" do
     let(:report) { assigns(:report) }
     let(:student) { create(:student) }
-    let(:option) { create(:option) }
+    let(:suboption) { create(:suboption) }
 
     context "when valid" do
       before(:each) do
         report = create(:report)
         patch :update, params: {
-          report: attributes_for(:report, student_id: student.id, option_ids: [option.id]),
+          report: attributes_for(:report, student_id: student.id, suboption_ids: [suboption.id]),
           id: report.id
         }
       end
@@ -141,7 +141,7 @@ RSpec.describe ReportsController, type: :controller do
 
       it "should update attributes" do
         expect(report.reload.student).to eq student
-        expect(report.options.first).to eq option
+        expect(report.suboptions.first).to eq suboption
       end
     end
 
@@ -149,7 +149,7 @@ RSpec.describe ReportsController, type: :controller do
       before(:each) do
         report = create(:report)
         patch :update, params: {
-          report: attributes_for(:report, student_id: -1, option_ids: [option.id]),
+          report: attributes_for(:report, student_id: -1, suboption_ids: [suboption.id]),
           id: report.id
         }
       end
@@ -160,15 +160,15 @@ RSpec.describe ReportsController, type: :controller do
 
       it "should not update attributes" do
         expect(report.reload.student).to_not eq student
-        expect(report.options.size).to eq 0
+        expect(report.suboptions.size).to eq 0
       end
     end
   end
 
   describe "DELETE #destroy" do
     context "when requested report exists" do
-      let(:option) { create(:option) }
-      let(:report) { create(:report, option_ids: [option.id]) }
+      let(:suboption) { create(:suboption) }
+      let(:report) { create(:report, suboption_ids: [suboption.id]) }
 
       before(:each) do
         delete :destroy, params: { id: report.id }
@@ -184,7 +184,7 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       it "should delete report from option on DB" do
-        expect(option.reports.size).to eq 0
+        expect(suboption.reports.size).to eq 0
       end
     end
 

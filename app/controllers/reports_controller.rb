@@ -13,6 +13,7 @@ class ReportsController < ApplicationController
     @categories = ActivityCategory.all
     @activities = Activity.all
     @options = Option.all
+    @suboptions = Suboption.all
     @report = Report.new
   end
 
@@ -29,6 +30,7 @@ class ReportsController < ApplicationController
     @categories = ActivityCategory.all
     @activities = Activity.all
     @options = Option.all
+    @suboptions = Suboption.all
     @report = Report.find(params[:id])
   end
 

@@ -2,7 +2,7 @@
   <p>
     <%= f.label :student %><br>
     <% array = Student.all.map { |student| [student.name, student.id] } %>
-    <%= select_tag "report[student_id]", options_for_select(array) %>
+    <%= f.select :student_id, options_for_select(array) %>
   </p>
   <div class="">
     <% @categories.each do |category| %>
@@ -14,7 +14,18 @@
             <% @options.where(activity_id: activity.id).each do |option| %>
               <div class="option">
                 <%= f.label option.name %>
-                <%= f.check_box "option_ids", {:multiple => true}, option.id, nil  %>
+                <% if option.multiple %>
+                  <% @suboptions.where(option_id: option.id).each do |suboption| %>
+                    <div class="suboption">
+                      <%= f.label suboption.name %>
+                      <%= f.check_box "suboption_ids", {:multiple => true}, suboption.id, nil  %>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <br>
+                  <% sub_array = @suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
+                  <%= select_tag "report[suboption_ids][]", options_for_select(sub_array, @report.suboption_ids)  %>
+                <% end %>
               </div>
             <% end %>
           </div>

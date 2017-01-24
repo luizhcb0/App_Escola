@@ -65,11 +65,6 @@ ActiveRecord::Schema.define(version: 20170121051148) do
     t.index ["activity_id"], name: "index_options_on_activity_id", using: :btree
   end
 
-  create_table "options_reports", id: false, force: :cascade do |t|
-    t.integer "option_id", null: false
-    t.integer "report_id", null: false
-  end
-
   create_table "professors", force: :cascade do |t|
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_professors_on_user_id", using: :btree
@@ -88,6 +83,11 @@ ActiveRecord::Schema.define(version: 20170121051148) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["student_id"], name: "index_reports_on_student_id", using: :btree
+  end
+
+  create_table "reports_suboptions", id: false, force: :cascade do |t|
+    t.integer "report_id",    null: false
+    t.integer "suboption_id", null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -141,12 +141,12 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   add_foreign_key "messages_students", "messages", on_delete: :cascade
   add_foreign_key "messages_students", "students", on_delete: :cascade
   add_foreign_key "options", "activities", on_delete: :cascade
-  add_foreign_key "options_reports", "options", on_delete: :cascade
-  add_foreign_key "options_reports", "reports", on_delete: :cascade
   add_foreign_key "professors", "users", on_delete: :cascade
   add_foreign_key "report_notes", "activities", on_delete: :cascade
   add_foreign_key "report_notes", "reports", on_delete: :cascade
   add_foreign_key "reports", "students", on_delete: :cascade
+  add_foreign_key "reports_suboptions", "reports", on_delete: :cascade
+  add_foreign_key "reports_suboptions", "suboptions", on_delete: :cascade
   add_foreign_key "schools", "professors", on_delete: :cascade
   add_foreign_key "student_users", "students", on_delete: :cascade
   add_foreign_key "student_users", "users", on_delete: :cascade
