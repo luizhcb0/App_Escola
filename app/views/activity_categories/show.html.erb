@@ -1,6 +1,19 @@
-<h1><%= @activity_category.name %></h1>
+<section class="container-fluid">
+  <h1><%= @activity_category.name %></h1>
 
-<table>
-  <tr><td>Category:</td><td><%= @activity_category.name %></td></tr>
-  <tr><td><%= link_to 'Edit', edit_activity_category_path(@activity_category.id) %></td></tr>
-</table>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Category:</td>
+            <td><%= @activity_category.name %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%= link_to '<button class="btn btn-default" name="button">Edit</button>'.html_safe, edit_activity_category_path(@activity_category.id) %>
+
+
+</section>

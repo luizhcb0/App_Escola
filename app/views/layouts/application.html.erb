@@ -23,17 +23,9 @@
             <ul class="nav navbar-nav">
               <li class="active">
                 <% if current_user %>
-                  <a href=""><%= current_user.name %></a>
+                  <%= link_to current_user.name, root_path %>
                 <% else %>
-                  <a href="">AppAgenda</a>
-                <% end %>
-
-              </li>
-              <li>
-                <% if current_user %>
-                  <%= link_to "Sign out", session_path, method: :delete %>
-                <% else %>
-                  <%= link_to "Sign in", new_session_path %>
+                  <%= link_to 'App Agenda', root_path %>
                 <% end %>
               </li>
               <li class="dropdown">
@@ -45,13 +37,18 @@
           		</li>
               <li><a href="contato">Contato</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <% if current_user %>
+                  <%= link_to "Sign out", session_path, method: :delete %>
+                <% else %>
+                  <%= link_to "Sign in", new_session_path %>
+                <% end %>
+              </li>
+            </ul>
           </div><!--/.nav-collapse -->
         </div>
     </nav>
-
-    <section class="container-fluid">
-
-    </section>
 
     <%= yield %>
 
