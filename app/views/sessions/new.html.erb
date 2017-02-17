@@ -1,15 +1,30 @@
-
+<section class="container-fluid">
 <%= form_tag session_path do %>
-  <table>
-    <tr>
-      <td><%= label_tag :email %></td>
-      <td><%= text_field_tag :email %></td>
-    </tr>
-    <tr>
-      <td><%= label_tag :password %></td>
-      <td><%= password_field_tag :password %></td>
-    </tr>
-    <tr>
-      <td><%= submit_tag "Sign In" %></td>
-    </tr>
+  <div class="form-group">
+    <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <div class="input-group">
+        <span class="input-group-addon">@</span>
+        <%= text_field_tag :email, nil, placeholder: 'login', class: 'form-control' %>
+        <!-- <input name="email" type="email" class="form-control" id="email" placeholder="login"> -->
+	    </div>
+    </div>
+      </div>
+  </div>
+  <div class="form-group">
+    <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+     <div class="input-group">
+      <span class="input-group-addon">***</span>
+      <%= password_field_tag :password, nil, placeholder: 'Senha', class: "form-control" %>
+    <!-- <input name="password" type="password" class="form-control" id="password" placeholder="Senha"> -->
+  </div>
+  </div>
+  </div>
+  </div>
+  <div class="form-group">
+    <%= submit_tag "Sign In", class: "btn btn-default" %>
+  </div>
+
 <% end %>
+</section>
