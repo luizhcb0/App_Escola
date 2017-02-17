@@ -1,15 +1,3 @@
-
-<%= form_tag session_path do %>
-  <table>
-    <tr>
-      <td><%= label_tag :email %></td>
-      <td><%= text_field_tag :email %></td>
-    </tr>
-    <tr>
-      <td><%= label_tag :password %></td>
-      <td><%= password_field_tag :password %></td>
-    </tr>
-    <tr>
-      <td><%= submit_tag "Sign In" %></td>
-    </tr>
-<% end %>
+<section class="container-fluid">
+  <%= render "form" %>
+</section>

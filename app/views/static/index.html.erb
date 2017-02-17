@@ -1,15 +1,33 @@
-<h1>App Agenda</h1>
+<section class="container-fluid">
+  <h1>App Agenda</h1>
+  <% if current_user %>
+    <% if current_user.role.name == 'admin' %>
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <ul class="list-group">
+            <li class="list-group-item"><%= link_to 'Schools', schools_path %></li>
+            <li class="list-group-item"><%= link_to 'Students', students_path %></li>
+            <li class="list-group-item"><%= link_to 'Professors', professors_path %></li>
+            <li class="list-group-item"><%= link_to 'Classrooms', classrooms_path %></li>
+            <li class="list-group-item"><%= link_to 'Activity Categories', activity_categories_path %></li>
+            <li class="list-group-item"><%= link_to 'Activities', activities_path %></li>
+            <li class="list-group-item"><%= link_to 'Options', options_path %></li>
+            <li class="list-group-item"><%= link_to 'Messages', messages_path %></li>
+            <li class="list-group-item"><%= link_to 'Reports', reports_path %></li>
+          </ul>
+        </div>
 
-<table>
-  <tr>
-    <tr><td><%= link_to 'Students', students_path %></td></tr>
-    <tr><td><%= link_to 'Classrooms', classrooms_path %></td></tr>
-    <tr><td><%= link_to 'Professors', professors_path %></td></tr>
-    <tr><td><%= link_to 'Activity Categories', activity_categories_path %></td></tr>
-    <tr><td><%= link_to 'Activities', activities_path %></td></tr>
-    <tr><td><%= link_to 'Options', options_path %></td></tr>
-    <tr><td><%= link_to 'Messages', messages_path %></td></tr>
-    <tr><td><%= link_to 'Reports', reports_path %></td></tr>
-    <tr><td><%= link_to 'Schools', schools_path %></td></tr>
-  </tr>
-</table>
+      </div>
+
+    <% elsif current_user.role.name == 'principal' %>
+
+    <% elsif current_user.role.name == 'professor' %>
+
+    <% elsif current_user.role.name == 'student' %>
+
+
+    <% end %>
+  <% else %>
+    <%= render "sessions/form" %>
+  <% end %>
+</section>

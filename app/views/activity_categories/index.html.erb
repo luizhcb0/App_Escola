@@ -1,14 +1,43 @@
+<section class="container-fluid">
 
-<h1>Categories</h1>
+  <h1>Categories</h1>
 
-<table>
-  <% @activity_categories.each do |activity_category| %>
-    <tr>
-      <td><%= activity_category.name %></td>
-      <td><%= link_to 'Show', activity_category_path(activity_category) %></td>
-      <td><%= link_to 'Edit', edit_activity_category_path(activity_category) %></td>
-      <td><%= link_to 'Delete', activity_category_path(activity_category), method: :delete %></td>
-    </tr>
-  <% end %>
-  <td><%= link_to 'New Category', new_activity_category_path %></td>
-</table>
+  <div>
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <table class="table">
+          <tbody>
+            <% @activity_categories.each do |activity_category| %>
+              <tr>
+                <td><%= activity_category.name %></td>
+
+                <td>
+                  <%= link_to activity_category_path(activity_category), class:"btn btn-success btn-circle" do %>
+                    <i class="fa fa-eye"></i>
+                  <% end %>
+                  <%= link_to edit_activity_category_path(activity_category), class:"btn btn-primary btn-circle" do %>
+                    <i class="fa fa-pencil"></i>
+                  <% end %>
+                  <%= link_to activity_category_path(activity_category), class:"btn btn-danger btn-circle", method:"delete" do %>
+                   <i class="fa fa-trash-o"></i>
+                 <% end %>
+                </td>
+
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+      <%= link_to new_activity_category_path do %>
+        <button class="btn btn-default" name="button">New Category</button>
+      <% end %>
+  </div>
+
+
+
+
+</section>

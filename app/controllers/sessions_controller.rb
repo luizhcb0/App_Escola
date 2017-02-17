@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user and @user.authenticate(params[:password])
       log_in(@user)
-      redirect_to schools_path
+      redirect_to root_path
     else
       render :new   # re-renders the sign in page
     end

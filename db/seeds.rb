@@ -8,7 +8,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Role.create(name: "admin")
+adm = Role.create(name: "admin")
 Role.create(name: "principal")
 Role.create(name: "professor")
  f = Role.create(name: "student")
@@ -36,6 +36,8 @@ Role.create(name: "student_adjacent")
  st = Student.create(name: "Estudante", address: "QNL", birthday: "Sat, 14 Jan 2017")
  us = User.create(name: "Usuario", phone: "555555", email: "user@gmail.com", password: "123456", role: f)
  StudentUser.create(user: us, student: st)
+
+ User.create(role: adm, name: 'admin', phone: '123123', email: 'admin@gmail.com', password: 'administrator')
 #
 # Report.create(student: st, report_options_attributes: [
 #   {option: s1, note: "olar"},
