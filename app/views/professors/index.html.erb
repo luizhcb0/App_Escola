@@ -1,30 +1,43 @@
+<section class="container-fluid">
 
-<h1>Professors</h1>
+  <h1>Professors</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-  </tr>
+  <div>
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <table class="table">
+          <tbody>
+            <% @professors.each do |professor| %>
+              <tr>
+                <td><%= professor.user.name %></td>
 
-  <% @professors.each do |professor| %>
-    <tr>
-      <td><%= professor.user.name %></td>
-      <td><%= link_to 'Show', professor_path(professor) %></td>
-      <td><%= link_to 'Edit', edit_professor_path(professor) %></td>
-      <td><%= link_to 'Delete', professor_path(professor), method: :delete %></td>
-    </tr>
-  <% end %>
-  <td><%= link_to 'New', new_professor_path %></td>
-</table>
+                <td>
+                  <%= link_to professor_path(professor), class:"btn btn-success btn-circle" do %>
+                    <i class="fa fa-eye"></i>
+                  <% end %>
+                  <%= link_to edit_professor_path(professor), class:"btn btn-primary btn-circle" do %>
+                    <i class="fa fa-pencil"></i>
+                  <% end %>
+                  <%= link_to professor_path(professor), class:"btn btn-danger btn-circle", method:"delete" do %>
+                   <i class="fa fa-trash-o"></i>
+                 <% end %>
+                </td>
 
-<table>
-  <% if current_user %>
-    <% if current_user.role.name == 'professor' %>
-      <tr>
-       <!-- action: "send_message" == :action => "send_message" -->
-        <td><%= link_to 'Send Message', action: "send_message" %></td>
-      </tr>
-    <% end %>
-  <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-</table>
+  <div class="">
+      <%= link_to new_professor_path do %>
+        <button class="btn btn-default" name="button">New Professor</button>
+      <% end %>
+  </div>
+
+
+
+
+</section>

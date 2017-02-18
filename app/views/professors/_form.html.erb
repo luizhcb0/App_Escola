@@ -1,12 +1,13 @@
+<%= form_for @professor, html: {class: 'form-horizontal'} do |f| %>
 
-<%= form_for @professor do |f| %>
-  <p>
-    <%= fields_for @professor.user.nil? ? :user : @professor.user do |user_f| %>
-      <%= render "users/user_fields", :f => user_f %>
-    <% end %>
-  </p>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <%= fields_for @professor.user.nil? ? :user : @professor.user do |user_f| %>
+        <%= render "users/user_fields", :f => user_f %>
+      <% end %>
 
-  <p>
-    <%= f.submit "Save" %>
-  </p>
+      <%= f.submit "Save", class: "btn btn-default" %>
+    </div>
+  </div>
+
 <% end %>
