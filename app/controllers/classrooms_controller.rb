@@ -9,7 +9,6 @@ class ClassroomsController < ApplicationController
     @classroom = Classroom.find(params[:id])
     @students = Student.find(@classroom.student_ids)
     @activities = Activity.find(@classroom.activity_ids)
-
   end
 
   def new

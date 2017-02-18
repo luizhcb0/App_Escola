@@ -1,17 +1,79 @@
-<h1><%= @classroom.name %></h1>
+<section class="container-fluid">
+  <h1><%= @classroom.name %></h1>
 
-<table>
-  <tr><td>Name:</td><td><%= @classroom.name %></td></tr>
-  <tr><td>Shift:</td><td><%= @classroom.shift %></td></tr>
-  <tr><td>Professor:</td>
-    <% @classroom.professors.each do |pf| %>
-      <td>
-        <%= pf.user.name %>
-      </td>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Name:</td>
+            <td><%= @classroom.name %></td>
+          </tr>
+          <tr>
+            <td>Shift:</td>
+            <td><%= @classroom.shift %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <% if @classroom.professors.present? %>
+    <div class="col-sm-4 col-sm-offset-2">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><b>Professors</b></td>
+          </tr>
+          <% @classroom.professors.each do |professor| %>
+            <tr>
+              <td><%= professor.user.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
     <% end %>
-  </tr>
-  <tr><td>Student:</td><td><%= @classroom.student_ids %></td></tr>
-  <tr><td>Activity:</td><td><%= @classroom.activity_ids %></td></tr>
+    <% if @classroom.activities.present? %>
+    <div class="col-sm-4">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><b>Activities</b></td>
+          </tr>
+          <% @classroom.activities.each do |activity| %>
+            <tr>
+              <td><%= activity.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% end %>
+  </div>
 
-  <tr><td><%= link_to 'Edit', edit_classroom_path(@classroom.id) %></td></tr>
-</table>
+  <div class="row">
+    <% if @classroom.students.present? %>
+    <div class="col-sm-4 col-sm-offset-4">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><b>Students</b></td>
+          </tr>
+          <% @classroom.students.each do |student| %>
+            <tr>
+              <td><%= student.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% end %>
+  </div>
+
+
+  <%= link_to '<button class="btn btn-default" name="button">Edit</button>'.html_safe, edit_classroom_path(@classroom.id) %>
+
+
+</section>

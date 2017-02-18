@@ -1,26 +1,62 @@
-<%= form_for @classroom do |f| %>
-  <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %><br>
-    <%= f.label :shift %><br>
-    <%= f.text_field :shift %><br>
-    <%= f.label :professor %><br>
+<%= form_for @classroom, html: {class: 'form-horizontal'} do |f| %>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="form-group">
+        <%= f.label :name, class: "col-sm-3 control-label"%>
+        <div class="col-sm-6">
+          <%= f.text_field :name, class: "form-control"  %>
+        </div>
+      </div>
 
-    <% array = Professor.all.map { |professor| [professor.user.name, professor.id] } %>
-    <%= select_tag "classroom[professor_ids][]", options_for_select(array) %>
+      <div class="form-group">
+        <%= f.label :shift, class: "col-sm-3 control-label"%>
+        <div class="col-sm-6">
+          <%= f.text_field :shift, class: "form-control"  %>
+        </div>
+      </div>
 
-    <br><%= f.label :student %><br>
 
-    <% array = Student.all.map { |student| [student.name, student.id] } %>
-    <%= select_tag "classroom[student_ids][]", options_for_select(array) %>
+      <% if professors.present? %>
+        <div class="form-group">
+          <%= f.label :professors, class: "col-sm-3 control-label"%>
+          <div class="col-sm-6">
+            <% professors.each do |professor| %>
+              <label class="checkbox-inline">
+                <%= f.check_box :professor_ids, {:multiple => true}, professor.id, nil  %> <%= professor.user.name %>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
 
+      <% if activities.present? %>
+        <div class="form-group">
+          <%= f.label :activities, class: "col-sm-3 control-label"%>
+          <div class="col-sm-6">
+            <% activities.each do |activity| %>
+              <label class="checkbox-inline">
+                <%= f.check_box :activity_ids, {:multiple => true}, activity.id, nil  %> <%= activity.name %>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
 
-    <br><%= f.label :activity %><br>
+      <% if students.present? %>
+        <div class="form-group">
+          <%= f.label :students, class: "col-sm-3 control-label"%>
+          <div class="col-sm-6">
+            <% students.each do |student| %>
+              <label class="checkbox-inline">
+                <%= f.check_box :student_ids, {:multiple => true}, student.id, nil  %> <%= student.name %>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
 
-    <% array = Activity.all.map { |activity| [activity.name, activity.id] } %>
-    <%= select_tag "classroom[activity_ids][]", options_for_select(array) %>
+      <%= f.submit "Save", class: "btn btn-default" %>
 
-  <p>
-    <%= f.submit "Save" %>
-  </p>
+    </div>
+  </div>
 <% end %>

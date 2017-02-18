@@ -1,17 +1,40 @@
-<h1>Classrooms</h1>
+<section class="container-fluid">
 
-<table>
-  <tr>
-    <th>Name</th>
-  </tr>
+  <h1>Classrooms</h1>
 
-  <% @classrooms.each do |classroom| %>
-    <tr>
-      <td><%= classroom.name %></td>
-      <td><%= link_to 'Show', classroom_path(classroom) %></td>
-      <td><%= link_to 'Edit', edit_classroom_path(classroom) %></td>
-      <td><%= link_to 'Delete', classroom_path(classroom), method: :delete %></td>
-    </tr>
-  <% end %>
-  <td><%= link_to 'New', new_classroom_path %></td>
-</table>
+
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <table class="table">
+          <tbody>
+            <% @classrooms.each do |classroom| %>
+              <tr>
+                <td><%= classroom.name %></td>
+
+                <td>
+                  <%= link_to classroom_path(classroom), class:"btn btn-success btn-circle" do %>
+                    <i class="fa fa-eye"></i>
+                  <% end %>
+                  <%= link_to edit_classroom_path(classroom), class:"btn btn-primary btn-circle" do %>
+                    <i class="fa fa-pencil"></i>
+                  <% end %>
+                  <%= link_to classroom_path(classroom), class:"btn btn-danger btn-circle", method:"delete" do %>
+                   <i class="fa fa-trash-o"></i>
+                 <% end %>
+                </td>
+
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  <div class="">
+      <%= link_to new_classroom_path do %>
+        <button class="btn btn-default" name="button">New Classroom</button>
+      <% end %>
+  </div>
+
+</section>
