@@ -1,8 +1,7 @@
 <%= form_for @report do |f| %>
   <p>
     <%= f.label :student %><br>
-    <% array = Student.all.map { |student| [student.name, student.id] } %>
-    <%= f.select :student_id, options_for_select(array) %>
+    <%= f.select :student_id, options_for_select(student_array) %>
   </p>
   <div class="">
     <% @categories.each do |category| %>
