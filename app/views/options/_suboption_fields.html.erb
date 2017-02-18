@@ -1,5 +1,11 @@
 <div class="nested-fields">
-  <%= f.label :suboption %><br>
-  <%= f.text_field :name %>
-  <%= link_to_remove_association '<button type="button" name="button">X</button>'.html_safe, f %>
+  <div class="form-group">
+    <%= f.label :suboption, class: "col-sm-3 control-label" %>
+    <div class="col-sm-5">
+      <%= f.text_field :name, class: "form-control"  %>
+    </div>
+    <div class="col-sm-1">
+      <%= link_to_remove_association '<button class="btn btn-danger" name="button">x</button>'.html_safe, f %>
+    </div>
+  </div>
 </div>

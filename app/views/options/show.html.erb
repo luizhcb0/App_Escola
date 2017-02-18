@@ -1,21 +1,42 @@
-<h1><%= @option.name %></h1>
+<section class="container-fluid">
+  <h1><%= @option.name %></h1>
 
-<table>
-  <tr><td>Activity:</td><td><%= @option.activity.name %></td></tr>
-</table>
-<table>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Activity:</td>
+            <td><%= @option.activity.name %></td>
+          </tr>
+          <tr>
+            <td>Multiple Select:</td>
+            <td><%= @option.multiple %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <% if @option.suboptions.present? %>
-    <tr>
-      <td>Sub Options:</td>
-    </tr>
-      <% @option.suboptions.each do |child| %>
-      <tr><td><%= child.name %></td></tr>
-      <% end %>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><b>Suboptions</b></td>
+          </tr>
+          <% @option.suboptions.each do |child| %>
+            <tr>
+              <td><%= child.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <% end %>
-  <tr>
-    <td>Multiple Select:</td>
-    <td><%= @option.multiple %></td>
-  </tr>
 
-  <tr><td><%= link_to 'Edit', edit_option_path(@option.id) %></td></tr>
-</table>
+  <%= link_to '<button class="btn btn-default" name="button">Edit</button>'.html_safe, edit_option_path(@option.id) %>
+
+</section>

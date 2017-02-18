@@ -1,14 +1,43 @@
+<section class="container-fluid">
 
-<h1>Activities</h1>
+  <h1>Activities</h1>
 
-<table>
-  <% @activities.each do |activity| %>
-    <tr>
-      <td><%= activity.name %></td>
-      <td><%= link_to 'Show', activity_path(activity) %></td>
-      <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-      <td><%= link_to 'Delete', activity_path(activity), method: :delete %></td>
-    </tr>
-  <% end %>
-  <td><%= link_to 'New Activity', new_activity_path %></td>
-</table>
+
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <table class="table">
+          <tbody>
+            <% @activities.each do |activity| %>
+              <tr>
+                <td><%= activity.name %></td>
+
+                <td>
+                  <%= link_to activity_path(activity), class:"btn btn-success btn-circle" do %>
+                    <i class="fa fa-eye"></i>
+                  <% end %>
+                  <%= link_to edit_activity_path(activity), class:"btn btn-primary btn-circle" do %>
+                    <i class="fa fa-pencil"></i>
+                  <% end %>
+                  <%= link_to activity_path(activity), class:"btn btn-danger btn-circle", method:"delete" do %>
+                   <i class="fa fa-trash-o"></i>
+                 <% end %>
+                </td>
+
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  <div class="">
+      <%= link_to new_activity_path do %>
+        <button class="btn btn-default" name="button">New Activity</button>
+      <% end %>
+  </div>
+
+
+
+
+</section>
