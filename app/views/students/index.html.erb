@@ -1,22 +1,4 @@
-
-<h1>Students</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-  </tr>
-
-  <% @students.each do |student| %>
-    <tr>
-      <td><%= student.name %></td>
-      <td><%= link_to 'Show', student_path(student) %></td>
-      <td><%= link_to 'Edit', edit_student_path(student) %></td>
-      <td><%= link_to 'Delete', student_path(student), method: :delete %></td>
-    </tr>
-  <% end %>
-  <td><%= link_to 'New', new_student_path %></td>
-</table>
-
+<!--
 <table>
   <tr>
     <th>Messages</th>
@@ -37,4 +19,47 @@
   <% end %>
 
 
-</table>
+</table> -->
+<section class="container-fluid">
+
+  <h1>Students</h1>
+
+  <div>
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <table class="table">
+          <tbody>
+            <% @students.each do |student| %>
+              <tr>
+                <td><%= student.name %></td>
+
+                <td>
+                  <%= link_to student_path(student), class:"btn btn-success btn-circle" do %>
+                    <i class="fa fa-eye"></i>
+                  <% end %>
+                  <%= link_to edit_student_path(student), class:"btn btn-primary btn-circle" do %>
+                    <i class="fa fa-pencil"></i>
+                  <% end %>
+                  <%= link_to student_path(student), class:"btn btn-danger btn-circle", method:"delete" do %>
+                   <i class="fa fa-trash-o"></i>
+                 <% end %>
+                </td>
+
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+      <%= link_to new_student_path do %>
+        <button class="btn btn-default" name="button">New Student</button>
+      <% end %>
+  </div>
+
+
+
+
+</section>

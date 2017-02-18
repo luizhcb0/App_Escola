@@ -1,10 +1,28 @@
+<section class="container-fluid">
+  <h1><%= @student.name %></h1>
 
-<table>
-  <tr><td>Name:</td><td><%= @student.name %></td></tr>
-  <tr><td>Address:</td><td><%= @student.address %></td></tr>
-  <tr><td>Birthday:</td><td><%= @student.birthday %></td></tr>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Student Name:</td>
+            <td><%= @student.name %></td>
+          </tr>
+          <tr>
+            <td>Address:</td>
+            <td><%= @student.address %></td>
+          </tr>
+          <tr>
+            <td>Birthday:</td>
+            <td><%= @student.birthday %></td>
+          </tr>
+          <%= render "users/user_show", user: @user %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%= link_to '<button class="btn btn-default" name="button">Edit</button>'.html_safe, edit_student_path(@student.id) %>
 
-  <p> <%= render "users/user_show", user: @user %> </p>
 
-  <tr><td><%= link_to 'Edit', edit_student_path(@student.id) %></td></tr>
-</table>
+</section>
