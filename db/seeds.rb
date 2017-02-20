@@ -14,34 +14,59 @@ Role.create(name: "professor")
  f = Role.create(name: "student")
 Role.create(name: "student_adjacent")
 
- a = ActivityCategory.create(name: "Category1")
- b = ActivityCategory.create(name: "Category2")
+ a = ActivityCategory.create(name: "Alimentação")
+ b = ActivityCategory.create(name: "Diário")
+ c = ActivityCategory.create(name: "Administrativo")
 
- c = Activity.create(name: "Activity1", activity_category: a)
- d = Activity.create(name: "Activity2", activity_category: a)
- e = Activity.create(name: "Activity3", activity_category: b)
+ a1 = Activity.create(name: "Lanche", activity_category: a)
+ a2 = Activity.create(name: "Bebida", activity_category: a)
+ a3 = Activity.create(name: "Almoço", activity_category: a)
 
- opt = Option.create(name: "Option", activity: e, multiple: true, suboptions: [
-   s1 = Suboption.create(name: "sub1"),
-   s2 = Suboption.create(name: "sub2"),
-   s3 = Suboption.create(name: "sub3"),
-   s4 = Suboption.create(name: "sub4")
+
+ b1 = Activity.create(name: "Fralda", activity_category: b)
+ b2 = Activity.create(name: "Banheiro", activity_category: b)
+ b3 = Activity.create(name: "Sono", activity_category: b)
+
+
+ opt = Option.create(name: "Cocô", activity: b1, multiple: false, suboptions: [
+   Suboption.create(name: "Cocô mole"),
+    Suboption.create(name: "Diarréia"),
+    Suboption.create(name: "Normal")
  ])
 
- opt2 = Option.create(name: "Option3", activity: d, multiple: false, suboptions: [
-   s5 = Suboption.create(name: "sub5"),
-   s6 = Suboption.create(name: "sub6")
+ opt2 = Option.create(name: "Xixi", activity: b1, multiple: false, suboptions: [
+    Suboption.create(name: "Xixi normal"),
+    Suboption.create(name: "Escapou xixi")
+ ])
+
+ opt3 = Option.create(name: "Cocô", activity: b2, multiple: false, suboptions: [
+    Suboption.create(name: "Cocô mole"),
+    Suboption.create(name: "Diarréia"),
+    Suboption.create(name: "Normal")
+ ])
+
+ opt4 = Option.create(name: "Xixi", activity: b2, multiple: false, suboptions: [
+    Suboption.create(name: "Xixi normal"),
+    Suboption.create(name: "Escapou xixi")
+ ])
+
+ opt5 = Option.create(name: "Tempo", activity: b3, multiple: false, suboptions: [
+   Suboption.create(name: "10 minutos"),
+   Suboption.create(name: "20 minutos"),
+   Suboption.create(name: "30 minutos"),
+   Suboption.create(name: "40 minutos"),
+   Suboption.create(name: "50 minutos"),
+   Suboption.create(name: "60 minutos")
 ])
 #
- st = Student.create(name: "Estudante", address: "QNL", birthday: "Sat, 14 Jan 2017")
+ st = Student.create(name: "João", address: "QNL", birthday: "Sat, 14 Jan 2017")
+ st = Student.create(name: "Ramon", address: "QNL", birthday: "Sat, 14 Jan 2017")
+ st = Student.create(name: "Euzébio", address: "QNL", birthday: "Sat, 14 Jan 2017")
+ st = Student.create(name: "Lídia", address: "QNL", birthday: "Sat, 14 Jan 2017")
+ st = Student.create(name: "Joana", address: "QNL", birthday: "Sat, 14 Jan 2017")
+ st = Student.create(name: "Mafalda", address: "QNL", birthday: "Sat, 14 Jan 2017")
+ st = Student.create(name: "José", address: "QNL", birthday: "Sat, 14 Jan 2017")
  us = User.create(name: "Usuario", phone: "555555", email: "user@gmail.com", password: "123456", role: f)
  StudentUser.create(user: us, student: st)
 
  User.create(role: adm, name: 'admin', phone: '123123', email: 'admin@gmail.com', password: 'administrator')
-#
-# Report.create(student: st, report_options_attributes: [
-#   {option: s1, note: "olar"},
-#   {option: s3, note: "alow"},
-#   {option: s4, note: "cagou"},
-#   {option: s2},
-#   ])

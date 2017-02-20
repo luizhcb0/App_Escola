@@ -10,10 +10,6 @@ class ReportsController < ApplicationController
   end
 
   def new
-    @categories = ActivityCategory.all
-    @activities = Activity.all
-    @options = Option.all
-    @suboptions = Suboption.all
     @report = Report.new
   end
 

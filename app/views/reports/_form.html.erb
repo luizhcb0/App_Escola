@@ -1,39 +1,64 @@
 <%= form_for @report do |f| %>
-  <p>
-    <%= f.label :student %><br>
-    <%= f.select :student_id, options_for_select(student_array) %>
-  </p>
-  <div class="">
-    <% @categories.each do |category| %>
-      <div class="category">
-        <%= category.name %>
-        <% @activities.where(activity_category_id: category.id).each do |activity| %>
-          <div class="activity">
-            <%= activity.name %>
-            <% @options.where(activity_id: activity.id).each do |option| %>
-              <div class="option">
-                <%= f.label option.name %>
-                <% if option.multiple %>
-                  <% @suboptions.where(option_id: option.id).each do |suboption| %>
-                    <div class="suboption">
-                      <%= f.label suboption.name %>
-                      <%= f.check_box "suboption_ids", {:multiple => true}, suboption.id, nil  %>
-                    </div>
-                  <% end %>
-                <% else %>
-                  <br>
-                  <% sub_array = @suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
-                  <%= select_tag "report[suboption_ids][]", options_for_select(sub_array, @report.suboption_ids)  %>
-                <% end %>
-              </div>
-            <% end %>
+  <div class="row">
+
+    <%= f.hidden_field 'student_id', {id: 'student_id'} %>
+
+    <div class="col-sm-9">
+      <div class="row">
+        <% students.each do |student| %>
+          <div class="col-xs-4 col-md-2">
+            <center>
+              <%= student.name %>
+            </center>
+            <a class="std_link thumbnail" id="<%= student.id.to_s %>"></a>
           </div>
         <% end %>
       </div>
-    <% end %>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+          <% categories.each do |category| %>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <%= category.name %>
+                </h4>
+              </div>
+              <div class="panel-body">
+                <% activities.where(activity_category_id: category.id).each do |activity| %>
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <div class="panel-title">
+                        <%= activity.name %>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <% options.where(activity_id: activity.id).each do |option| %>
+                        <%= f.label option.name %>
+                        <% if option.multiple %>
+                          <% suboptions.where(option_id: option.id).each do |suboption| %>
+                            <div class="form-group">
+                              <%= f.label suboption.name %>
+                              <%= f.check_box "suboption_ids", {:multiple => true}, suboption.id, nil  %>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <% sub_array = suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
+                          <%= select_tag "report[suboption_ids][]", options_for_select(sub_array, @report.suboption_ids), class: "form-control"  %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <%= f.submit "Save", class: "btn btn-default" %>
+    </div>
+
   </div>
 
-  <p>
-    <%= f.submit "Send" %>
-  </p>
 <% end %>
