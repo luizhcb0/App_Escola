@@ -4,18 +4,26 @@
     <%= f.hidden_field 'student_id', {id: 'student_id'} %>
 
     <div class="col-sm-9">
+      <h3 class="page-header">
+        Crianças
+      </h3>
       <div class="row">
         <% students.each do |student| %>
           <div class="col-xs-4 col-md-2">
             <center>
               <%= student.name %>
             </center>
-            <a class="std_link thumbnail" id="<%= student.id.to_s %>"></a>
+            <a class="std_link thumbnail" id="<%= student.id.to_s %>">
+              <img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt="">
+            </a>
           </div>
         <% end %>
       </div>
     </div>
     <div class="col-sm-3">
+      <h3 class="page-header">
+        Categorias
+      </h3>
       <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
           <% categories.each do |category| %>
