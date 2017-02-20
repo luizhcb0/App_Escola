@@ -11,7 +11,7 @@
   <% if current_user %>
     <% if current_user.role.name == 'admin' %>
       <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
+        <div class="col-sm-4 col-sm-offset-4">
           <ul class="list-group">
             <li class="list-group-item"><%= link_to 'Schools', schools_path %></li>
             <li class="list-group-item"><%= link_to 'Students', students_path %></li>
@@ -24,14 +24,43 @@
             <li class="list-group-item"><%= link_to 'Reports', reports_path %></li>
           </ul>
         </div>
-
       </div>
 
     <% elsif current_user.role.name == 'principal' %>
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+          <ul class="list-group">
+            <li class="list-group-item"><%= link_to 'Students', students_path %></li>
+            <li class="list-group-item"><%= link_to 'Professors', professors_path %></li>
+            <li class="list-group-item"><%= link_to 'Classrooms', classrooms_path %></li>
+            <li class="list-group-item"><%= link_to 'Activity Categories', activity_categories_path %></li>
+            <li class="list-group-item"><%= link_to 'Activities', activities_path %></li>
+            <li class="list-group-item"><%= link_to 'Options', options_path %></li>
+            <li class="list-group-item"><%= link_to 'Messages', messages_path %></li>
+            <li class="list-group-item"><%= link_to 'Reports', reports_path %></li>
+          </ul>
+        </div>
+      </div>
 
     <% elsif current_user.role.name == 'professor' %>
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+          <ul class="list-group">
+            <li class="list-group-item"><%= link_to 'Messages', messages_path %></li>
+            <li class="list-group-item"><%= link_to 'Reports', reports_path %></li>
+          </ul>
+        </div>
+      </div>
 
     <% elsif current_user.role.name == 'student' %>
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+          <ul class="list-group">
+            <li class="list-group-item"><%= link_to 'Messages', messages_path %></li>
+            <li class="list-group-item"><%= link_to 'Reports', reports_path %></li>
+          </ul>
+        </div>
+      </div>
 
 
     <% end %>
