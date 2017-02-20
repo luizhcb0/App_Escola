@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "messages/edit.html.erb", type: :view do
   before(:each) {
+    view.extend SessionsHelper
     professor = create(:professor)
     assign(:message, build(:message, id: 2) )
     assign(:current_user, professor.user)

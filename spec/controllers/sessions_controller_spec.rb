@@ -22,7 +22,7 @@ RSpec.describe SessionsController, type: :controller do
       before(:each) { post :create, params: attributes_for(:user, :fixed) }
 
       it "should redirect successfully" do
-        expect(response).to redirect_to schools_path #change it latter
+        expect(response).to redirect_to root_path #change it latter
       end
 
       it "should set session user_id with the right id" do
