@@ -8,6 +8,7 @@ RSpec.describe "activities/show.html.erb", type: :view do
   }
 
   it "should show activity attributes" do
-    expect(rendered).to match(/Atividade/)     # professor name
+    expect(rendered).to match(/Atividade/)     # activity name
+    expect(rendered).to match(/Categoria/)     # category name
   end
 end
