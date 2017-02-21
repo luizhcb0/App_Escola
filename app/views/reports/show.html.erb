@@ -60,34 +60,37 @@
 	  			<span class="input-group-addon">
 						<span class="glyphicon glyphicon-calendar"> Dia: </span>
 					</span>
-	  			<input type="date" class="form-control" value="<%= @report.created_at.to_date.iso8601%>">
+	  			<input type="date" class="form-control" value="<%= @report.created_at.to_date %>">
 	  		</div>
 		  	<br>
         <!--  --------------------------------->
 
         <!-- Activiies & Options -------------->
-        <!-- color options: #337ab7, #3c763d, #8a6d3b -->
 				<% panels = ["primary", "warning", "success"] %>
-        <% @report.suboptions.each do |suboption| %>
-        	<div class="panel panel-<%= panels[rand(3)] %>" >
-        		<div class="panel-heading" >
-        			<h3 class="panel-title"><%= suboption.option.activity.name %></h3>
-        		</div>
-        		<div class="panel-body">
-        			<b><%= suboption.option.name %>:</b> <%= suboption.name %> <br>
-        			<b>Obs.:</b> note
-        		</div>
-        	</div>
+      	<% @report.suboptions.each do |suboption| %>
+      		<div class="panel panel-<%= panels[rand(3)] %>" >
+      			<div class="panel-heading" >
+      				<h3 class="panel-title"><%= suboption.option.activity.name %></h3>
+      			</div>
+      			<div class="panel-body">
+      				<b><%= suboption.option.name %>:</b> <%= suboption.name %> <br>
+      				<b>Obs.:</b> note
+      			</div>
+      		</div>
         <% end %>
         <!--  --------------------------------->
 
         <!-- Messages of that day ------------->
-				<div class="panel panel-danger">
-					<div class="panel-heading">
-						<h3 class="panel-title">Aviso</h3>
+				<% messages = @report.student.messages.where(created_at:
+					(@report.created_at.beginning_of_day..@report.created_at.end_of_day)) %>
+				<% messages.each do |message| %>
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							<h3 class="panel-title">Aviso</h3>
+						</div>
+						<div class="panel-body"><%= message.text %></div>
 					</div>
-					<div class="panel-body"> Texto texto...</div>
-				</div>
+					<% end %>
         <!--  --------------------------------->
 
 	  	</div>
