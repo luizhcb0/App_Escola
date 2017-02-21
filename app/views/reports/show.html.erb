@@ -26,28 +26,33 @@
 	      <h3 class="page-header">Relatórios Diários - <%= @report.student.name %></h3>
 
         <!--  Messages: ------------------------->
-        <center>
-        	<ul class="nav nav-pills" role="tablist">
-			   		<div class="btn-group">
-			   			<button type="button" class="btn btn-danger" data-toggle="collapse"
-                data-target="#collapseExample" aria-expanded="false"
-                aria-controls="collapseExample">Avisos
-			   				<span class="badge">2</span>
-			   			</button>
-			   		</div>
-						<div class="collapse" id="collapseExample">
-  						<div class="well">
-  							<div class="panel panel-danger">
-  								<div class="panel-heading">
-                    <h3 class="panel-title">Aviso - aa/dd/yyyy </h3>
-  								</div>
-  								<div class="panel-body"> Texto texto...</div>
+				<% messages = @report.student.messages.where("message_students.read" => [false,nil]) %>
+				<% if !messages.empty? %>
+        	<center>
+        		<ul class="nav nav-pills" role="tablist">
+			   			<div class="btn-group">
+			   				<button type="button" class="btn btn-danger" data-toggle="collapse"
+                	data-target="#collapseExample" aria-expanded="false"
+                	aria-controls="collapseExample">Avisos
+			   					<span class="badge"><%= messages.count %></span>
+			   				</button>
+			   			</div>
+							<div class="collapse" id="collapseExample">
+  							<div class="well">
+									<% messages.each do |message| %>
+  									<div class="panel panel-danger">
+  										<div class="panel-heading">
+                    		<h3 class="panel-title">Aviso - <%= message.created_at.to_date.iso8601 %></h3>
+  										</div>
+  										<div class="panel-body"><%= message.text %></div>
+  									</div>
+										<% end %>
   							</div>
-  						</div>
-						</div>
-					</ul>
-				</center>
-				<br>
+							</div>
+						</ul>
+					</center>
+					<br>
+				<% end %>
         <!--  ---------------------------------->
 
         <!-- Date chooser ---------------------->
@@ -62,17 +67,17 @@
 
         <!-- Activiies & Options -------------->
         <!-- color options: #337ab7, #3c763d, #8a6d3b -->
+				<% panels = ["primary", "warning", "success"] %>
         <% @report.suboptions.each do |suboption| %>
-        <% panels = ["primary", "warning", "success"] %>
-        <div class="panel panel-<%= panels[rand(3)] %>" >
-        	<div class="panel-heading" >
-        		<h3 class="panel-title"><%= suboption.option.activity.name %></h3>
+        	<div class="panel panel-<%= panels[rand(3)] %>" >
+        		<div class="panel-heading" >
+        			<h3 class="panel-title"><%= suboption.option.activity.name %></h3>
+        		</div>
+        		<div class="panel-body">
+        			<b><%= suboption.option.name %>:</b> <%= suboption.name %> <br>
+        			<b>Obs.:</b> note
+        		</div>
         	</div>
-        	<div class="panel-body">
-        		<b><%= suboption.option.name %>:</b> <%= suboption.name %> <br>
-        		<b>Obs.:</b> note
-        	</div>
-        </div>
         <% end %>
         <!--  --------------------------------->
 
