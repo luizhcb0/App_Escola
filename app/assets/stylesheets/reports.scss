@@ -26,6 +26,11 @@ a.selected {
 }
 
 
+
 .std_link:hover::after {
   opacity: 1;
+}
+
+.panel-body {
+  display: none;
 }
