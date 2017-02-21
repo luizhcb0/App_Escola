@@ -25,24 +25,67 @@ r_std_adj = Role.create(name: "student_adjacent")
 # > ActivityCategories & Activities & Options
 ## Alimentação
 ac_aliment = ActivityCategory.create(name: "Alimentação")
-  # Bebida
-  a_bebida = Activity.create(name: "Bebida", activity_category: ac_aliment)
-    opt_ = Option.create(name: "Água", activity: a_bebida, multiple: false)
-    opt_ = Option.create(name: "Suco", activity: a_bebida, multiple: false)
-    opt_ = Option.create(name: "Leite", activity: a_bebida, multiple: false)
   # Lanche
   a_lanche = Activity.create(name: "Lanche", activity_category: ac_aliment)
-    opt_ = Option.create(name: "Comida", activity: a_lanche, multiple: false, suboptions: [
+    opt_ = Option.create(name: "Comida", activity: a_lanche, multiple: true, suboptions: [
        Suboption.create(name: "Banana"),
        Suboption.create(name: "Biscoito"),
        Suboption.create(name: "Pão")
     ])
+    opt_ = Option.create(name: "Quantidade", activity: a_lanche, multiple: false, suboptions: [
+       Suboption.create(name: "Comeu tudo"),
+       Suboption.create(name: "Comeu metade"),
+       Suboption.create(name: "Comeu pouco"),
+       Suboption.create(name: "Recusou"),
+       Suboption.create(name: "Repetiu")
+    ])
+    opt_ = Option.create(name: "Bebida", activity: a_lanche, multiple: false, suboptions: [
+      Suboption.create(name: "Nada"),
+       Suboption.create(name: "Água"),
+       Suboption.create(name: "Leite"),
+       Suboption.create(name: "Suco de fruta")
+    ])
   # Almoco
   a_almoco = Activity.create(name: "Almoço", activity_category: ac_aliment)
-    opt_ = Option.create(name: "Comida", activity: a_lanche, multiple: false, suboptions: [
+    opt_ = Option.create(name: "Comida", activity: a_almoco, multiple: true, suboptions: [
        Suboption.create(name: "Arroz"),
        Suboption.create(name: "Feijão"),
-       Suboption.create(name: "Tomate")
+       Suboption.create(name: "Carne"),
+       Suboption.create(name: "Frango"),
+       Suboption.create(name: "Peixe"),
+       Suboption.create(name: "Macarrão"),
+       Suboption.create(name: "Ovo"),
+       Suboption.create(name: "Salada")
+    ])
+    opt_ = Option.create(name: "Quantidade", activity: a_almoco, multiple: false, suboptions: [
+      Suboption.create(name: "Comeu tudo"),
+      Suboption.create(name: "Comeu metade"),
+      Suboption.create(name: "Comeu pouco"),
+      Suboption.create(name: "Recusou"),
+      Suboption.create(name: "Repetiu")
+    ])
+    opt_ = Option.create(name: "Bebida", activity: a_almoco, multiple: false, suboptions: [
+      Suboption.create(name: "Nada"),
+       Suboption.create(name: "Água"),
+       Suboption.create(name: "Suco de fruta")
+    ])
+    opt_ = Option.create(name: "Sobremesa", activity: a_almoco, multiple: false, suboptions: [
+      Suboption.create(name: "Fruta"),
+       Suboption.create(name: "Gelatina")
+    ])
+  # Líquido
+  a_liquido = Activity.create(name: "Líquido", activity_category: ac_aliment)
+    opt_ = Option.create(name: "Bebida", activity: a_liquido, multiple: true, suboptions: [
+      Suboption.create(name: "Água"),
+       Suboption.create(name: "Suco"),
+       Suboption.create(name: "Leite")
+    ])
+    opt_ = Option.create(name: "Quantidade", activity: a_liquido, multiple: false, suboptions: [
+      Suboption.create(name: "Comeu tudo"),
+      Suboption.create(name: "Comeu metade"),
+      Suboption.create(name: "Comeu pouco"),
+      Suboption.create(name: "Recusou"),
+      Suboption.create(name: "Repetiu")
     ])
 
 ## Diario
@@ -83,7 +126,30 @@ ac_diario  = ActivityCategory.create(name: "Diário")
     ])
 
 ## Administrativo
-ac_adm     = ActivityCategory.create(name: "Administrativo")
+ac_oc     = ActivityCategory.create(name: "Ocorrências")
+    a_incidente = Activity.create(name: "Incidentes", activity_category: ac_oc)
+      opt_ = Option.create(name: "Tipo", activity: a_incidente, multiple: false, suboptions: [
+        Suboption.create(name: "Acidente"),
+        Suboption.create(name: "Conflito com colega"),
+        Suboption.create(name: "Mal comportamento")
+      ])
+      opt_ = Option.create(name: "Horário", activity: a_incidente, multiple: false, suboptions: [
+        Suboption.create(name: "10 minutos"),
+        Suboption.create(name: "20 minutos"),
+        Suboption.create(name: "30 minutos"),
+        Suboption.create(name: "40 minutos"),
+        Suboption.create(name: "50 minutos"),
+        Suboption.create(name: "60 minutos")
+      ])
+    a_incidente = Activity.create(name: "Saúde", activity_category: ac_oc)
+      opt_ = Option.create(name: "Problema", activity: a_incidente, multiple: false, suboptions: [
+        Suboption.create(name: "Febre"),
+        Suboption.create(name: "Afecções Gastrointestinais"),
+        Suboption.create(name: "Afecções Respiratórias"),
+        Suboption.create(name: "Assadura"),
+        Suboption.create(name: "Inalação"),
+        Suboption.create(name: "Medicação")
+      ])
 
 # > Professors
 us_p_bru = User.create(name: "Bruna Barroso", phone: "555555", email: "brunabarroso65@gmail.com", password: "123456", role: r_prof)
