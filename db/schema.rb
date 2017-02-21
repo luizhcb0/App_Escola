@@ -45,17 +45,20 @@ ActiveRecord::Schema.define(version: 20170121051148) do
     t.integer "student_id",   null: false
   end
 
+  create_table "message_students", id: false, force: :cascade do |t|
+    t.integer "message_id", null: false
+    t.integer "student_id", null: false
+    t.boolean "read"
+    t.index ["message_id"], name: "index_message_students_on_message_id", using: :btree
+    t.index ["student_id"], name: "index_message_students_on_student_id", using: :btree
+  end
+
   create_table "messages", force: :cascade do |t|
     t.integer  "professor_id", null: false
     t.text     "text"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["professor_id"], name: "index_messages_on_professor_id", using: :btree
-  end
-
-  create_table "messages_students", id: false, force: :cascade do |t|
-    t.integer "message_id", null: false
-    t.integer "student_id", null: false
   end
 
   create_table "options", force: :cascade do |t|
@@ -137,9 +140,9 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   add_foreign_key "classrooms_professors", "professors", on_delete: :cascade
   add_foreign_key "classrooms_students", "classrooms", on_delete: :cascade
   add_foreign_key "classrooms_students", "students", on_delete: :cascade
+  add_foreign_key "message_students", "messages", on_delete: :cascade
+  add_foreign_key "message_students", "students", on_delete: :cascade
   add_foreign_key "messages", "professors", on_delete: :cascade
-  add_foreign_key "messages_students", "messages", on_delete: :cascade
-  add_foreign_key "messages_students", "students", on_delete: :cascade
   add_foreign_key "options", "activities", on_delete: :cascade
   add_foreign_key "professors", "users", on_delete: :cascade
   add_foreign_key "report_notes", "activities", on_delete: :cascade
