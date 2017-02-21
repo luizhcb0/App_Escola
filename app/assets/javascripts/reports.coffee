@@ -4,7 +4,7 @@
 
 $(document).on "turbolinks:load", ->
   @togglePanel = (element) ->
-    $("#"+element.attr("class")).slideToggle(600)
+    $("#"+element.attr("class")).slideToggle(300)
     $("#"+element.attr("class")).css('display', "block")
 
   @selected = (element) ->
