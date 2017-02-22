@@ -1,48 +1,16 @@
-<h3 class="page-header">Relatórios Diários - <%= @report.student.name %></h3>
-
-<!--  Messages: ------------------------->
-<% messages = @report.student.messages.where("message_students.read" => [false,nil]) %>
-<% if !messages.empty? %>
-  <center>
-    <ul class="nav nav-pills" role="tablist">
-      <div class="btn-group">
-        <button type="button" class="btn btn-danger" data-toggle="collapse"
-          data-target="#collapseExample" aria-expanded="false"
-          aria-controls="collapseExample">Avisos
-          <span class="badge"><%= messages.count %></span>
-        </button>
-      </div>
-      <div class="collapse" id="collapseExample">
-        <div class="well">
-          <% messages.each do |message| %>
-            <div class="panel panel-danger">
-              <div class="panel-heading">
-                <h3 class="panel-title">Aviso - <%= message.created_at.to_date.iso8601 %></h3>
-              </div>
-              <div class="panel-body"><%= message.text %></div>
-            </div>
-            <% end %>
-        </div>
-      </div>
-    </ul>
-  </center>
-  <br>
-<% end %>
-<!--  ---------------------------------->
-
 <!-- Date chooser ---------------------->
 <div class="input-group">
   <span class="input-group-addon">
     <span class="glyphicon glyphicon-calendar"> Dia: </span>
   </span>
-  <input type="date" class="form-control" value="<%= @report.created_at.to_date %>">
+  <input type="date" class="form-control" value="<%= report.created_at.to_date %>">
 </div>
 <br>
 <!--  --------------------------------->
 
 <!-- Activiies & Options -------------->
 <% panels = ["primary", "warning", "success"] %>
-<% @report.suboptions.each do |suboption| %>
+<% report.suboptions.each do |suboption| %>
   <div class="panel panel-<%= panels[rand(3)] %>" >
     <div class="panel-heading" >
       <h3 class="panel-title"><%= suboption.option.activity.name %></h3>
@@ -56,14 +24,6 @@
 <!--  --------------------------------->
 
 <!-- Messages of that day ------------->
-<% messages = @report.student.messages.where(created_at:
-  (@report.created_at.beginning_of_day..@report.created_at.end_of_day)) %>
-<% messages.each do |message| %>
-  <div class="panel panel-danger">
-    <div class="panel-heading">
-      <h3 class="panel-title">Aviso</h3>
-    </div>
-    <div class="panel-body"><%= message.text %></div>
-  </div>
-  <% end %>
+<%= render "messages/messages_block", messages: report.student.messages.
+  where(created_at: (report.created_at.beginning_of_day..report.created_at.end_of_day)) %>
 <!--  --------------------------------->

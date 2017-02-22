@@ -1,0 +1,19 @@
+<% if !messages.empty? %>
+  <center>
+    <ul class="nav nav-pills" role="tablist">
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger" data-toggle="collapse"
+          data-target="#collapseMessages" aria-expanded="false"
+          aria-controls="collapseMessages">Avisos
+          <span class="badge"><%= messages.count %></span>
+        </button>
+      </div>
+      <div class="collapse" id="collapseMessages">
+        <div class="well">
+          <%= render "messages/messages_block", messages: messages %>
+        </div>
+      </div>
+    </ul>
+  </center>
+  <br>
+<% end %>

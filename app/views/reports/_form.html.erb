@@ -38,14 +38,12 @@
           <div class="modal-body">
 
             <!-- Ações -->
-            <% @report = Report.find(1) %>
-            <%= render "report_page" %>
+            <%= render "report_page", report: Report.find(1) %>
             <!-- Fim Ações -->
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="button" class="btn btn-primary">Editar</button>
-            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-primary">Editar</button>
           </div>
         </div>
       </div>

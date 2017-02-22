@@ -23,9 +23,18 @@
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
-			<%= render "report_page" %>
-			<%= link_to '<button class="btn btn-default" name="button">Edit</button>'.html_safe,
-      	edit_report_path(@report.id) %>
+			<!--  Header: -_------------------------>
+			<h3 class="page-header">Relatórios Diários - <%= @report.student.name %></h3>
+			<!--  ---------------------------------->
+
+			<!--  Messages: ------------------------->
+			<%= render "messages/messages_collapse_bt", messages: @report.student.messages.
+			  where("message_students.read" => [false,nil]) %>
+			<!--  ---------------------------------->
+
+			<!--  Report page: --------------------->
+			<%= render "report_page", report: @report %>
+			<!--  ---------------------------------->
 		</div>
 	</div>
 </div>
