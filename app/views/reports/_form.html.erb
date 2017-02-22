@@ -3,7 +3,7 @@
 
     <%= f.hidden_field 'student_id', {id: 'student_id'} %>
 
-    <div class="col-sm-9">
+    <div class="col-xs-12 col-sm-9">
       <h3 class="page-header">
         Crianças
       </h3>
@@ -16,10 +16,43 @@
             <a onclick="selected($(this)); return false;" class="std_link thumbnail" id="<%= student.id.to_s %>">
               <img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt="">
             </a>
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal1">
+              <span class="glyphicon glyphicon-level-up" aria-hidden="true"></span>
+            </button>
           </div>
         <% end %>
       </div>
     </div>
+
+
+    <!-- Modal 1 ------------------------>
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Relatórios Diários - Marcos Grégo</h4>
+          </div>
+          <div class="modal-body">
+
+            <!-- Ações -->
+            <% @report = Report.find(1) %>
+            <%= render "report_page" %>
+            <!-- Fim Ações -->
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-primary">Editar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fim Modal 1 ------------------------>
+
+
     <div class="col-sm-3">
       <h3 class="page-header">
         Categorias
