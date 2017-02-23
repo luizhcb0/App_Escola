@@ -1,40 +1,26 @@
 
-<!-- <table>
-  <% @report.suboptions.each do |suboption| %>
-    <tr>
-      <td><%= suboption.option.activity.activity_category.name %></td>
-      <td><%= suboption.option.activity.name %></td>
-      <td><%= suboption.option.name %></td>
-      <td><%= suboption.name %></td>
-    </tr>
-  <% end %>
-
-  <% @report.report_notes.each do |note| %>
-    <tr><td><%= note.activity.name %></td></tr>
-    <tr><td><%= note.text %></td></tr>
-  <% end %>
-
-  <tr><td><%= link_to 'Edit', edit_report_path(@report.id) %></td></tr>
-
-</table> -->
-
+<!-- suboption.option.activity.activity_category.name -->
 
 <div class="container">
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
+			
+			<% student = @report.nil? ? Student.find(params[:student_id]) : @report.student%>
+
 			<!--  Header: -_------------------------>
-			<h3 class="page-header">Relatórios Diários - <%= @report.student.name %></h3>
+			<h3 class="page-header">Relatórios Diários - <%= student.name %></h3>
 			<!--  ---------------------------------->
 
 			<!--  Messages: ------------------------->
-			<%= render "messages/messages_collapse_bt", messages: @report.student.messages.
+			<%= render "messages/messages_collapse_bt", messages: student.messages.
 			  where("message_students.read" => [false,nil]) %>
 			<!--  ---------------------------------->
 
 			<!--  Report page: --------------------->
 			<%= render "report_page", report: @report %>
 			<!--  ---------------------------------->
+
 		</div>
 	</div>
 </div>

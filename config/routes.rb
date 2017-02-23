@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   resources :activities
   resources :options
   resources :activity_categories
-  resources :reports
+  resources :reports do
+    post 'search', on: :collection
+  end
 
 end

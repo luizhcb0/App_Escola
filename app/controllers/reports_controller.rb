@@ -9,6 +9,12 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
   end
 
+  def search
+    @report = Report.where(student_id: params[:student_id],
+      created_at: (params[:date].to_date.beginning_of_day..params[:date].to_date.end_of_day)).first
+    render :show
+  end
+
   def new
     @report = Report.new
   end

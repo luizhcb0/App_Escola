@@ -1,29 +1,38 @@
 <!-- Date chooser ---------------------->
+<%= form_tag(search_reports_path) do %>
 <div class="input-group">
   <span class="input-group-addon">
     <span class="glyphicon glyphicon-calendar"> Dia: </span>
   </span>
-  <input type="date" class="form-control" value="<%= report.created_at.to_date %>">
+  <%= date_field_tag :date,
+    report.nil? ? params[:date] : report.created_at.to_date, class: "form-control" %>
 </div>
+  <%= hidden_field_tag(:student_id, report.nil? ? params[:student_id] : report.student.id) %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
 <br>
 <!--  --------------------------------->
 
-<!-- Activiies & Options -------------->
-<% panels = ["primary", "warning", "success"] %>
-<% report.suboptions.each do |suboption| %>
-  <div class="panel panel-<%= panels[rand(3)] %>" >
-    <div class="panel-heading" >
-      <h3 class="panel-title"><%= suboption.option.activity.name %></h3>
+<% if !report.nil? %>
+  <!-- Activiies & Options -------------->
+  <% panels = ["primary", "warning", "success"] %>
+  <% report.suboptions.each do |suboption| %>
+    <div class="panel panel-<%= panels[rand(3)] %>" >
+      <div class="panel-heading" >
+        <h3 class="panel-title"><%= suboption.option.activity.name %></h3>
+      </div>
+      <div class="panel-body">
+        <b><%= suboption.option.name %>:</b> <%= suboption.name %> <br>
+        <b>Obs.:</b> note
+      </div>
     </div>
-    <div class="panel-body">
-      <b><%= suboption.option.name %>:</b> <%= suboption.name %> <br>
-      <b>Obs.:</b> note
-    </div>
-  </div>
-<% end %>
-<!--  --------------------------------->
+  <% end %>
+  <!--  --------------------------------->
 
-<!-- Messages of that day ------------->
-<%= render "messages/messages_block", messages: report.student.messages.
-  where(created_at: (report.created_at.beginning_of_day..report.created_at.end_of_day)) %>
-<!--  --------------------------------->
+  <!-- Messages of that day ------------->
+  <%= render "messages/messages_block", messages: report.student.messages.
+    where(created_at: (report.created_at.beginning_of_day..report.created_at.end_of_day)) %>
+  <!--  --------------------------------->
+<% else %>
+  <h2> Sem relatório.. </h2>
+<% end %>

@@ -45,6 +45,36 @@ RSpec.describe ReportsController, type: :controller do
     end
   end
 
+
+  describe "POST #search" do
+    context "when requested report exists" do
+      let(:report) { create(:report) }
+
+      before(:each) do
+        post :search, params: { student_id: report.student.id, date: Date.today }
+      end
+
+      it "should be success" do
+        expect(response).to be_success
+      end
+
+      it "should load the correct report" do
+        expect(assigns(:report)).to eq report
+      end
+    end
+
+    context "when requested report does not exist" do
+      it "does not throw exception" do
+        expect{post :search, params: { student_id: -1, date: Date.today } }.to_not raise_exception
+      end
+
+      it "should return nil as report" do
+        expect(assigns(:report)).to eq nil
+      end
+    end
+  end
+
+
   describe "GET #new" do
     before(:each) do
       get :new
