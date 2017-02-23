@@ -1,4 +1,4 @@
-<!-- Date chooser ---------------------->
+<!-- Date chooser -------------------------------->
 <%= form_tag(search_reports_path) do %>
 <div class="input-group">
   <span class="input-group-addon">
@@ -11,28 +11,65 @@
   <%= submit_tag "Search", class: "btn btn-primary" %>
 <% end %>
 <br>
-<!--  --------------------------------->
+<!--  -------------------------------------------->
 
 <% if !report.nil? %>
-  <!-- Activiies & Options -------------->
+  <!-- Activiies & Options ----------------------->
+  <!-- panel color variables -->
   <% panels = ["primary", "warning", "success"] %>
-  <% report.suboptions.each do |suboption| %>
-    <div class="panel panel-<%= panels[rand(3)] %>" >
-      <div class="panel-heading" >
-        <h3 class="panel-title"><%= suboption.option.activity.name %></h3>
-      </div>
-      <div class="panel-body">
-        <b><%= suboption.option.name %>:</b> <%= suboption.name %> <br>
-        <b>Obs.:</b> note
-      </div>
-    </div>
-  <% end %>
-  <!--  --------------------------------->
+  <% panel_color = -1 %>
 
-  <!-- Messages of that day ------------->
+  <!-- make selection -->
+  <% selection = suboptions_with_joins(report.id) %>
+  <!-- skip it if no selection was made -->
+  <% if selection.count > 0 %>
+    <!-- open the first activity -->
+    <% prev_item = {} %>
+
+    <!-- LOOP through all activities -->
+    <% selection.each do |item| %>
+      <!-- change color if changed the category -->
+      <% panel_color+=1 if item["activity_category_id"] != prev_item["activity_category_id"] %>
+
+      <!-- change panel if changed activity -->
+      <% if item["activity_id"] != prev_item["activity_id"] %>
+        <!-- close previous one -->
+        <% if !prev_item.empty? %>
+          <%= render "report_activity_footer" %>
+        <% end %>
+        <!-- start a new  one -->
+        <%= render "report_activity_header",
+          panel: panels[panel_color%3], title: item["activity_name"] %>
+        <b><%= item["option_name"] %>:</b>
+        <%= item["suboption_name"] %>
+
+      <!-- change topic if changed option -->
+      <% elsif item["option_id"] != prev_item["option_id"] %>
+        <br><b><%= item["option_name"] %>:</b>
+        <%= item["suboption_name"] %>
+
+      <% else %>
+      <!-- show suboption_name -->
+      , <%= item["suboption_name"] %>
+      <% end %>
+
+      <!-- ADD NOTES -->
+      <!-- <br><b>Obs.:</b> note -->
+
+      <!-- update prev_item -->
+      <% prev_item = item %>
+    <% end %>
+    <!-- LOOP end -->
+
+    <!-- close the last activity -->
+    <%= render "report_activity_footer" %>
+  <% end %>
+  <!--  ----------------------------------------->
+
+  <!-- Messages of that day --------------------->
   <%= render "messages/messages_block", messages: report.student.messages.
     where(created_at: (report.created_at.beginning_of_day..report.created_at.end_of_day)) %>
-  <!--  --------------------------------->
+  <!--  ----------------------------------------->
 <% else %>
   <h2> Sem relatório.. </h2>
 <% end %>
