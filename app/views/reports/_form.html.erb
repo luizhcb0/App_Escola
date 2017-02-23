@@ -63,7 +63,7 @@
                     <a onclick="togglePanel($(this));" class="<%= category.name %>"><%= category.name %></a>
                 </h4>
               </div>
-              <div class="panel-body" id="<%= category.name %>">
+              <div class="panel-body report-form" id="<%= category.name %>">
                 <% activities.where(activity_category_id: category.id).each do |activity| %>
                   <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
@@ -71,7 +71,7 @@
                         <a onclick="togglePanel($(this));" class="<%= activity.name %>"><%= activity.name %></a>
                       </div>
                     </div>
-                    <div class="panel-body" id="<%= activity.name %>">
+                    <div class="panel-body report-form" id="<%= activity.name %>">
                       <% options.where(activity_id: activity.id).each do |option| %>
                         <%= f.label option.name %>
                         <% if option.multiple %>
