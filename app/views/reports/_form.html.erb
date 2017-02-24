@@ -8,6 +8,7 @@
         Crianças
       </h3>
       <div class="row">
+        <%= form_tag search_reports_path do %><%end%><!-- needed to unbug the first kid -->
         <% students.each do |student| %>
           <div class="col-xs-4 col-md-2">
             <center>
