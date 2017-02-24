@@ -1,6 +1,6 @@
 class ReportNote < ApplicationRecord
   belongs_to :activity
-  belongs_to :report
+  belongs_to :report, optional: true
 
   validates :text, presence: true
 end

@@ -97,7 +97,9 @@ RSpec.describe ReportsController, type: :controller do
     context "when valid" do
       before(:each) do
         post :create, params: {
-          report: attributes_for(:report, student_id: student.id, suboption_ids: [suboption.id])
+          report: attributes_for(:report, student_id: student.id,
+            suboption_ids: [suboption.id],
+            report_notes_attributes: [build(:report_note).attributes])
         }
       end
 
@@ -105,8 +107,16 @@ RSpec.describe ReportsController, type: :controller do
         expect(response).to redirect_to reports_path
       end
 
+      it "should belong to the right student" do
+        expect(report.student.id).to eq student.id
+      end
+
       it "should save the report" do
         expect(report).to be_persisted
+      end
+
+      it "should save the report_note" do
+        expect(report.report_notes.count).to eq 1
       end
 
       it "should save report.suboptions reference" do
@@ -160,7 +170,9 @@ RSpec.describe ReportsController, type: :controller do
       before(:each) do
         report = create(:report)
         patch :update, params: {
-          report: attributes_for(:report, student_id: student.id, suboption_ids: [suboption.id]),
+          report: attributes_for(:report, student_id: student.id,
+            suboption_ids: [suboption.id],
+            report_notes_attributes: [build(:report_note, text: "new note").attributes]),
           id: report.id
         }
       end
@@ -172,6 +184,7 @@ RSpec.describe ReportsController, type: :controller do
       it "should update attributes" do
         expect(report.reload.student).to eq student
         expect(report.suboptions.first).to eq suboption
+        expect(report.report_notes.first.text).to eq "new note"
       end
     end
 
@@ -179,12 +192,13 @@ RSpec.describe ReportsController, type: :controller do
       before(:each) do
         report = create(:report)
         patch :update, params: {
-          report: attributes_for(:report, student_id: -1, suboption_ids: [suboption.id]),
+          report: attributes_for(:report, student_id: -1,
+            suboption_ids: [suboption.id], report_notes_attributes: [build(:report_note).attributes]),
           id: report.id
         }
       end
 
-      it "should render edti template" do
+      it "should render edit template" do
         expect(response).to render_template(:edit)
       end
 

@@ -39,6 +39,7 @@ module StrongParamsHolder
   end
 
   def report_params
-    params.require(:report).permit(:student_id, suboption_ids: [])
+    params.require(:report).permit(:student_id, suboption_ids: [],
+      report_notes_attributes: [:id, :activity_id, :report_id, :text, :_destroy])
   end
 end
