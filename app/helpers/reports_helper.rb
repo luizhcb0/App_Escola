@@ -36,4 +36,17 @@ module ReportsHelper
       order by activity_category_id, activity_id, option_id, suboption_id")
   end
 
+  # Puts all the note texts of that activity into a string
+  # *** It marks the notes that had been used!!
+  def mark_notes_for(activity_id, notes_ary)
+    text = ""
+    notes_ary.each do |note|
+      if (note.activity_id == activity_id)
+        text += (text.empty?) ? note.text : "<br>"+note.text
+        note.activity_id = -1
+      end
+    end
+    return text
+  end
+
 end

@@ -1,2 +1,6 @@
+    <% if !note.empty? %>
+      <%= "<br>".html_safe if break_line %>
+      <b>Obs.:</b> <%= note.html_safe %>
+    <% end %>
   </div>
 </div>

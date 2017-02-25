@@ -21,48 +21,63 @@
 
   <!-- make selection -->
   <% selection = suboptions_with_joins(report.id) %>
-  <!-- skip it if no selection was made -->
-  <% if selection.count > 0 %>
-    <!-- open the first activity -->
-    <% prev_item = {} %>
+  <!-- open the first activity -->
+  <% prev_item = {} %>
+  <!-- array of notes -->
+  <% notes_a = report.report_notes.to_a %>
 
-    <!-- LOOP through all activities -->
-    <% selection.each do |item| %>
-      <!-- change color if changed the category -->
-      <% panel_color+=1 if item["activity_category_id"] != prev_item["activity_category_id"] %>
+  <!-- LOOP through all activities -->
+  <% selection.each do |item| %>
+    <!-- CATEGORY end: change color -->
+    <% panel_color+=1 if item["activity_category_id"] != prev_item["activity_category_id"] %>
 
-      <!-- change panel if changed activity -->
-      <% if item["activity_id"] != prev_item["activity_id"] %>
-        <!-- close previous one -->
-        <% if !prev_item.empty? %>
-          <%= render "report_activity_footer" %>
-        <% end %>
-        <!-- start a new  one -->
-        <%= render "report_activity_header",
-          panel: panels[panel_color%3], title: item["activity_name"] %>
-        <b><%= item["option_name"] %>:</b>
-        <%= item["suboption_name"] %>
+    <!-- ACTIVITY end: change panel -->
+    <% if item["activity_id"] != prev_item["activity_id"] %>
+      <!-- close previous one -->
+      <%= render "report_activity_footer",
+        note: mark_notes_for(prev_item["activity_id"], notes_a), break_line: true if !prev_item.empty? %>
+      <!-- start a new  one -->
+      <%= render "report_activity_header",
+        panel: panels[panel_color%3], title: item["activity_name"] %>
+      <b><%= item["option_name"] %>:</b>
+      <%= item["suboption_name"] %>
 
-      <!-- change topic if changed option -->
-      <% elsif item["option_id"] != prev_item["option_id"] %>
-        <br><b><%= item["option_name"] %>:</b>
-        <%= item["suboption_name"] %>
+    <!-- OPTION end: change topic -->
+    <% elsif item["option_id"] != prev_item["option_id"] %>
+      <br><b><%= item["option_name"] %>:</b>
+      <%= item["suboption_name"] %>
 
-      <% else %>
-      <!-- show suboption_name -->
-      , <%= item["suboption_name"] %>
-      <% end %>
-
-      <!-- ADD NOTES -->
-      <!-- <br><b>Obs.:</b> note -->
-
-      <!-- update prev_item -->
-      <% prev_item = item %>
+    <% else %>
+    <!-- SUBOPTION show name -->
+    , <%= item["suboption_name"] %>
     <% end %>
-    <!-- LOOP end -->
 
-    <!-- close the last activity -->
-    <%= render "report_activity_footer" %>
+    <!-- update prev_item -->
+    <% prev_item = item %>
+  <% end %>
+  <!-- LOOP end -->
+
+  <!-- close the last activity -->
+  <%= render "report_activity_footer",
+    note: mark_notes_for(prev_item["activity_id"], notes_a), break_line: true if !prev_item.empty? %>
+  <!--  ----------------------------------------->
+
+  <% prev_cat = (prev_item.empty?) ? 0 : prev_item["activity_category_id"] %>
+  <!-- show notes of activities not mentioned --->
+  <% notes_a.each do |note| %>
+    <% if note.activity_id != -1 %>
+      <!-- CATEGORY end: change color -->
+      <% panel_color+=1 if note.activity.activity_category_id != prev_cat %>
+      <% prev_cat = note.activity.activity_category_id %>
+
+      <!-- open -->
+      <%= render "report_activity_header",
+        panel: panels[panel_color%3], title: note.activity.name %>
+      <!-- close -->
+      <%= render "report_activity_footer",
+        note: mark_notes_for(note.activity_id, notes_a), break_line: false %>
+
+    <% end %>
   <% end %>
   <!--  ----------------------------------------->
 
