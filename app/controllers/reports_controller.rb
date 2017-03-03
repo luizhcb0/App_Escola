@@ -2,17 +2,16 @@ class ReportsController < ApplicationController
   include StrongParamsHolder
 
   def index
-    @reports = Report.all
+    student = Student.find(params[:student_id])
+    @reports = student.reports
   end
 
   def show
-    @report = Report.find(params[:id])
+    @report = find_report_from_params
   end
 
   def search
-    @report = Report.where(student_id: params[:student_id],
-      created_at: (params[:date].to_date.beginning_of_day..params[:date].to_date.end_of_day)).first
-    render :show
+    redirect_to student_report_path(params[:student_id],params[:date])
   end
 
   def new
@@ -22,7 +21,7 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(report_params)
     if @report.save
-      redirect_to reports_path
+      redirect_to root_path
     else
       render :new
     end
@@ -33,21 +32,28 @@ class ReportsController < ApplicationController
     @activities = Activity.all
     @options = Option.all
     @suboptions = Suboption.all
-    @report = Report.find(params[:id])
+    @report = find_report_from_params
   end
 
   def update
-    @report = Report.find(params[:id])
+    @report = find_report_from_params
     if @report.update_attributes(report_params)
-      redirect_to reports_path(@report.id)
+      redirect_to student_report_path(@report.student, @report.date)
     else
       render :edit
     end
   end
 
   def destroy
-    @report = Report.find(params[:id])
-    @report.destroy
-    redirect_to reports_path
+    @report = find_report_from_params
+    @report.destroy if !@report.nil?
+    redirect_to root_path
   end
+
+  # Based on params :student_id and :date, finds the correspondent report
+  private
+  def find_report_from_params
+    Report.where(student_id: params[:student_id], date: params[:date]).first
+  end
+
 end

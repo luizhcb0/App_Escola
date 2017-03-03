@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20170121051148) do
     t.integer "message_id", null: false
     t.integer "student_id", null: false
     t.boolean "read"
+    t.index ["message_id", "student_id"], name: "index_message_students_on_message_id_and_student_id", unique: true, using: :btree
     t.index ["message_id"], name: "index_message_students_on_message_id", using: :btree
     t.index ["student_id"], name: "index_message_students_on_student_id", using: :btree
   end
@@ -83,14 +84,17 @@ ActiveRecord::Schema.define(version: 20170121051148) do
 
   create_table "reports", force: :cascade do |t|
     t.integer  "student_id", null: false
+    t.date     "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["student_id", "date"], name: "index_reports_on_student_id_and_date", unique: true, using: :btree
     t.index ["student_id"], name: "index_reports_on_student_id", using: :btree
   end
 
   create_table "reports_suboptions", id: false, force: :cascade do |t|
     t.integer "report_id",    null: false
     t.integer "suboption_id", null: false
+    t.index ["report_id", "suboption_id"], name: "index_reports_suboptions_on_report_id_and_suboption_id", unique: true, using: :btree
   end
 
   create_table "roles", force: :cascade do |t|

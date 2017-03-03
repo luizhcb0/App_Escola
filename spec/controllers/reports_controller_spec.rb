@@ -5,7 +5,7 @@ RSpec.describe ReportsController, type: :controller do
 
   describe "GET #index" do
     before(:each) do
-      get :index
+      get :index, params: { student_id: test_report[0].student_id }
     end
 
     it "should be success" do
@@ -17,7 +17,7 @@ RSpec.describe ReportsController, type: :controller do
     end
 
     it "should load all reports" do
-      expect(assigns(:reports)).to match_array test_report
+      expect(assigns(:reports)).to match_array test_report[0].student.reports
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe ReportsController, type: :controller do
       let(:report) { create(:report) }
 
       before(:each) do
-        get :show, params: { id: report.id }
+        get :show, params: { student_id: report.student_id , date: report.date }
       end
 
       it "should be success" do
@@ -40,7 +40,8 @@ RSpec.describe ReportsController, type: :controller do
 
     context "when requested report does not exist" do
       it "throws ActiveRecord::RecordNotFound exception" do
-        expect{get :show, params: {id: -1} }.to raise_exception ActiveRecord::RecordNotFound
+        get :show, params: { student_id: -1, date: Date.today }
+        expect(assigns(:report)).to eq nil
       end
     end
   end
@@ -51,25 +52,11 @@ RSpec.describe ReportsController, type: :controller do
       let(:report) { create(:report) }
 
       before(:each) do
-        post :search, params: { student_id: report.student.id, date: Date.today }
+        post :search, params: { student_id: report.student_id, date: Date.today }
       end
 
-      it "should be success" do
-        expect(response).to be_success
-      end
-
-      it "should load the correct report" do
-        expect(assigns(:report)).to eq report
-      end
-    end
-
-    context "when requested report does not exist" do
-      it "does not throw exception" do
-        expect{post :search, params: { student_id: -1, date: Date.today } }.to_not raise_exception
-      end
-
-      it "should return nil as report" do
-        expect(assigns(:report)).to eq nil
+    it "should redirect_to show" do
+        expect(response).to redirect_to student_report_path(report.student_id, report.date)
       end
     end
   end
@@ -104,11 +91,11 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       it "should redirect to reports_path" do
-        expect(response).to redirect_to reports_path
+        expect(response).to redirect_to root_path
       end
 
       it "should belong to the right student" do
-        expect(report.student.id).to eq student.id
+        expect(report.student_id).to eq student.id
       end
 
       it "should save the report" do
@@ -149,7 +136,7 @@ RSpec.describe ReportsController, type: :controller do
     let(:report) { test_report[rand 2] }
 
     before(:each) do
-      get :edit, params: {id: report.id}
+      get :edit, params: {student_id: report.student_id, date: report.date}
     end
 
     it "should be success" do
@@ -173,12 +160,12 @@ RSpec.describe ReportsController, type: :controller do
           report: attributes_for(:report, student_id: student.id,
             suboption_ids: [suboption.id],
             report_notes_attributes: [build(:report_note, text: "new note").attributes]),
-          id: report.id
+          student_id: report.student_id, date: report.date
         }
       end
 
       it "should be success" do
-        expect(response).to redirect_to reports_path(report.id)
+        expect(response).to redirect_to student_report_path(report.student_id,report.date)
       end
 
       it "should update attributes" do
@@ -194,7 +181,7 @@ RSpec.describe ReportsController, type: :controller do
         patch :update, params: {
           report: attributes_for(:report, student_id: -1,
             suboption_ids: [suboption.id], report_notes_attributes: [build(:report_note).attributes]),
-          id: report.id
+          student_id: report.student_id, date: report.date
         }
       end
 
@@ -215,11 +202,11 @@ RSpec.describe ReportsController, type: :controller do
       let(:report) { create(:report, suboption_ids: [suboption.id]) }
 
       before(:each) do
-        delete :destroy, params: { id: report.id }
+        delete :destroy, params: { student_id: report.student_id, date: report.date }
       end
 
       it "should redirect to reports_path" do
-        expect(response).to redirect_to reports_path
+        expect(response).to redirect_to root_path
       end
 
       it "should delete the requested report from DB" do
@@ -234,7 +221,8 @@ RSpec.describe ReportsController, type: :controller do
 
     context "when requested report does not exist" do
       it "should throw ActiveRecord::RecordNotFound exception" do
-        expect{ get :show, params: {id: -1}}.to raise_exception ActiveRecord::RecordNotFound
+        delete :destroy, params: {student_id: -1, date: Date.today}
+        expect(assigns(:report)).to eq nil
       end
     end
   end

@@ -14,14 +14,20 @@ Rails.application.routes.draw do
   #   post 'save_message', :on => :collection
   # end
   #
-  resources :students
+  resources :students do
+    resources :reports, except: [:new, :create], param: :date
+  end
+  resources :reports, only: [:new, :create] do
+    post 'search', on: :collection
+  end
+
   resources :classrooms
   resources :messages
   resources :activities
   resources :options
   resources :activity_categories
-  resources :reports do
-    post 'search', on: :collection
-  end
+  # resources :reports do
+  #   post 'search', on: :collection
+  # end
 
 end

@@ -7,5 +7,6 @@ class CreateMessageStudents < ActiveRecord::Migration[5.0]
     end
     add_foreign_key :message_students, :messages, on_delete: :cascade
     add_foreign_key :message_students, :students, on_delete: :cascade
+    add_index :message_students, ["message_id", "student_id"], :unique => true
   end
 end

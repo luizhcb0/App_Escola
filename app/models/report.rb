@@ -4,4 +4,11 @@ class Report < ApplicationRecord
   has_many :report_notes
 
   accepts_nested_attributes_for :report_notes
+
+  # Callback to set the read proprerty false on Create
+  before_create :set_date
+
+  def set_date
+    self.date = Date.today
+  end
 end

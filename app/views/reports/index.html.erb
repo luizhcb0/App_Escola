@@ -5,8 +5,10 @@
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-      <%= link_to '<button class="btn btn-default" name="button">Newest</button>'.html_safe, :sort => "created_at DESC" %>
-      <%= link_to '<button class="btn btn-default" name="button">Oldest</button>'.html_safe, :sort => "created_at ASC" %>
+      <%= link_to '<button class="btn btn-default" name="button">Newest</button>'.html_safe,
+        student_id: @reports[0].student_id, sort: "created_at DESC" %>
+      <%= link_to '<button class="btn btn-default" name="button">Oldest</button>'.html_safe,
+        student_id: @reports[0].student_id, sort: "created_at ASC" %>
     </div>
   </div>
 
@@ -26,15 +28,15 @@
           <% @reports.each do |report| %>
             <tr>
               <td><%= report.student.name %></td>
-              <td><%= report.created_at.to_s(:short)%></td>
+              <td><%= report.date.to_s(:long)%></td>
               <td>
-                <%= link_to report_path(report), class:"btn btn-success btn-circle" do %>
+                <%= link_to student_report_path(report.student,report.date), class:"btn btn-success btn-circle" do %>
                   <i class="fa fa-eye"></i>
                 <% end %>
-                <%= link_to edit_report_path(report), class:"btn btn-primary btn-circle" do %>
+                <%= link_to edit_student_report_path(report.student,report.date), class:"btn btn-primary btn-circle" do %>
                   <i class="fa fa-pencil"></i>
                 <% end %>
-                <%= link_to report_path(report), class:"btn btn-danger btn-circle", method:"delete" do %>
+                <%= link_to student_report_path(report.student,report.date), class:"btn btn-danger btn-circle", method:"delete" do %>
                  <i class="fa fa-trash-o"></i>
                 <% end %>
               </td>

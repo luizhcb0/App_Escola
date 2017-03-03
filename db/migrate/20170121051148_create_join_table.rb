@@ -6,5 +6,6 @@ class CreateJoinTable < ActiveRecord::Migration[5.0]
     end
     add_foreign_key :reports_suboptions, :suboptions, on_delete: :cascade
     add_foreign_key :reports_suboptions, :reports, on_delete: :cascade
+    add_index :reports_suboptions, ["report_id", "suboption_id"], :unique => true
   end
 end
