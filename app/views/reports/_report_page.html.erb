@@ -14,9 +14,8 @@
 
 <% if !report.nil? %>
   <!-- Activiies & Options ----------------------->
-  <!-- panel color variables -->
+  <!-- panel colors array -->
   <% panels = ["primary", "warning", "success"] %>
-  <% panel_color = -1 %>
 
   <!-- make selection -->
   <% selection = suboptions_with_joins(report.id) %>
@@ -27,9 +26,6 @@
 
   <!-- LOOP through all activities -->
   <% selection.each do |item| %>
-    <!-- CATEGORY end: change color -->
-    <% panel_color+=1 if item["activity_category_id"] != prev_item["activity_category_id"] %>
-
     <!-- ACTIVITY end: change panel -->
     <% if item["activity_id"] != prev_item["activity_id"] %>
       <!-- close previous one -->
@@ -37,7 +33,7 @@
         note: mark_notes_for(prev_item["activity_id"], notes_a), break_line: true if !prev_item.empty? %>
       <!-- start a new  one -->
       <%= render "report_activity_header",
-        panel: panels[panel_color%3], title: item["activity_name"] %>
+        panel: panels[item["activity_category_id"]%3], title: item["activity_name"] %>
       <b><%= item["option_name"] %>:</b>
       <%= item["suboption_name"] %>
 
@@ -65,13 +61,9 @@
   <!-- show notes of activities not mentioned --->
   <% notes_a.each do |note| %>
     <% if note.activity_id != -1 %>
-      <!-- CATEGORY end: change color -->
-      <% panel_color+=1 if note.activity.activity_category_id != prev_cat %>
-      <% prev_cat = note.activity.activity_category_id %>
-
       <!-- open -->
       <%= render "report_activity_header",
-        panel: panels[panel_color%3], title: note.activity.name %>
+        panel: panels[note.activity.activity_category_id%3], title: note.activity.name %>
       <!-- close -->
       <%= render "report_activity_footer",
         note: mark_notes_for(note.activity_id, notes_a), break_line: false %>

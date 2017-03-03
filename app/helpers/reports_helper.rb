@@ -33,7 +33,7 @@ module ReportsHelper
       join suboptions on rep_subs.suboption_id=suboptions.id
       join options on suboptions.option_id=options.id
       join activities on options.activity_id=activities.id
-      order by activity_category_id, activity_id, option_id, suboption_id")
+      order by activity_id, option_id, suboption_id")
   end
 
   # Puts all the note texts of that activity into a string
