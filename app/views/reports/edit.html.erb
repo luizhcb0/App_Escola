@@ -1,3 +1,7 @@
 <section class="container-fluid">
-  <%= render "form" %>
+  <% if !@report.nil? %>
+    <%= form_for @report, url: student_report_path(@report.student,@report.date) do |f| %>
+      <%= render "form_categories", f: f %>
+    <% end %>
+  <% end %>
 </section>

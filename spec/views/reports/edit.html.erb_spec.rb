@@ -8,6 +8,6 @@ RSpec.describe "reports/edit.html.erb", type: :view do
   }
 
   it "should render form" do
-    expect(view).to render_template(:partial => "_form")
+    expect(view).to render_template(:partial => "_form_categories")
   end
 end
