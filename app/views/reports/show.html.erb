@@ -1,11 +1,9 @@
 
-<!-- suboption.option.activity.activity_category.name -->
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
-			
+
 			<% student = @report.nil? ? Student.find(params[:student_id]) : @report.student%>
 
 			<!--  Header: -_------------------------>
@@ -13,8 +11,10 @@
 			<!--  ---------------------------------->
 
 			<!--  Messages: ------------------------->
-			<%= render "messages/messages_collapse_bt", messages: student.messages.
-			  where("message_students.read" => [false,nil]) %>
+			<% if current_user.role.name == "student" || current_user.role.name == "student_adjacent" %>
+				<%= render "messages/messages_collapse_bt", messages: student.messages.
+				  where("message_students.read" => [false,nil]) %>
+			<% end %>
 			<!--  ---------------------------------->
 
 			<!--  Report page: --------------------->
