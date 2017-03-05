@@ -4,10 +4,10 @@
   <span class="input-group-addon">
     <span class="glyphicon glyphicon-calendar"> Dia: </span>
   </span>
-  <%= date_field_tag :date, report.nil? ? params[:date] : report.date, class: "form-control" %>
+  <%= date_field_tag :date, report.nil? ? params[:date] : report.date,
+    class: "form-control", onchange: "this.form.submit();" %>
 </div>
   <%= hidden_field_tag(:student_id, report.nil? ? params[:student_id] : report.student.id) %>
-  <%= submit_tag "Search", class: "btn btn-primary" %>
 <% end %>
 <br>
 <!--  -------------------------------------------->
