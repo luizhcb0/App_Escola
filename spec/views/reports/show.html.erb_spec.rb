@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "reports/show.html.erb", type: :view do
   before(:each) {
+    view.extend SessionsHelper
     # needs to be create because of the timestamp
-    assign(:report, create(:report, suboptions: [create(:suboption)]))
+    student = create(:student, users: [create(:user)])
+    view.log_in(student.users[0])
+    assign(:report, create(:report, student: student, suboptions: [create(:suboption)]))
     render
   }
 
