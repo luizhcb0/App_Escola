@@ -1,46 +1,58 @@
 
-  <h3 class="page-header">
-    Categorias
-  </h3>
-  <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
-      <% categories.each do |category| %>
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="headingOne">
-            <h4 class="panel-title">
-                <a onclick="togglePanel($(this));" class="<%= category.name %>"><%= category.name %></a>
-            </h4>
-          </div>
-          <div class="panel-body report-form" id="<%= category.name %>">
-            <% activities.where(activity_category_id: category.id).each do |activity| %>
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                  <div class="panel-title">
-                    <a onclick="togglePanel($(this));" class="<%= activity.name %>"><%= activity.name %></a>
-                  </div>
-                </div>
-                <div class="panel-body report-form" id="<%= activity.name %>">
-                  <% options.where(activity_id: activity.id).each do |option| %>
-                    <%= f.label option.name %>
-                    <% if option.multiple %>
-                      <% suboptions.where(option_id: option.id).each do |suboption| %>
-                        <div class="form-group">
-                          <%= f.label suboption.name %>
-                          <%= f.check_box "suboption_ids", {:multiple => true}, suboption.id, nil  %>
-                        </div>
-                      <% end %>
-                    <% else %>
-                      <% sub_array = suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
-                      <%= select_tag "report[suboption_ids][]", options_for_select(sub_array, @report.suboption_ids), class: "form-control"  %>
-                    <% end %>
-                  <% end %>
+<h3 class="page-header">
+  Categorias
+</h3>
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <% categories.each do |category| %>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+              <a onclick="togglePanel($(this));" class="<%= category.name %>">
+                <%= category.name %>
+              </a>
+          </h4>
+        </div>
+        <div class="panel-body report-form" id="<%= category.name %>">
+          <% counter = 0 %>
+          <% activities.where(activity_category_id: category.id).each do |activity| %>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <div class="panel-title">
+                  <a onclick="togglePanel($(this));" class="<%= activity.name %>">
+                    <%= activity.name %>
+                  </a>
                 </div>
               </div>
-            <% end %>
-          </div>
+              <div class="panel-body report-form" id="<%= activity.name %>">
+                <% options.where(activity_id: activity.id).each do |option| %>
+                  <%= f.label option.name %>
+                  <% if option.multiple %>
+                    <% suboptions.where(option_id: option.id).each do |suboption| %>
+                      <div class="form-group">
+                        <%= f.label suboption.name %>
+                        <%= f.check_box "suboption_ids", {:multiple => true}, suboption.id, nil %>
+                      </div>
+                    <% end %>
+                  <% else %>
+                    <% sub_array = suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
+                    <%= select_tag "report[suboption_ids][]",
+                      options_for_select(sub_array, @report.suboption_ids), class: "form-control" %>
+                  <% end %>
+                <% end %>
+
+                <%= f.fields_for :report_notes, report_notes[counter] do |note| %>
+                  <%= note.hidden_field :activity_id, value: activity.id %>
+                  <%= note.label :text, "Obs: " %><br/>
+                  <%= note.text_area :text, class: "form-control" %>
+                <% end %>
+                <% counter += 1 %>
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
-  <%= f.submit "Save", class: "btn btn-default" %>
 </div>
+<%= f.submit "Save", class: "btn btn-default" %>
