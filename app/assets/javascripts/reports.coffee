@@ -3,25 +3,23 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "turbolinks:load", ->
-  prevSelected = null # previous selected kid
-
+  $prevSelected = null # previous selected kid
   @togglePanel = (element) ->
     $("#"+element.attr("class")).slideToggle(300)
     $("#"+element.attr("class")).css('display', "block")
 
   @selected = (element) ->
+
     $('#student_id').val(element.attr('id'))
     if !$(element).hasClass("selected")
-      $(element).addClass('selected')
-
       #  remove selected from previous kid
-      $(prevSelected).removeClass('selected') if prevSelected isnt null
-      prevSelected = element
-
+      $prevSelected.removeClass('selected') if $prevSelected isnt null
+      $prevSelected = element
+      $(element).addClass('selected')
     else
       $(element).removeClass('selected')
-      prevSelected = null # resets the previous selected
-
+      #  remove selected from previous kid
+      $prevSelected = null # resets the previous selected
     return
 
   # $('.std_link').click ->
