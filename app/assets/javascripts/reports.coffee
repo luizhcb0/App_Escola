@@ -13,13 +13,15 @@ $(document).on "turbolinks:load", ->
     $('#student_id').val(element.attr('id'))
     if !$(element).hasClass("selected")
       $(element).addClass('selected')
+
+      #  remove selected from previous kid
+      $(prevSelected).removeClass('selected') if prevSelected isnt null
+      prevSelected = element
+
     else
       $(element).removeClass('selected')
+      prevSelected = null # resets the previous selected
 
-    #  remove selected from previous kid
-    if (prevSelected != null)
-      $(prevSelected).removeClass('selected')
-    prevSelected = (element)
     return
 
   # $('.std_link').click ->
