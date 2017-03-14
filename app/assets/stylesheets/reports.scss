@@ -17,14 +17,12 @@
 .std_link:hover {
   -webkit-transform: scale(.98,.98);
   transform: scale(.98,.98);
-  width: 98%;
 }
 
 .std_link.selected {
-  border-width: 3px;
-  -webkit-transform: scale(.96,.96);
-  transform: scale(.96,.96);
-  width: 98%;
+  background: #337ab7;
+  -webkit-transform: scale(.95,.95);
+  transform: scale(.95,.95);
 }
 
 a.selected {
