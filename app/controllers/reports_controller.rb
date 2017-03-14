@@ -16,9 +16,6 @@ class ReportsController < ApplicationController
 
   def new
     @report = Report.new
-    Activity.all.each do |activity|
-      @report.report_notes.build
-    end
   end
 
   def create
