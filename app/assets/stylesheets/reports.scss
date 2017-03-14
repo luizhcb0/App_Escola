@@ -21,18 +21,16 @@
 }
 
 
-a.selected {
-  border-color: #337ab7;
-  border: solid 2px;
-  -webkit-transform: scale(.98,.98);
-  transform: scale(.98,.98);
-}
-
-
-
-.std_link:hover::after {
-  opacity: 1;
-}
+// a.selected {
+//   border-color: #337ab7;
+//   border: solid 2px;
+//   -webkit-transform: scale(.96,.96);
+//   transform: scale(.96,.96);
+// }
+//
+// .std_link:hover::after {
+//   opacity: 1;
+// }
 
 .report-form {
   display: none;
@@ -42,4 +40,12 @@ a.selected {
   color: #337ab7;
   cursor: pointer;
   text-decoration: none;
+}
+
+:checked + label .std_link {
+  border: solid 2px #337ab7;
+}
+
+input.student_check[type=checkbox] {
+  display: none;
 }

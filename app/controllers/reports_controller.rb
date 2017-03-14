@@ -19,12 +19,24 @@ class ReportsController < ApplicationController
   end
 
   def create
-    @report = Report.new(report_params)
-    if @report.save
-      redirect_to root_path
-    else
-      render :new
+    @reports = Array.new
+    params[:student_ids].each do |student_id|
+      @reports << @report = Report.new(report_params(student_id))
     end
+    Report.transaction do
+      success = @reports.map(&:save)
+      unless success.all?
+        errored = @reports.select {|b| !b.errors.blank? }
+        # do something with the errored values
+        render :new
+        raise ActiveRecord::Rollback
+      else
+        redirect_to root_path
+      end
+    end
+    # Report.transaction do
+    #   @reports.each(&:save!)
+    # end
   end
 
   def edit

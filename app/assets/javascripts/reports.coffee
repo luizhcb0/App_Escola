@@ -8,20 +8,21 @@ $(document).on "turbolinks:load", ->
     $("#"+element.attr("class")).slideToggle(300)
     $("#"+element.attr("class")).css('display', "block")
 
-  @selected = (element) ->
+# NOT USED ANYMORE DUE MULTIPE SELECTION
+  # @selected = (element) ->
+  #   $('#student_id').val(element.attr('id'))
+  #   if !$(element).hasClass("selected")
+  #     #  remove selected from previous kid
+  #     $prevSelected.removeClass('selected') if $prevSelected isnt null
+  #     $prevSelected = element
+  #     $(element).addClass('selected')
+  #   else
+  #     $(element).removeClass('selected')
+  #     #  remove selected from previous kid
+  #     $prevSelected = null # resets the previous selected
+  #   return
 
-    $('#student_id').val(element.attr('id'))
-    if !$(element).hasClass("selected")
-      #  remove selected from previous kid
-      $prevSelected.removeClass('selected') if $prevSelected isnt null
-      $prevSelected = element
-      $(element).addClass('selected')
-    else
-      $(element).removeClass('selected')
-      #  remove selected from previous kid
-      $prevSelected = null # resets the previous selected
-    return
-
+# ATERNATIVE TO THE FUNCTION ABOVE
   # $('.std_link').click ->
   #   $('#student_id').val(this.id)
   #   if !$(this).hasClass("selected")
