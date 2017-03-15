@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.std_link::after {
+.std_img::after {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -14,10 +14,18 @@
   transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.std_link:hover {
+.std_img:hover {
   -webkit-transform: scale(.98,.98);
   transform: scale(.98,.98);
   cursor: pointer;
+}
+
+.std_container {
+  margin-bottom: 15%;
+}
+
+.std_label {
+  min-height: 2vw;
 }
 
 
@@ -42,7 +50,7 @@
   text-decoration: none;
 }
 
-:checked + label .std_link {
+:checked + label .std_img {
   border: solid 2px #337ab7;
 }
 

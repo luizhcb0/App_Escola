@@ -9,19 +9,22 @@
         <%= form_tag search_reports_path do %><%end%><!-- needed to unbug the first kid -->
         <% students.each do |student| %>
           <div class="col-xs-4 col-md-2">
-            <%= check_box_tag "student_ids[]", student.id, nil, {id: "check_#{student.id}", class: "student_check"} %>
-            <%= label_tag "check_#{student.id}" do%>
-              <%=student.name%>
-              <div class="std_link thumbnail"><img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt=""></div>
-            <% end %>
+
+            <div class="std_container">
+              <%= check_box_tag "student_ids[]", student.id, nil, {id: "check_#{student.id}", class: "student_check"} %>
+              <%= label_tag "check_#{student.id}" do %>
+                <div class="std_label"><%= student.name %></div>
+                <div class="std_img thumbnail"><img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt=""></div>
+              <% end %>
             <!-- <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal1">
               <span class="glyphicon glyphicon-level-up" aria-hidden="true"></span>
             </button> -->
-            <%= form_tag search_reports_path do %>
-              <%= hidden_field_tag :date, Date.today, class: "form-control" %>
-              <%= hidden_field_tag :student_id, student.id %>
-              <%= submit_tag "Buscar", class: "btn btn-primary btn-xs" %>
-            <% end %>
+              <%= form_tag search_reports_path do %>
+                <%= hidden_field_tag :date, Date.today, class: "form-control" %>
+                <%= hidden_field_tag :student_id, student.id %>
+                <%= submit_tag "Buscar", class: "btn btn-primary btn-xs" %>
+              <% end %>
+            </div>
 
           </div>
         <% end %>
