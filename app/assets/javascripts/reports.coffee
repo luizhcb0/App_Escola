@@ -8,6 +8,10 @@ $(document).on "turbolinks:load", ->
     $("#"+element.attr("class")).slideToggle(300)
     $("#"+element.attr("class")).css('display', "block")
 
+
+  $(".alert").fadeOut(3000)
+
+
 # NOT USED ANYMORE DUE MULTIPE SELECTION
   # @selected = (element) ->
   #   $('#student_id').val(element.attr('id'))

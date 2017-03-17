@@ -23,18 +23,25 @@ class ReportsController < ApplicationController
 
   def create
     @reports = Array.new
-    params[:student_ids].each do |student_id|
-      @reports << @report = Report.new(report_params(student_id))
+    if !params[:student_ids].nil?
+      params[:student_ids].each do |student_id|
+        @reports << @report = Report.new(report_params(student_id))
+      end
+    else
+      @reports << @report = Report.new(report_params(nil))
     end
     Report.transaction do
       success = @reports.map(&:save)
+      #success = @reports.map(&:save!) --> Force Model validation
       unless success.all?
         errored = @reports.select {|b| !b.errors.blank? }
         # do something with the errored values
+        flash[:error] = "Relatório não pôde ser enviado"
         render :new
         raise ActiveRecord::Rollback
       else
-        redirect_to root_path
+        flash[:success] = "Relatório enviado com sucesso"
+        redirect_to new_report_path
       end
     end
     # Report.transaction do
