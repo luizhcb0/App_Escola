@@ -38,8 +38,8 @@ module StrongParamsHolder
     params.require(:activity_category).permit(:name)
   end
 
-  def report_params(student)
-    params[:report][:student_id] = student
+  def report_params(student = nil)
+    params[:report][:student_id] = student if !student.nil?
     params.require(:report).permit(:student_id, :date, suboption_ids: [],
       report_notes_attributes: [:id, :activity_id, :report_id, :text, :_destroy])
   end

@@ -84,14 +84,15 @@ RSpec.describe ReportsController, type: :controller do
     context "when valid" do
       before(:each) do
         post :create, params: {
-          report: attributes_for(:report, student_id: student.id,
+          student_ids: [student.id],
+          report: attributes_for(:report,
             suboption_ids: [suboption.id],
             report_notes_attributes: [build(:report_note).attributes])
         }
       end
 
-      it "should redirect to reports_path" do
-        expect(response).to redirect_to root_path
+      it "should redirect_to new report" do
+        expect(response).to redirect_to new_report_path
       end
 
       it "should belong to the right student" do
@@ -117,7 +118,7 @@ RSpec.describe ReportsController, type: :controller do
 
     context "when invalid" do
       before(:each) do
-        post :create, params: { report: attributes_for(:report, student_id: nil) }
+        post :create, params: { report: attributes_for(:report) }
       end
 
       it "should render new template" do
