@@ -181,7 +181,8 @@ RSpec.describe ReportsController, type: :controller do
         report = create(:report)
         patch :update, params: {
           report: attributes_for(:report, student_id: -1,
-            suboption_ids: [suboption.id], report_notes_attributes: [build(:report_note).attributes]),
+            suboption_ids: [suboption.id, create(:suboption).id], 
+            report_notes_attributes: [build(:report_note).attributes]),
           student_id: report.student_id, date: report.date
         }
       end
@@ -192,7 +193,7 @@ RSpec.describe ReportsController, type: :controller do
 
       it "should not update attributes" do
         expect(report.reload.student).to_not eq student
-        expect(report.suboptions.size).to eq 0
+        expect(report.suboptions.size).to eq 1
       end
     end
   end
