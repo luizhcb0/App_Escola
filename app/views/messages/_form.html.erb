@@ -1,17 +1,21 @@
-<%= form_for @message do |f| %>
-  <p>
-    <%= f.label :to %><br>
+<%= form_for message do |m| %>
 
-    <%= select_tag "message[student_ids][]", options_for_select(students_array) %><br>
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <%= m.hidden_field :professor_id, value: current_user.professor.id %>
 
-    <%# professor = Professor.where(user: current_user.id).first %>
-    <%#= f.hidden_field :professor_id, :value => professor.id %>
+    <% students.each do |student| %>
+      <%= m.hidden_field :student_ids, {multiple: true, id: "#{student.id}"}%>
+    <% end %>
 
-    <%= f.hidden_field :professor_id, :value => current_user.professor.id %>
+    <%= m.label :text, "Texto"%>
+    <%= m.text_area :text, {class: "form-control message_box", rows: 6} %>
 
-    <%= label_tag(:text) %><br>
-    <%= f.text_area :text %><br>
-  <p>
-    <%= f.submit "Send" %>
-  </p>
+    <%= m.submit "Enviar", class: "btn btn-default" %>
+
+  </div>
+
+
+</div>
+
 <% end %>

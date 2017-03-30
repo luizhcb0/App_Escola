@@ -11,6 +11,23 @@ $(document).on "turbolinks:load", ->
 
   $(".alert").fadeOut(3000)
 
+  $('#render_msg').click ->
+    $(".right_forms .categories").css('display','none')
+    $(".right_forms .messages").css('display','block')
+
+  $('#render_cat').click ->
+    $(".right_forms .messages").css('display','none')
+    $(".right_forms .categories").css('display','block')
+
+  $('input[type="checkbox"][name="student_ids[]"]').change ->
+    if (this.checked)
+      $(".message_form #"+this.value).val(this.value)
+    else
+      $(".message_form #"+this.value).val("")
+    return
+
+
+
 
 # NOT USED ANYMORE DUE MULTIPE SELECTION
   # @selected = (element) ->
