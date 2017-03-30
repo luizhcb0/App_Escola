@@ -6,9 +6,9 @@
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
       <%= link_to '<button class="btn btn-default" name="button">Newest</button>'.html_safe,
-        student_id: @reports[0].student_id, sort: "created_at DESC" %>
+        student_id: params[:student_id], sort: "created_at DESC" %>
       <%= link_to '<button class="btn btn-default" name="button">Oldest</button>'.html_safe,
-        student_id: @reports[0].student_id, sort: "created_at ASC" %>
+        student_id: params[:student_id], sort: "created_at ASC" %>
     </div>
   </div>
 

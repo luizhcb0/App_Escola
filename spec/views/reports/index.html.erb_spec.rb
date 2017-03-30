@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "reports/index.html.erb", type: :view do
   before(:each) {
-    create(:report, student: create(:student, name: "Student1"))
+    report = create(:report, student: create(:student, name: "Student1"))
     assign(:reports, Report.all)
+    params[:student_id] = report.student_id
     render
   }
 
