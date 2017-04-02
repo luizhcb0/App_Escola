@@ -19,12 +19,27 @@ $(document).on "turbolinks:load", ->
     $(".right_forms .messages").css('display','none')
     $(".right_forms .categories").css('display','block')
 
+  $("#select_all").click ->
+    if(this.checked)
+      $('input[type="checkbox"][name="student_ids[]"]').each ->
+        this.checked = true
+        $(".message_form #"+this.value).val(this.value)
+        return
+    else
+      $('input[type="checkbox"][name="student_ids[]"]').each ->
+        this.checked = false
+        $(".message_form #"+this.value).val("")
+        return
+      return
+
+
   $('input[type="checkbox"][name="student_ids[]"]').change ->
     if (this.checked)
       $(".message_form #"+this.value).val(this.value)
     else
       $(".message_form #"+this.value).val("")
-    return
+      $('#select_all').attr('checked', false);
+      return
 
 
 

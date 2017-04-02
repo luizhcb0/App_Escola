@@ -63,17 +63,25 @@
         <a class="nav-link" data-toggle="tab" href="#home" role="tab" id="render_cat">Categorias</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" id="render_msg">Mensagens</a>
+        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" id="render_msg">Avisos</a>
       </li>
     </ul>
     </h3>
     <div class="right_forms">
+
+      <div class="form-group">
+        <%= check_box_tag :select_all %>
+        <%= label_tag :select_all, "Enviar para todos" %>
+      </div>
+
       <div class="categories">
         <%= render "form_categories", f: f, report_notes: @report.report_notes %>
       </div>
+
       <div class="messages">
         <%= render "messages/form", message: Message.new %>
       </div>
+
     </div>
 
   </div>
