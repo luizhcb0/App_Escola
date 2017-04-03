@@ -21,6 +21,14 @@
 			<%= render "report_page", report: @report %>
 			<!--  ---------------------------------->
 
+			<% if !@report.nil? && current_user.role.name != "student" &&
+				current_user.role.name != "student_adjacent" %>
+				<%= link_to edit_student_report_path(student,@report.date),
+					class:"btn btn-primary btn-circle" do %>
+					<i class="fa fa-pencil"></i>
+				<% end %>
+			<% end %>
+
 		</div>
 	</div>
 </div>
