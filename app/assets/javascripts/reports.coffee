@@ -3,22 +3,24 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on "turbolinks:load", ->
-  $prevSelected = null # previous selected kid
+
   @togglePanel = (element) ->
     $("#"+element.attr("class")).slideToggle(300)
     $("#"+element.attr("class")).css('display', "block")
 
-
   $(".alert").fadeOut(3000)
 
+  # Display messages partial
   $('#render_msg').click ->
     $(".right_forms .categories").css('display','none')
     $(".right_forms .messages").css('display','block')
 
+  # Display categories partial
   $('#render_cat').click ->
     $(".right_forms .messages").css('display','none')
     $(".right_forms .categories").css('display','block')
 
+  #  Select all students
   $("#select_all").click ->
     if(this.checked)
       $('input[type="checkbox"][name="student_ids[]"]').each ->
@@ -32,7 +34,7 @@ $(document).on "turbolinks:load", ->
         return
       return
 
-
+  # Selected students for reports will be selected for messages
   $('input[type="checkbox"][name="student_ids[]"]').change ->
     if (this.checked)
       $(".message_form #"+this.value).val(this.value)

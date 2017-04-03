@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.thumbnail.std_img {
+  margin-bottom: 5%;
+}
+
 .std_img::after {
   position: absolute;
   z-index: -1;
@@ -26,6 +30,10 @@
 
 .std_label {
   min-height: 2vw;
+}
+
+.std_icons {
+  float: left;
 }
 
 
