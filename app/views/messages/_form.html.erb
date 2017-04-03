@@ -5,7 +5,7 @@
 
     <%= m.hidden_field :professor_id, value: current_user.professor.id %>
 
-    <% message.students.each do |student| %>
+    <% students.each do |student| %>
       <%= m.hidden_field :student_ids, {multiple: true, id: "#{student.id}"}%>
     <% end %>
 
