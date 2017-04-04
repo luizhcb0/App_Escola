@@ -9,7 +9,7 @@
           <tbody>
             <% @schools.each do |school| %>
               <tr>
-                <td><%= school.name %></td>
+                <td><%= school.user.name %></td>
 
                 <td>
                   <%= link_to school_path(school), class:"btn btn-success btn-circle" do %>
