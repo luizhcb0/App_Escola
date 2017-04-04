@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   add_foreign_key "reports", "students", on_delete: :cascade
   add_foreign_key "reports_suboptions", "reports", on_delete: :cascade
   add_foreign_key "reports_suboptions", "suboptions", on_delete: :cascade
-  add_foreign_key "schools", "users", on_delete: :nullify
+  add_foreign_key "schools", "users", on_delete: :restrict
   add_foreign_key "student_users", "students", on_delete: :cascade
   add_foreign_key "student_users", "users", on_delete: :cascade
   add_foreign_key "suboptions", "options", on_delete: :cascade

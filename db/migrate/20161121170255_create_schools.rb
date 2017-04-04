@@ -3,6 +3,6 @@ class CreateSchools < ActiveRecord::Migration[5.0]
     create_table :schools do |t|
       t.belongs_to :user, null: false, index: true
     end
-    add_foreign_key :schools, :users, on_delete: :nullify
+    add_foreign_key :schools, :users, on_delete: :restrict
   end
 end

@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "Associations" do
-    it { should have_one(:professor) }
+    it { should have_one(:classroom) }
     it { should have_many(:student_users) }
     it { should have_many(:students) }
   end
