@@ -18,7 +18,7 @@ class ClassroomsController < ApplicationController
   def create
     @classroom = Classroom.new(classroom_params)
     @classroom.build_user(user_params).with_role("professor")
-    if @classroom.save
+    if @classroom.user.save && @classroom.save
       redirect_to classrooms_path
     else
       render :new

@@ -57,7 +57,8 @@ RSpec.describe ClassroomsController, type: :controller do
     let(:classroom) { assigns(:classroom) }
 
     context 'when valid' do
-      before(:each) { post :create, params: { classroom: attributes_for(:classroom) } }
+      before(:each) { post :create, params: { classroom: attributes_for(:classroom),
+        user: attributes_for(:user, :fixed) } }
 
       it "should redirect to classrooms_path" do
         expect(response).to redirect_to(classrooms_path)
@@ -71,7 +72,7 @@ RSpec.describe ClassroomsController, type: :controller do
 
     context 'when invalid' do
       before(:each) { post :create, params: {
-        classroom: attributes_for(:classroom, name: "") } }
+        classroom: attributes_for(:classroom), user: attributes_for(:user, email: "email") } }
 
       it { expect(response).to render_template(:new) }
       it { expect(classroom).to_not be_persisted }
@@ -99,7 +100,8 @@ RSpec.describe ClassroomsController, type: :controller do
       before(:each) do
         classroom = create(:classroom)
         patch :update, params: {
-          classroom: attributes_for(:classroom ,name: "salinha", shift: "vespertino"),
+          classroom: attributes_for(:classroom, shift: "vespertino"),
+          user: attributes_for(:user, name: "salinha"),
           id: classroom.id }
       end
 
@@ -108,7 +110,7 @@ RSpec.describe ClassroomsController, type: :controller do
       end
 
       it "should update attributes" do
-        expect(classroom.name).to eq "salinha"
+        expect(classroom.user.name).to eq "salinha"
         expect(classroom.shift).to eq "vespertino"
       end
     end
@@ -117,7 +119,8 @@ RSpec.describe ClassroomsController, type: :controller do
       before(:each) do
         classroom = create(:classroom)
         patch :update, params: {
-          classroom: attributes_for(:classroom ,name: "", shift: "vespertino"),
+          classroom: attributes_for(:classroom, shift: "vespertino"),
+          user: attributes_for(:user, email: "salinha"),
           id: classroom.id }
       end
 
@@ -141,9 +144,6 @@ RSpec.describe ClassroomsController, type: :controller do
       it "should have deleted the classroom from the DB" do
         expect(Classroom.all).not_to include classroom
         expect { classroom.reload }.to raise_exception ActiveRecord::RecordNotFound
-      end
-
-      xit "should delete dependents from DB" do
       end
     end
 
