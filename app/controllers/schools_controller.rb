@@ -15,8 +15,8 @@ class SchoolsController < ApplicationController
 
   def create
     @school = School.new(school_params)
-    @school.build_professor(user: User.new(user_params).with_role("principal"))
-    if @school.professor.user.save && @school.save
+    @school.user = User.new(user_params).with_role("principal")
+    if @school.user.save && @school.save
       redirect_to schools_path
     else
       render :new
@@ -29,7 +29,7 @@ class SchoolsController < ApplicationController
 
   def update
     @school = School.find(params[:id])
-    if @school.professor.user.update_attributes(user_params) &&
+    if @school.user.update_attributes(user_params) &&
       @school.update_attributes(school_params)
       redirect_to schools_path(@school.id)
     else

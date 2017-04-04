@@ -17,6 +17,7 @@ class ClassroomsController < ApplicationController
 
   def create
     @classroom = Classroom.new(classroom_params)
+    @classroom.build_user(user_params).with_role("professor")
     if @classroom.save
       redirect_to classrooms_path
     else
@@ -33,7 +34,8 @@ class ClassroomsController < ApplicationController
 
   def update
     @classroom = Classroom.find(params[:id])
-    if @classroom.update_attributes(classroom_params)
+    if @classroom.user.update_attributes(user_params) &&
+      @classroom.update_attributes(classroom_params)
       redirect_to classrooms_path(@classroom.id)
     else
       render :edit
