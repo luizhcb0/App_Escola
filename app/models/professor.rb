@@ -1,6 +1,6 @@
 class Professor < ApplicationRecord
-  belongs_to :classrooms;
+  belongs_to :classroom
   has_many :messages
-  
+
   validates :name, presence: true
 end
