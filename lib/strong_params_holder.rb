@@ -10,9 +10,9 @@ module StrongParamsHolder
   def user_params
     params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation)
   end
-  
+
   def professor_params
-    params.require(:user).permit(:name, :classroom_id)
+    params.require(:professor).permit(:name, :classroom_id)
   end
 
   def student_params
