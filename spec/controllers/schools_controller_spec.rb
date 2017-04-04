@@ -69,18 +69,16 @@ RSpec.describe SchoolsController, type: :controller do
         expect(school).to be_persisted
       end
 
-      it "should save a professor(principal)" do
-        expect(school.professor).to_not be nil
-        expect(school.professor).to be_persisted
+      it "should save a user(principal)" do
+        expect(school.user).to_not be nil
+        expect(school.user).to be_persisted
       end
 
-      it "should save a valid professor(principal) user" do
-        expect(school.professor.user).to_not be nil
-        expect(school.professor.user).to be_persisted
-        expect(school.professor.user.name).to eq "User"
-        expect(school.professor.user.email).to eq "email@example.com"
-        expect(school.professor.user.authenticate("12345678")).to eq school.professor.user
-        expect(school.professor.user.role.name).to eq "principal"
+      it "should save a valid user(principal) user" do
+        expect(school.user.name).to eq "User"
+        expect(school.user.email).to eq "email@example.com"
+        expect(school.user.authenticate("12345678")).to eq school.user
+        expect(school.user.role.name).to eq "principal"
       end
     end
 
@@ -90,8 +88,7 @@ RSpec.describe SchoolsController, type: :controller do
 
       it { expect(response).to render_template(:new) }
       it { expect(school).to_not be_persisted }
-      it { expect(school.professor).to_not be_persisted }
-      it { expect(school.professor.user).to_not be_persisted }
+      it { expect(school.user).to_not be_persisted }
     end
   end
 
@@ -115,7 +112,7 @@ RSpec.describe SchoolsController, type: :controller do
       before(:each) do
         school = create(:school)
         patch :update, params: {
-          school: attributes_for(:school, name: "Teste2"),
+          school: attributes_for(:school),
           user: attributes_for(:user, name: "User2", email: "test@gmail.com",
             password: "654321", password_confirmation: "654321"),
           id: school.id }
@@ -125,14 +122,13 @@ RSpec.describe SchoolsController, type: :controller do
         expect(response).to redirect_to(schools_path(school.id))
       end
 
-      it "should update school attributes" do
-        expect(school.name).to eq "Teste2"
-      end
+      # it "should update school attributes" do
+      # end
 
       it "should update user attributes" do
-        expect(school.professor.user.name).to eq "User2"
-        expect(school.professor.user.email).to eq "test@gmail.com"
-        expect(school.professor.user.password).to eq "654321"
+        expect(school.user.name).to eq "User2"
+        expect(school.user.email).to eq "test@gmail.com"
+        expect(school.user.password).to eq "654321"
       end
     end
 
@@ -140,20 +136,19 @@ RSpec.describe SchoolsController, type: :controller do
       before(:each) do
         school = create(:school)
         patch :update, params: {
-          school: attributes_for(:school, name: "Teste2"),
+          school: attributes_for(:school),
           user: attributes_for(:user, name: "User2", email: "abc.com"),
           id: school.id }
       end
 
       it { expect(response).to render_template(:edit) }
 
-      it "shouldn't change school" do
-        expect(school.reload.name).to_not eq "Teste2"
-      end
+      # it "shouldn't change school" do
+      # end
 
-      it "shouldn't change school professor user" do
-        expect(school.reload.professor.reload.user.name).to_not eq "User2"
-        expect(school.professor.user.email).to_not eq "abc.com"
+      it "shouldn't change school user" do
+        expect(school.reload.user.name).to_not eq "User2"
+        expect(school.user.email).to_not eq "abc.com"
       end
     end
   end
@@ -170,9 +165,6 @@ RSpec.describe SchoolsController, type: :controller do
       it "should have deleted the school from the DB" do
         expect(School.all).not_to include school
         expect { school.reload }.to raise_exception ActiveRecord::RecordNotFound
-      end
-
-      xit "should delete dependents from DB" do
       end
     end
 
