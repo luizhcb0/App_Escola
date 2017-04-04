@@ -21,6 +21,7 @@
 			<%= render "report_page", report: @report %>
 			<!--  ---------------------------------->
 
+			<!-- Show edit button ------------------>
 			<% if !@report.nil? && current_user.role.name != "student" &&
 				current_user.role.name != "student_adjacent" %>
 				<%= link_to edit_student_report_path(student,@report.date),
@@ -28,6 +29,7 @@
 					<i class="fa fa-pencil"></i>
 				<% end %>
 			<% end %>
+			<!--  ---------------------------------->
 
 		</div>
 	</div>
