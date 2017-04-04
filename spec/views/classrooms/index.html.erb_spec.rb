@@ -8,6 +8,6 @@ RSpec.describe "classrooms/index.html.erb", type: :view do
   }
 
   it "should display all classroom professors" do
-    expect(rendered).to match(/Sala Teste/)
+    expect(rendered).to match(/User/)
   end
 end

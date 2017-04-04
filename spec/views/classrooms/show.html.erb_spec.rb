@@ -8,8 +8,7 @@ RSpec.describe "classrooms/show.html.erb", type: :view do
   }
 
   it "should show classroom attributes" do
-    expect(rendered).to match(/User/)     # professor name
-    expect(rendered).to match(/Sala Teste/)     # classroom text
+    expect(rendered).to match(/User/)         # classroom name
     expect(rendered).to match(/Matutino/)     # classroom text
   end
 end
