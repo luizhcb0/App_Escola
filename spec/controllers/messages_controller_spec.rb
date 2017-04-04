@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
-  let (:test_msg_professor) { 2.times.map { create(:message, professor: test_professor) } }
+  let (:test_msg_class) { 2.times.map { create(:message, classroom: test_class) } }
   let (:test_msg_student) { 2.times.map { create(:message, students: [test_student]) } }
 
-  let (:test_professor) { create(:professor, user: create(:user, role: create(:role, name: "professor"))) }
+  let (:test_class) { create(:classroom, user: create(:user, role: create(:role, name: "professor"))) }
   let (:test_student) { create(:student, users: [create(:user, role: create(:role, name: "student"))]) }
 
   describe "GET #index for professor" do
 
     before(:each) do
-      session[:user_id] = test_professor.user.id
+      session[:user_id] = test_class.user.id
       get :index
     end
 
@@ -23,7 +23,7 @@ RSpec.describe MessagesController, type: :controller do
     end
 
     it "should load all messages on from this session" do
-      expect(assigns(:messages)).to match_array test_msg_professor
+      expect(assigns(:messages)).to match_array test_msg_class
     end
 
   end
@@ -92,12 +92,12 @@ RSpec.describe MessagesController, type: :controller do
 
     context "when valid" do
       before(:each) do
-        session[:user_id] = test_professor.user.id
+        session[:user_id] = test_class.user.id
         # post :create, params: { message: build(:message).attributes }
         post :create, params: {
            message: attributes_for(
             :message,
-            professor_id: test_professor.id,
+            classroom_id: test_class.id,
             student_ids: [test_student.id]
           )
         }
@@ -111,8 +111,8 @@ RSpec.describe MessagesController, type: :controller do
         expect(message).to be_persisted
       end
 
-      it "should have the correct professor_id from user session" do
-        expect(message.professor_id).to eq test_professor.id
+      it "should have the correct classroom_id from user session" do
+        expect(message.classroom_id).to eq test_class.id
       end
 
       it "should send the message to the correct students" do
@@ -123,7 +123,7 @@ RSpec.describe MessagesController, type: :controller do
     context "when text is invalid" do
       before(:each) do
         post :create, params: {
-          message: attributes_for(:message, text: "", professor_id: test_professor.id)
+          message: attributes_for(:message, text: "", classroom_id: test_class.id)
         }
       end
 
@@ -132,7 +132,7 @@ RSpec.describe MessagesController, type: :controller do
       end
     end
 
-    context "when professor_id is missing" do
+    context "when classroom_id is missing" do
       before(:each) do
         post :create, params: {
           message: attributes_for(:message)
@@ -147,7 +147,7 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   describe "GET #edit" do
-    let(:message) {test_msg_professor[rand 2]}
+    let(:message) {test_msg_class[rand 2]}
 
     before(:each) do
       get :edit, params: {
@@ -176,7 +176,7 @@ RSpec.describe MessagesController, type: :controller do
           message: attributes_for(
             :message,
             text: "mudei",
-            professor_id: test_professor.id,
+            classroom_id: test_class.id,
             student_ids: [test_student.id]
           ),
           id: message.id
@@ -189,7 +189,7 @@ RSpec.describe MessagesController, type: :controller do
 
       it "should update attributes" do
         expect(message.text).to eq "mudei"
-        expect(message.professor_id).to eq test_professor.id
+        expect(message.classroom_id).to eq test_class.id
       end
 
       it "should update students" do
@@ -221,7 +221,7 @@ RSpec.describe MessagesController, type: :controller do
   describe "DELETE #destroy" do
 
     context "when requested message exists" do
-      let(:message) { test_msg_professor[rand 2] }
+      let(:message) { test_msg_class[rand 2] }
 
       before(:each) do
         delete :destroy, params: {
