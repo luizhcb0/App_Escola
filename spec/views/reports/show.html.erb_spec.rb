@@ -7,9 +7,7 @@ RSpec.describe "reports/show.html.erb", type: :view do
     student = create(:student, users: [create(:user)])
     view.log_in(student.users[0])
     assign(:report, create(:report, student: student, suboptions: [create(:suboption)]))
-    assign(:params, {student_id: student.id, date: Date.today})
     render
-    # render :html, locals: { params: { student_id: student.id, date: Date.today } }
   }
 
   it "should show report attributes" do
