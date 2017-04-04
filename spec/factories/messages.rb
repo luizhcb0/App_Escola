@@ -2,6 +2,6 @@
 FactoryGirl.define do
   factory :message do
     text  "Mensagem"
-    professor
+    classroom
   end
 end

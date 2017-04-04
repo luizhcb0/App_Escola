@@ -1,6 +1,7 @@
 
 FactoryGirl.define do
   factory :professor do
-    user
+    name "Prof"
+    classroom
   end
 end
