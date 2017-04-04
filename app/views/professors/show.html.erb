@@ -1,15 +1,14 @@
 <section class="container-fluid">
-  <h1><%= @professor.user.name %></h1>
+  <h1><%= @professor.name %></h1>
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
       <table class="table">
-        <tbody>
-          <%= render "users/user_show", user: @professor.user %>
-        </tbody>
+        <tr><td>Class:</td><td><%= @professor.classroom.user.name %></td></tr>
       </table>
     </div>
   </div>
-  <%= link_to '<button class="btn btn-default" name="button">Edit</button>'.html_safe, edit_professor_path(@professor.id) %>
+  <%= link_to '<button class="btn btn-default" name="button">Edit</button>'.html_safe,
+    edit_professor_path(@professor.id) %>
 
 </section>
