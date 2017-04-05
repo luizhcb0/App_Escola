@@ -34,10 +34,8 @@ class MessagesController < ApplicationController
       @message.message_connections.build(classroom_id: params[:message_connection][:classroom_id], student_id: std) if std.present?
     end
     if @message.save
-      b
       redirect_to messages_path
     else
-      a
       render :new
     end
   end
