@@ -1,10 +1,7 @@
 module ReportsHelper
-  def student_array
-    student_array = Student.all.map { |student| [student.name, student.id] }
-  end
 
   def students
-    students = Student.all
+    students = Student.includes(:classrooms).where(classrooms: {id: current_user.classroom.id })
   end
 
   def categories
