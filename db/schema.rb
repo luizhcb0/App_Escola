@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   end
 
   create_table "schools", force: :cascade do |t|
+    t.string  "name",    null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_schools_on_user_id", using: :btree
   end

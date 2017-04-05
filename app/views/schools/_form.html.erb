@@ -4,6 +4,7 @@
       <div class="form-group">
         <%= f.label :school_name, class: "col-sm-3 control-label"%>
         <div class="col-sm-6">
+          <%= f.text_field :name, class: "form-control" %> 
         </div>
       </div>
       <%= fields_for @school.user.nil? ? :user : @school.user do |user_f| %>

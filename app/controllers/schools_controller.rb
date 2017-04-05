@@ -14,7 +14,7 @@ class SchoolsController < ApplicationController
   end
 
   def create
-    @school = School.new() # school_params is empty for now
+    @school = School.new(school_params)
     @school.user = User.new(user_params).with_role("principal")
     if @school.user.save && @school.save
       redirect_to schools_path
@@ -29,9 +29,9 @@ class SchoolsController < ApplicationController
 
   def update
     @school = School.find(params[:id])
-    if @school.user.update_attributes(user_params)
-      # && @school.update_attributes(school_params) # this is empty for now
-      redirect_to schools_path(@school.id)
+    if @school.user.update_attributes(user_params) &&
+      @school.update_attributes(school_params)
+        redirect_to schools_path(@school.id)
     else
       render :edit
     end

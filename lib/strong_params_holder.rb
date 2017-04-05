@@ -4,7 +4,7 @@
 
 module StrongParamsHolder
   def school_params
-    params.require(:school).permit(:logo)
+    params.require(:school).permit(:name, :logo)
   end
 
   def user_params
