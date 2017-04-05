@@ -8,6 +8,5 @@ class CreateMessageConnections < ActiveRecord::Migration[5.0]
     add_foreign_key :message_connections, :classrooms, on_delete: :cascade
     add_foreign_key :message_connections, :students, on_delete: :cascade
     add_foreign_key :message_connections, :messages, on_delete: :cascade
-    end
   end
 end
