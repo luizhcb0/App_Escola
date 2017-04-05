@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  has_one :professor
   has_many :student_users
+  has_one :classroom
   has_many :students, through: :student_users
   belongs_to :role
 

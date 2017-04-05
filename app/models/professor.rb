@@ -1,6 +1,6 @@
 class Professor < ApplicationRecord
-  has_one :school
-  belongs_to :user, dependent: :delete
-  has_and_belongs_to_many :classrooms
+  belongs_to :classroom, optional: true
   has_many :messages
+
+  validates :name, presence: true
 end

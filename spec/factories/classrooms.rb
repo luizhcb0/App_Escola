@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :classroom do
-    name  "Sala Teste"
+    user
     shift "Matutino"
   end
 end

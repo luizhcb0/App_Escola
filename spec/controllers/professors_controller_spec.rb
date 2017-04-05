@@ -56,7 +56,9 @@ RSpec.describe ProfessorsController, type: :controller do
   describe "POST #create" do
     let(:professor) { assigns(:professor) }
     context 'when valid' do
-      before(:each) { post :create, params: { user: attributes_for(:user, :fixed) } }
+      let(:classroom) { create(:classroom) }
+      before(:each) { post :create, params: { professor: attributes_for(:professor,
+        classroom_id: classroom.id ) } }
 
       it "should redirect to professors_path" do
         expect(response).to redirect_to(professors_path)
@@ -65,20 +67,13 @@ RSpec.describe ProfessorsController, type: :controller do
       it "should save the professor" do
         expect(professor).to_not be nil
         expect(professor).to be_persisted
-      end
-
-      it "should save a valid professor user" do
-        expect(professor.user).to_not be nil
-        expect(professor.user).to be_persisted
-        expect(professor.user.name).to eq "User"
-        expect(professor.user.email).to eq "email@example.com"
-        expect(professor.user.authenticate("12345678")).to be professor.user
-        expect(professor.user.role.name).to eq "professor"
+        expect(professor.name).to eq "Prof"
+        expect(professor.classroom_id).to eq classroom.id
       end
     end
 
-    context 'when email is invalid' do
-      before(:each) { post :create, params: { user: attributes_for(:user, email: "abc.com") } }
+    context 'when name is invalid' do
+      before(:each) { post :create, params: { professor: attributes_for(:professor, name: "") } }
 
       it { expect(response).to render_template(:new) }
       it { expect(professor).to_not be_persisted }
@@ -102,11 +97,11 @@ RSpec.describe ProfessorsController, type: :controller do
   describe "PATCH #update" do
     let(:professor) { assigns(:professor) }
     context 'when valid' do
+      let(:classroom) { create(:classroom) }
       before(:each) do
         professor = create(:professor)
         patch :update, params: {
-          user: attributes_for(:user, name: "User2", email: "test@gmail.com",
-            password: "654321", password_confirmation: "654321"),
+          professor: attributes_for(:professor, name: "Prof2", classroom_id: classroom.id),
           id: professor.id }
       end
 
@@ -115,24 +110,22 @@ RSpec.describe ProfessorsController, type: :controller do
       end
 
       it "should update user attributes" do
-        expect(professor.user.name).to eq "User2"
-        expect(professor.user.email).to eq "test@gmail.com"
-        expect(professor.user.password).to eq "654321"
+        expect(professor.name).to eq "Prof2"
+        expect(professor.classroom_id).to eq classroom.id
       end
     end
 
-    context 'when email is invalid' do
+    context 'when name is invalid' do
       before(:each) do
         professor = create(:professor)
-        patch :update, params: { user: attributes_for(:user,
-          name: "User2", email: "abc.com"), id: professor.id }
+        patch :update, params: { professor: attributes_for(:professor, name: ""),
+          id: professor.id }
       end
 
       it { expect(response).to render_template(:edit) }
 
       it "shouldn't change professor" do
-        expect(professor.reload.user.name).to_not eq "User2"
-        expect(professor.user.email).to_not eq "abc.com"
+        expect(professor.reload.name).to eq "Prof"
       end
     end
   end
@@ -149,9 +142,6 @@ RSpec.describe ProfessorsController, type: :controller do
       it "should have deleted the professor from the DB" do
         expect(Professor.all).not_to include professor
         expect { professor.reload }.to raise_exception ActiveRecord::RecordNotFound
-      end
-
-      xit "should delete dependents from DB" do
       end
     end
 

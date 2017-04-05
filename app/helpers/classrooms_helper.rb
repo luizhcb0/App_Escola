@@ -1,6 +1,6 @@
 module ClassroomsHelper
   def professor_array
-    professor_array = Professor.all.map { |professor| [professor.user.name, professor.id] }
+    professor_array = Professor.all.map { |professor| [professor.name, professor.id] }
   end
 
   def professors

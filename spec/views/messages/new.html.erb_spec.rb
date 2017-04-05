@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "messages/new.html.erb", type: :view do
   before(:each) {
     view.extend SessionsHelper
-    professor = create(:professor)
-    assign(:current_user, professor.user)
+    classroom = create(:classroom)
+    assign(:current_user, classroom.user)
     assign(:message, Message.new )
     render
   }

@@ -151,10 +151,6 @@ ac_oc     = ActivityCategory.create(name: "Ocorrências")
         Suboption.create(name: "Medicação")
       ])
 
-# > Professors
-us_p_bru = User.create(name: "Bruna Barroso", phone: "555555", email: "brunabarroso65@gmail.com", password: "123456", role: r_prof)
-prof_bru = Professor.create(user: us_p_bru)
-
 # > Students
 st_bea = Student.create(name: "Beatriz Oliveira", address: "QNL", birthday: "Sat, 14 Jan 2017")
   us_bea_m = User.create(name: "Mae", phone: "555555", email: "bea@gmail.com", password: "123456", role: r_std)
@@ -185,9 +181,14 @@ st_tom = Student.create(name: "Tomás Rojas", address: "QNL", birthday: "Sat, 14
   StudentUser.create(user: us_tom_m, student: st_tom)
 
 # > Classrooms
-class_a = Classroom.create(name: "Turma-A", shift: "manha", professors: [prof_bru], students:[
+us_class = User.create(name: "Turma-A", phone: "555555", email: "brunabarroso65@gmail.com", password: "123456", role: r_prof)
+class_a = Classroom.create(user: us_class, shift: "manha", students:[
   st_bea, st_cat, st_cec, st_fre, st_gio, st_isa, st_lun, st_cru, st_tom
   ])
+
+# > Professors
+  prof_bru = Professor.create(name: "Bruna Barroso", classroom: class_a)
+
 
 # > Administrator
 User.create(role: r_adm, name: 'admin', phone: '123123', email: 'admin@gmail.com', password: 'administrator')

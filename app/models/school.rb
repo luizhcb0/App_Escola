@@ -1,5 +1,6 @@
 class School < ApplicationRecord
-  belongs_to :professor, dependent: :destroy
-
+  belongs_to :user, dependent: :destroy
+  
   validates :name, presence: true
+
 end

@@ -31,13 +31,9 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   end
 
   create_table "classrooms", force: :cascade do |t|
-    t.string "name"
-    t.string "shift"
-  end
-
-  create_table "classrooms_professors", id: false, force: :cascade do |t|
-    t.integer "classroom_id", null: false
-    t.integer "professor_id", null: false
+    t.integer "user_id", null: false
+    t.string  "shift"
+    t.index ["user_id"], name: "index_classrooms_on_user_id", using: :btree
   end
 
   create_table "classrooms_students", id: false, force: :cascade do |t|
@@ -55,11 +51,11 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "professor_id", null: false
+    t.integer  "classroom_id", null: false
     t.text     "text"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["professor_id"], name: "index_messages_on_professor_id", using: :btree
+    t.index ["classroom_id"], name: "index_messages_on_classroom_id", using: :btree
   end
 
   create_table "options", force: :cascade do |t|
@@ -70,8 +66,9 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   end
 
   create_table "professors", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_professors_on_user_id", using: :btree
+    t.integer "classroom_id"
+    t.string  "name"
+    t.index ["classroom_id"], name: "index_professors_on_classroom_id", using: :btree
   end
 
   create_table "report_notes", force: :cascade do |t|
@@ -103,9 +100,9 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   end
 
   create_table "schools", force: :cascade do |t|
-    t.string  "name"
-    t.integer "professor_id", null: false
-    t.index ["professor_id"], name: "index_schools_on_professor_id", using: :btree
+    t.string  "name",    null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_schools_on_user_id", using: :btree
   end
 
   create_table "student_users", force: :cascade do |t|
@@ -140,21 +137,20 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   add_foreign_key "activities", "activity_categories", on_delete: :cascade
   add_foreign_key "activities_classrooms", "activities", on_delete: :cascade
   add_foreign_key "activities_classrooms", "classrooms", on_delete: :cascade
-  add_foreign_key "classrooms_professors", "classrooms", on_delete: :cascade
-  add_foreign_key "classrooms_professors", "professors", on_delete: :cascade
+  add_foreign_key "classrooms", "users", on_delete: :nullify
   add_foreign_key "classrooms_students", "classrooms", on_delete: :cascade
   add_foreign_key "classrooms_students", "students", on_delete: :cascade
   add_foreign_key "message_students", "messages", on_delete: :cascade
   add_foreign_key "message_students", "students", on_delete: :cascade
-  add_foreign_key "messages", "professors", on_delete: :cascade
+  add_foreign_key "messages", "classrooms", on_delete: :cascade
   add_foreign_key "options", "activities", on_delete: :cascade
-  add_foreign_key "professors", "users", on_delete: :cascade
+  add_foreign_key "professors", "classrooms", on_delete: :nullify
   add_foreign_key "report_notes", "activities", on_delete: :cascade
   add_foreign_key "report_notes", "reports", on_delete: :cascade
   add_foreign_key "reports", "students", on_delete: :cascade
   add_foreign_key "reports_suboptions", "reports", on_delete: :cascade
   add_foreign_key "reports_suboptions", "suboptions", on_delete: :cascade
-  add_foreign_key "schools", "professors", on_delete: :cascade
+  add_foreign_key "schools", "users", on_delete: :restrict
   add_foreign_key "student_users", "students", on_delete: :cascade
   add_foreign_key "student_users", "users", on_delete: :cascade
   add_foreign_key "suboptions", "options", on_delete: :cascade

@@ -1,5 +1,5 @@
 <section class="container-fluid">
-  <h1><%= @classroom.name %></h1>
+  <h1><%= @classroom.user.name %></h1>
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
@@ -7,7 +7,7 @@
         <tbody>
           <tr>
             <td>Name:</td>
-            <td><%= @classroom.name %></td>
+            <td><%= @classroom.user.name %></td>
           </tr>
           <tr>
             <td>Shift:</td>
@@ -20,7 +20,7 @@
 
   <div class="row">
     <% if @classroom.professors.present? %>
-    <div class="col-sm-4 col-sm-offset-2">
+    <div class="col-sm-4 col-sm-offset-4">
       <table class="table table-bordered">
         <tbody>
           <tr>
@@ -28,7 +28,7 @@
           </tr>
           <% @classroom.professors.each do |professor| %>
             <tr>
-              <td><%= professor.user.name %></td>
+              <td><%= professor.name %></td>
             </tr>
           <% end %>
         </tbody>

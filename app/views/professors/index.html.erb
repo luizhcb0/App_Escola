@@ -9,7 +9,7 @@
           <tbody>
             <% @professors.each do |professor| %>
               <tr>
-                <td><%= professor.user.name %></td>
+                <td><%= professor.name %></td>
 
                 <td>
                   <%= link_to professor_path(professor), class:"btn btn-success btn-circle" do %>

@@ -2,9 +2,10 @@
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-      <%= fields_for @professor.user.nil? ? :user : @professor.user do |user_f| %>
-        <%= render "users/user_fields", :f => user_f %>
-      <% end %>
+      <%= f.label :name, class: "col-sm-3 control-label"%>
+      <div class="col-sm-6">
+        <%= f.text_field :name, class: "form-control"  %>
+      </div>
 
       <%= f.submit "Save", class: "btn btn-default" %>
     </div>

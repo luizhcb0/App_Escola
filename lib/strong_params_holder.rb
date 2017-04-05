@@ -4,11 +4,15 @@
 
 module StrongParamsHolder
   def school_params
-    params.require(:school).permit(:name, :professor)
+    params.require(:school).permit(:name, :logo)
   end
 
   def user_params
     params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation)
+  end
+
+  def professor_params
+    params.require(:professor).permit(:name, :classroom_id)
   end
 
   def student_params
@@ -16,12 +20,12 @@ module StrongParamsHolder
   end
 
   def classroom_params
-    params.require(:classroom).permit(:name, :shift, :professor_ids => [],
+    params.require(:classroom).permit(:shift, :professor_ids => [],
       :student_ids => [], :activity_ids => [])
   end
 
   def message_params
-    params.require(:message).permit(:text, :professor_id, :student_ids => [])
+    params.require(:message).permit(:text, :classroom_id, :student_ids => [])
   end
 
   def activity_params

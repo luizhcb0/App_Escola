@@ -72,10 +72,14 @@
   <% end %>
   <!--  ----------------------------------------->
 
-  <!-- Messages of that day --------------------->
-  <%= render "messages/messages_block", messages: report.student.messages.
-    where(created_at: (report.created_at.beginning_of_day..report.created_at.end_of_day)) %>
-  <!--  ----------------------------------------->
 <% else %>
   <h2> Sem relatório.. </h2>
 <% end %>
+
+<!-- Messages of that day --------------------->
+<% if !params[:date].nil? && !params[:student_id].nil? %>
+  <% date = params[:date].to_date %>
+  <%= render "messages/messages_block", messages: Student.find(params[:student_id]).messages.
+    where(created_at: (date.beginning_of_day..date.end_of_day)) %>
+<% end %>
+<!--  ----------------------------------------->

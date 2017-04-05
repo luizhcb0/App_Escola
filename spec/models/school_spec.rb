@@ -1,36 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe School, type: :model do
-  describe "Validations" do
-    it { should validate_presence_of(:name) }
-  end
+  # describe "Validations" do
+  #   it { should validate_presence_of(:name) }
+  # end
 
   describe "Associations" do
-    it { should belong_to(:professor).dependent(:destroy) }
+    it { should belong_to(:user).dependent(:destroy) }
   end
 
   describe "Delete - Associations consistency" do
     let(:school) { create(:school) }
 
-    it "should delete the principal" do
-      principal = school.professor
+    it "should not let principal be destroied" do
+      principal = school.user
       expect(principal).to be_persisted
-      school.destroy
-      expect(Professor.all).to_not include principal
-    end
-
-    it "should delete the principal user" do
-      principal_user = school.professor.user
-      expect(principal_user).to be_persisted
-      school.destroy
-      expect(User.all).to_not include principal_user
-    end
-
-    it "should delete the principal messages" do
-      message = create(:message, professor: school.professor)
-      expect(school.professor.messages.size).to eq 1
-      school.destroy
-      expect(Message.all).to_not include message
+      expect{ principal.destroy }.to raise_error ActiveRecord::InvalidForeignKey
+      expect(school.user).to eq principal
     end
   end
 end

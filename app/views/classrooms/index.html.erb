@@ -9,7 +9,7 @@
           <tbody>
             <% @classrooms.each do |classroom| %>
               <tr>
-                <td><%= classroom.name %></td>
+                <td><%= classroom.user.name %></td>
 
                 <td>
                   <%= link_to classroom_path(classroom), class:"btn btn-success btn-circle" do %>
