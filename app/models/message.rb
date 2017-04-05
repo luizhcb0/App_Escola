@@ -1,10 +1,12 @@
 class Message < ApplicationRecord
-  belongs_to :classroom
-  belongs_to :student
-  has_many :students, through: :message_students
+  has_many :message_connections
+  has_many :students, through: :message_connections
+  has_many :classrooms, through: :message_connections
 
-  validates :text, presence: true
-  
+  enum sender_receiver: %w(classroom_student student_classroom)
+
+  validates :text, :sender_receiver, presence: true
+
   # Callback to set the read proprerty false on Create
   before_create :set_not_read
 
