@@ -2,6 +2,9 @@
 FactoryGirl.define do
   factory :message do
     text  "Mensagem"
-    classroom
+    sender_receiver :classroom_student
+
+    classrooms {|classrooms| [classrooms.association(:classroom)]}
+    students {|students| [students.association(:student)]}
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121051148) do
+ActiveRecord::Schema.define(version: 20170405144909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,26 +36,29 @@ ActiveRecord::Schema.define(version: 20170121051148) do
     t.index ["user_id"], name: "index_classrooms_on_user_id", using: :btree
   end
 
+  create_table "classrooms_messages", id: false, force: :cascade do |t|
+    t.integer "classroom_id", null: false
+    t.integer "message_id",   null: false
+    t.index ["classroom_id", "message_id"], name: "index_classrooms_messages_on_classroom_id_and_message_id", unique: true, using: :btree
+  end
+
   create_table "classrooms_students", id: false, force: :cascade do |t|
     t.integer "classroom_id", null: false
     t.integer "student_id",   null: false
   end
 
-  create_table "message_students", id: false, force: :cascade do |t|
-    t.integer "message_id", null: false
-    t.integer "student_id", null: false
-    t.boolean "read"
-    t.index ["message_id", "student_id"], name: "index_message_students_on_message_id_and_student_id", unique: true, using: :btree
-    t.index ["message_id"], name: "index_message_students_on_message_id", using: :btree
-    t.index ["student_id"], name: "index_message_students_on_student_id", using: :btree
+  create_table "messages", force: :cascade do |t|
+    t.text     "text"
+    t.integer  "sender_receiver", null: false
+    t.boolean  "read"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  create_table "messages", force: :cascade do |t|
-    t.integer  "classroom_id", null: false
-    t.text     "text"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["classroom_id"], name: "index_messages_on_classroom_id", using: :btree
+  create_table "messages_students", id: false, force: :cascade do |t|
+    t.integer "message_id", null: false
+    t.integer "student_id", null: false
+    t.index ["message_id", "student_id"], name: "index_messages_students_on_message_id_and_student_id", unique: true, using: :btree
   end
 
   create_table "options", force: :cascade do |t|
@@ -138,11 +141,12 @@ ActiveRecord::Schema.define(version: 20170121051148) do
   add_foreign_key "activities_classrooms", "activities", on_delete: :cascade
   add_foreign_key "activities_classrooms", "classrooms", on_delete: :cascade
   add_foreign_key "classrooms", "users", on_delete: :nullify
+  add_foreign_key "classrooms_messages", "classrooms", on_delete: :cascade
+  add_foreign_key "classrooms_messages", "messages", on_delete: :cascade
   add_foreign_key "classrooms_students", "classrooms", on_delete: :cascade
   add_foreign_key "classrooms_students", "students", on_delete: :cascade
-  add_foreign_key "message_students", "messages", on_delete: :cascade
-  add_foreign_key "message_students", "students", on_delete: :cascade
-  add_foreign_key "messages", "classrooms", on_delete: :cascade
+  add_foreign_key "messages_students", "messages", on_delete: :cascade
+  add_foreign_key "messages_students", "students", on_delete: :cascade
   add_foreign_key "options", "activities", on_delete: :cascade
   add_foreign_key "professors", "classrooms", on_delete: :nullify
   add_foreign_key "report_notes", "activities", on_delete: :cascade

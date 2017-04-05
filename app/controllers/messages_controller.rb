@@ -5,11 +5,12 @@ class MessagesController < ApplicationController
   def index
     if current_user
       if current_user.role.name == 'professor'
-        @messages = Message.where(classroom_id: current_user.classroom.id).order(params[:sort])
+        @messages = Message.includes(:classrooms)
+          .where(classrooms: {id: current_user.classroom.id }).order(params[:sort])
 
       elsif current_user.role.name == 'student'
-        @messages = Message.includes(:students).where(
-          students: {id: current_user.students.ids}).order(params[:sort])
+        @messages = Message.includes(:students)
+          .where(students: {id: current_user.students.ids}).order(params[:sort])
 
       elsif current_user.role.name == 'admin'
         @messages = Message.all
