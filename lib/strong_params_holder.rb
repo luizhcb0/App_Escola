@@ -25,7 +25,7 @@ module StrongParamsHolder
   end
 
   def message_params
-    params.require(:message).permit(:text, :sender_receiver)
+    params.require(:message).permit(:text, :sender_receiver, classroom_ids: [], student_ids: [])
   end
 
   def activity_params

@@ -10,11 +10,9 @@
 
     <%= m.hidden_field :sender_receiver, value: :classroom_student %>
 
-    <%= fields_for :message_connection do |mc| %>
-      <%= mc.hidden_field :classroom_id, value: current_user.classroom.id %>
-      <% students.each do |student| %>
-        <%= mc.hidden_field :student_ids, {multiple: true, id: "#{student.id}"}%>
-      <% end %>
+    <%= m.hidden_field :classroom_ids, multiple: true, value: current_user.classroom.id %>
+    <% students.each do |student| %>
+      <%= m.hidden_field :student_ids, {multiple: true, id: "#{student.id}"}%>
     <% end %>
 
   </div>

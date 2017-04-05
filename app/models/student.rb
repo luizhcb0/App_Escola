@@ -5,8 +5,7 @@ class Student < ApplicationRecord
   has_many :users, through: :student_users
   has_many :reports
 
-  has_many :message_connections
-  has_many :messages, through: :message_connections
+  has_and_belongs_to_many :messages
 
   validates :name, presence: true
 end

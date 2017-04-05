@@ -31,9 +31,6 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    params[:message_connection][:student_ids].each do |std|
-      @message.message_connections.build(classroom_id: params[:message_connection][:classroom_id], student_id: std) if std.present?
-    end
     if @message.save
       redirect_to messages_path
     else
