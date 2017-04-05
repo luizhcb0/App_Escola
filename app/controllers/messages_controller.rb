@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
 
       elsif current_user.role.name == 'student'
         @messages = Message.includes(:students)
-        .where(students: {id: current_user.students.ids}).order(params[:sort])
+          .where(students: {id: current_user.students.ids}).order(params[:sort])
 
       elsif current_user.role.name == 'admin'
         @messages = Message.all

@@ -1,11 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
-  let (:test_msg_con_class) { 2.times.map { create(:message_connection, classroom: test_class) } }
-  let (:test_msg_con_student) { 2.times.map { create(:message_connection, student: test_student) } }
-
-  let (:test_msg_class) { test_msg_con_class.map { |msg_con| msg_con.message } }
-  let (:test_msg_student) { test_msg_con_student.map { |msg_con| msg_con.message } }
+  let (:test_msg_class) { 2.times.map { create(:message, classrooms: [test_class]) } }
+  let (:test_msg_student) { 2.times.map { create(:message, students: [test_student]) } }
 
   let (:test_class) { create(:classroom, user: create(:user, role: create(:role, name: "professor"))) }
   let (:test_student) { create(:student, users: [create(:user, role: create(:role, name: "student"))]) }
@@ -26,9 +23,7 @@ RSpec.describe MessagesController, type: :controller do
     end
 
     it "should load all messages on from this session" do
-      msg_con = create(:message_connection)
-      expect(msg_con).to be_persisted
-      # expect(assigns(:messages)).to match_array test_msg_class
+      expect(assigns(:messages)).to match_array test_msg_class
     end
 
   end
@@ -102,7 +97,7 @@ RSpec.describe MessagesController, type: :controller do
         post :create, params: {
            message: attributes_for(
             :message,
-            classroom_id: test_class.id,
+            classroom_ids: [test_class.id],
             student_ids: [test_student.id]
           )
         }
@@ -117,7 +112,7 @@ RSpec.describe MessagesController, type: :controller do
       end
 
       it "should have the correct classroom_id from user session" do
-        expect(message.classroom_id).to eq test_class.id
+        expect(message.classroom_ids).to eq [test_class.id]
       end
 
       it "should send the message to the correct students" do
@@ -181,7 +176,7 @@ RSpec.describe MessagesController, type: :controller do
           message: attributes_for(
             :message,
             text: "mudei",
-            classroom_id: test_class.id,
+            classroom_ids: [test_class.id],
             student_ids: [test_student.id]
           ),
           id: message.id
@@ -194,7 +189,7 @@ RSpec.describe MessagesController, type: :controller do
 
       it "should update attributes" do
         expect(message.text).to eq "mudei"
-        expect(message.classroom_id).to eq test_class.id
+        expect(message.classroom_ids).to eq [test_class.id]
       end
 
       it "should update students" do
