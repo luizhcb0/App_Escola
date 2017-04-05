@@ -2,8 +2,12 @@
 <h5><%= @message.created_at.to_s(:long)%></h5>
 
 <table>
-  <tr><td>From:</td><td><%= @message.classroom.user.name %></td></tr>
-  <tr><td>To:</td><td><%= @message.students.first.users.first.name %></td></tr>
+  <tr><td>From:</td><td><%= @message.classrooms.first.user.name %></td></tr>
+  <tr><td>To:</td>
+    <% @message.students.each do |std| %>
+      <td><%= std.users.first.name %></td>
+    <% end%>
+  </tr>
   <tr><td>Text:</td><td><%= @message.text %></td></tr>
   <tr><td><%= link_to 'Edit', edit_message_path(@message.id) %></td></tr>
 
