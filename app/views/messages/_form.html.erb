@@ -3,16 +3,21 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1 message_form">
 
-    <%= m.hidden_field :classroom_id, value: current_user.classroom.id %>
-
-    <% students.each do |student| %>
-      <%= m.hidden_field :student_ids, {multiple: true, id: "#{student.id}"}%>
-    <% end %>
-
     <%= m.label :text, "Texto"%>
     <%= m.text_area :text, {class: "form-control message_box", rows: 6} %>
 
     <%= m.submit "Enviar", class: "btn btn-default" %>
+    
+    <%= m.hidden_field :sender_receiver, value: :classroom_student %>
+    
+    <%= fields_for :message_connection do |mc| %>
+      <%= mc.hidden_field :classroom_id, value: current_user.classroom.id %>
+      <% students.each do |student| %>
+        <%= mc.hidden_field :student_ids, {multiple: true, id: "#{student.id}"}%>
+      <% end %>
+    <% end %>
+    
+    
 
   </div>
 

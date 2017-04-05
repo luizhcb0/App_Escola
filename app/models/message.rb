@@ -6,6 +6,8 @@ class Message < ApplicationRecord
   enum sender_receiver: %w(classroom_student student_classroom)
 
   validates :text, :sender_receiver, presence: true
+  validates :students, presence: true
+  validates :classrooms, presence: true
 
   # Callback to set the read proprerty false on Create
   before_create :set_not_read

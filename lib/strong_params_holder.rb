@@ -20,16 +20,16 @@ module StrongParamsHolder
   end
 
   def classroom_params
-    params.require(:classroom).permit(:shift, :professor_ids => [],
-      :student_ids => [], :activity_ids => [])
+    params.require(:classroom).permit(:shift, professor_ids: [],
+      student_ids: [], activity_ids: [])
   end
 
   def message_params
-    params.require(:message).permit(:text, :classroom_id, :student_ids => [])
+    params.require(:message).permit(:text, :sender_receiver)
   end
 
   def activity_params
-    params.require(:activity).permit(:name, :activity_category_id, :classroom_ids => [])
+    params.require(:activity).permit(:name, :activity_category_id, classroom_ids: [])
   end
 
   def option_params
