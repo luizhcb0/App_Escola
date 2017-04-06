@@ -3,7 +3,7 @@ class CreateMessageStudents < ActiveRecord::Migration[5.0]
     create_table :message_students do |t|
       t.belongs_to :message, null: false, index: true
       t.belongs_to :student, null: false, index: true
-      t.boolean :read
+      t.boolean :read, null: true
     end
     add_foreign_key :message_students, :messages, on_delete: :cascade
     add_foreign_key :message_students, :students, on_delete: :cascade
