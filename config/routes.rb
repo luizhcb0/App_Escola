@@ -30,4 +30,6 @@ Rails.application.routes.draw do
   #   post 'search', on: :collection
   # end
 
+  post '/read/', to: 'message_students#read', as: 'read'
+
 end
