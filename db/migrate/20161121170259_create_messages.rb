@@ -3,7 +3,6 @@ class CreateMessages < ActiveRecord::Migration[5.0]
     create_table :messages do |t|
       t.text :text
       t.integer :sender_receiver, null: false
-      t.boolean :read, null: true
       t.timestamps
     end
   end

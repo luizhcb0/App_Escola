@@ -10,7 +10,8 @@ RSpec.describe Student, type: :model do
     it { should have_many(:student_users).dependent(:destroy) }
     it { should have_many(:users) }
     it { should have_and_belong_to_many(:classrooms) }
-    it { should have_and_belong_to_many(:messages) }
+    it { should have_many(:message_students) }
+    it { should have_many(:messages) }
   end
 
   describe "Delete - Associations consistency" do
