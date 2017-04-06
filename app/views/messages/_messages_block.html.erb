@@ -10,7 +10,7 @@
     <% if show_read_check %>
       <div class="panel-footer">
         <%= link_to read_path(message_id: message.id, student_id: params[:student_id]),
-          method: :post, class:"btn btn-primary btn-circle" do %>
+          remote: true, method: :post, id: "read-check", class:"btn btn-primary btn-circle" do %>
           <i class="fa fa-check"></i>
         <% end %>
       </div>

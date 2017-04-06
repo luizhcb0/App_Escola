@@ -44,6 +44,14 @@ $(document).on "turbolinks:load", ->
       return
 
 
+  $("a#read-check").one("ajax:success", (e, data, status, xhr) ->
+    $(this).parents("div.panel").fadeOut(2000)
+    $("span.badge").text($("span.badge").text()-1)
+    if $("span.badge").text() is "0"
+      $("ul.nav").fadeOut(500)
+  ).on "ajax:error", (e, xhr, status, error) ->
+    $(this).after "<p style='color:red;'>An error occured, please try again later.</p>"
+
 
 
 # NOT USED ANYMORE DUE MULTIPE SELECTION
