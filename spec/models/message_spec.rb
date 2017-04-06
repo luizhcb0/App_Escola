@@ -10,6 +10,7 @@ RSpec.describe Message, type: :model do
 
   describe "Associations" do
     it { should have_and_belong_to_many(:classrooms) }
-    it { should have_and_belong_to_many(:students) }
+    it { should have_many(:message_students) }
+    it { should have_many(:students) }
   end
 end
