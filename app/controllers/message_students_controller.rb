@@ -5,6 +5,7 @@ class MessageStudentsController < ApplicationController
       student_id: params[:student_id]).first
     # msg_std = MessageStudent.find(params[:id])
     msg_std.update(read: true)
+    redirect_to :back
   end
 
 end

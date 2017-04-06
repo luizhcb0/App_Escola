@@ -1,8 +1,20 @@
+<% show_read_check = false if local_assigns[:show_read_check].nil? %>
+
 <% messages.each do |message| %>
   <div class="panel panel-danger">
     <div class="panel-heading">
       <h3 class="panel-title">Aviso - <%= message.created_at.to_date.iso8601 %></h3>
     </div>
     <div class="panel-body"><%= message.text %></div>
+
+    <% if show_read_check %>
+      <div class="panel-footer">
+        <%= link_to read_path(message_id: message.id, student_id: params[:student_id]),
+          method: :post, class:"btn btn-primary btn-circle" do %>
+          <i class="fa fa-check"></i>
+        <% end %>
+      </div>
+    <% end %>
+
   </div>
 <% end %>
