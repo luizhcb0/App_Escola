@@ -1,0 +1,2 @@
+class MessageStudent < ApplicationRecord
+end
