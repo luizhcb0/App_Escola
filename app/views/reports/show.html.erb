@@ -1,5 +1,18 @@
 
 <div class="container">
+	<!-- Parents select children they wanna see the report -->
+	<div class="row">
+		<% if is_user("student" || "student_adjacent") && current_user.students.length > 1 %>
+			<%= form_tag(search_reports_path) do %>
+				<% sub_array = current_user.students.map { |s| [s.name, s.id] } %>
+				<%= select_tag "student_id", options_for_select(sub_array, params[:student_id]),
+					class: "form-control", onchange: "this.form.submit();" %>
+				<%= hidden_field_tag(:date, Date.today) %>
+			<% end %>
+		<% end %>
+	</div>
+	<!--  --------------------------------------->
+	
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
@@ -11,7 +24,7 @@
 			<!--  ---------------------------------->
 
 			<!--  Messages: ------------------------->
-			<% if current_user.role.name == "student" || current_user.role.name == "student_adjacent" %>
+			<% if is_user("student" || "student_adjacent") %>
 				<%= render "messages/messages_collapse_bt", messages: student.messages.
 				  where("message_students.read" => [false,nil]) %>
 			<% end %>
@@ -22,8 +35,7 @@
 			<!--  ---------------------------------->
 
 			<!-- Show edit button ------------------>
-			<% if !@report.nil? && current_user.role.name != "student" &&
-				current_user.role.name != "student_adjacent" %>
+			<% if !@report.nil? && !is_user("student" || "student_adjacent") %>
 				<%= link_to edit_student_report_path(student,@report.date),
 					class:"btn btn-primary btn-circle" do %>
 					<i class="fa fa-pencil"></i>

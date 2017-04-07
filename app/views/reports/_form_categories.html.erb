@@ -32,7 +32,8 @@
                     <% end %>
                   <% else %>
                     <% sub_array = suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
-                    <%= select_tag "report[suboption_ids][]", options_for_select(sub_array, @report.suboption_ids), {class: "form-control", :include_blank => ''}  %>
+                    <%= select_tag "report[suboption_ids][]", options_for_select(sub_array,
+                      @report.suboption_ids), {class: "form-control", :include_blank => ''}  %>
                   <% end %>
                 <% end %>
 
