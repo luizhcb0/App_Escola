@@ -16,6 +16,11 @@ module SessionsHelper
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
+  # verify the type of user logged in
+  def is_user(role_name)
+    return current_user.role.name == role_name if logged_in?
+  end
+
   # Returns true if the user is logged in, false otherwise.
   def logged_in?
     !current_user.nil?
