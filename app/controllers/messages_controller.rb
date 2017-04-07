@@ -32,10 +32,11 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
-      redirect_to messages_path
+      flash[:success] = "Avisos enviados com sucesso"
     else
-      render :new
+      flash[:error] = "Houve um erro ao enviar o aviso"
     end
+    redirect_to new_report_path
   end
 
   def edit
