@@ -6,6 +6,11 @@ class Report < ApplicationRecord
   accepts_nested_attributes_for :report_notes, allow_destroy: true,
     reject_if: ->(attrs) { attrs['text'].blank? }
 
+  # Finds a report based in the student_id and a date
+  def self.find_by_student_date(student_id,date = Date.today)
+    where(student_id: student_id, date: date).first
+  end
+
   # Validates the existence of suboptions to save
   validate :at_least_one_suboption
 
@@ -14,7 +19,7 @@ class Report < ApplicationRecord
 
   private
   def set_date
-    self.date = Date.today
+    self.date = Date.today if self.date.nil?
   end
 
   def at_least_one_suboption
