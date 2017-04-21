@@ -55,12 +55,31 @@ RSpec.describe ReportsController, type: :controller do
         post :search, params: { student_id: report.student_id, date: Date.today }
       end
 
-    it "should redirect_to show" do
+      it "should redirect_to show" do
         expect(response).to redirect_to student_report_path(report.student_id, report.date)
       end
     end
   end
 
+
+  describe "POST #send_all" do
+    let(:reports) { 3.times.map { create(:report) } }
+    let(:students) { reports.map { |rep| rep.student } }
+    let(:classroom) { create(:classroom, students: students) }
+    before(:each) do
+      post :send_all, params: { classroom_id: classroom.id }
+    end
+
+    it "saves all reports of that day, for the specific class, as non drafts" do
+      expect(reports[0].reload.draft).to be false
+      expect(reports[1].reload.draft).to be false
+      expect(reports[2].reload.draft).to be false
+    end
+
+    it "redirects to the new_report_path" do
+      expect(response).to redirect_to new_report_path
+    end
+  end
 
   describe "GET #new" do
     before(:each) do

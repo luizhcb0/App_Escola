@@ -14,6 +14,17 @@ class ReportsController < ApplicationController
     redirect_to student_report_path(params[:student_id],params[:date])
   end
 
+  def send_all
+    classroom = Classroom.find(params[:classroom_id])
+    classroom.students.each do |std|
+      if report = Report.find_by_student_date(std.id)
+        report.update_attributes(draft: false)
+      end
+    end if !classroom.nil?
+    flash[:success] = "Relatório enviado com sucesso"
+    redirect_to new_report_path
+  end
+
   def new
     @report = Report.new
     Activity.all.each do |activity|
@@ -42,10 +53,10 @@ class ReportsController < ApplicationController
       unless success.all?
         errored = @reports.select {|b| !b.errors.blank? }
         # do something with the errored values
-        flash[:error] = "Relatório não pôde ser enviado"
+        flash[:error] = "Rascunho não pôde ser salvo"
         raise ActiveRecord::Rollback
       else
-        flash[:success] = "Relatório enviado com sucesso"
+        flash[:success] = "Rascunho salvo com sucesso"
       end
     end
     redirect_to new_report_path

@@ -87,6 +87,10 @@
         <%= render "messages/form", message: Message.new %>
       </div>
 
+      <% if is_user("professor") %>
+        <%= link_to "Enviar Relatórios", send_all_reports_path(classroom_id: current_user.classroom.id), method: :post %>
+      <% end %>
+
     </div>
 
   </div>
