@@ -16,10 +16,15 @@ class Report < ApplicationRecord
 
   # Callback to set the read proprerty false on Create
   before_create :set_date
+  before_create :set_draft
 
   private
   def set_date
     self.date = Date.today if self.date.nil?
+  end
+
+  def set_draft
+    self.draft = true if self.draft.nil?
   end
 
   def at_least_one_suboption

@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20170406130841) do
   create_table "reports", force: :cascade do |t|
     t.integer  "student_id", null: false
     t.date     "date"
+    t.boolean  "draft"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["student_id", "date"], name: "index_reports_on_student_id_and_date", unique: true, using: :btree
