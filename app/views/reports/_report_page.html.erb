@@ -12,7 +12,7 @@
 <br>
 <!--  -------------------------------------------->
 
-<% if !report.nil? %>
+<% if !report.nil? && !(is_user("student" || "student_adjacent") && report.draft ) %>
   <!-- Activiies & Options ----------------------->
   <!-- panel colors array -->
   <% panels = ["primary", "warning", "success"] %>
