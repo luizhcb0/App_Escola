@@ -77,7 +77,7 @@ RSpec.describe ReportsController, type: :controller do
   end
 
   describe "POST #create" do
-    let(:report) { assigns(:report) }
+    let(:reports) { assigns(:reports) }
     let(:suboption) { create(:suboption) }
     let(:student) { create(:student) }
 
@@ -96,23 +96,23 @@ RSpec.describe ReportsController, type: :controller do
       end
 
       it "should belong to the right student" do
-        expect(report.student_id).to eq student.id
+        expect(reports[0].student_id).to eq student.id
       end
 
       it "should save the report" do
-        expect(report).to be_persisted
+        expect(reports[0]).to be_persisted
       end
 
       it "should save the report_note" do
-        expect(report.report_notes.count).to eq 1
+        expect(reports[0].report_notes.count).to eq 1
       end
 
       it "should save report.suboptions reference" do
-        expect(report.suboptions.first).to eq suboption
+        expect(reports[0].suboptions.first).to eq suboption
       end
 
       it "should save suboptions.report reference" do
-        expect(suboption.reports.first).to eq report
+        expect(suboption.reports.first).to eq reports[0]
       end
     end
 
@@ -121,13 +121,14 @@ RSpec.describe ReportsController, type: :controller do
         post :create, params: { report: attributes_for(:report) }
       end
 
-      it "should render new template" do
-        expect(response).to render_template(:new)
+      it "should redirect_to new_report_path" do
+        expect(response).to redirect_to(new_report_path)
       end
 
       it "should not save the report" do
-        expect(report).to_not be_persisted
-        expect(Report.all).to_not include report
+        expect(reports[0]).to eq nil
+        # expect(report).to_not be_persisted
+        # expect(Report.all).to_not include report
       end
     end
   end
@@ -181,7 +182,7 @@ RSpec.describe ReportsController, type: :controller do
         report = create(:report)
         patch :update, params: {
           report: attributes_for(:report, student_id: -1,
-            suboption_ids: [suboption.id, create(:suboption).id], 
+            suboption_ids: [suboption.id, create(:suboption).id],
             report_notes_attributes: [build(:report_note).attributes]),
           student_id: report.student_id, date: report.date
         }
