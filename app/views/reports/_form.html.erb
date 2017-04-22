@@ -88,7 +88,9 @@
       </div>
 
       <% if is_user("professor") %>
-        <%= link_to "Enviar Relatórios", send_all_reports_path(classroom_id: current_user.classroom.id), method: :post %>
+        <%= link_to "Enviar Relatórios",
+          send_all_reports_path(classroom_id: current_user.classroom.id),
+          method: :post, class: "btn btn-default" %>
       <% end %>
 
     </div>
