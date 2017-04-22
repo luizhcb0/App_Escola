@@ -97,7 +97,6 @@ ActiveRecord::Schema.define(version: 20170406130841) do
   create_table "reports_suboptions", id: false, force: :cascade do |t|
     t.integer "report_id",    null: false
     t.integer "suboption_id", null: false
-    t.index ["report_id", "suboption_id"], name: "index_reports_suboptions_on_report_id_and_suboption_id", unique: true, using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
