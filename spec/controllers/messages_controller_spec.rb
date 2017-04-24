@@ -103,8 +103,8 @@ RSpec.describe MessagesController, type: :controller do
         }
       end
 
-      it "should redirect to messages_path" do
-        expect(response).to redirect_to(messages_path)
+      it "should redirect to new_report_path" do
+        expect(response).to redirect_to(new_report_path)
       end
 
       it "should save message" do
@@ -127,8 +127,8 @@ RSpec.describe MessagesController, type: :controller do
         }
       end
 
-      it "should render new" do
-        expect(response).to render_template("new")
+      it "should redirect_to new_report_path" do
+        expect(response).to redirect_to new_report_path
       end
     end
 
@@ -139,8 +139,8 @@ RSpec.describe MessagesController, type: :controller do
         }
       end
 
-      it "should render new" do
-        expect(response).to render_template("new")
+      it "should redirect_to new_report_path" do
+        expect(response).to redirect_to(new_report_path)
       end
     end
 

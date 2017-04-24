@@ -13,14 +13,36 @@
           <% counter = 0 %>
           <% activities.where(activity_category_id: category.id).each do |activity| %>
             <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="headingOne">
+              <div class="panel-heading" role="tab">
                 <div class="panel-title">
-                  <a onclick="togglePanel($(this));" class="<%= activity.name %>">
+                  <!-- <a onclick="togglePanel($(this));" class="<%= activity.name %>">
+                    <%= activity.name %>
+                  </a> -->
+                  <a type="button"  data-toggle="modal" data-target="#modal-<%= activity.name%>">
                     <%= activity.name %>
                   </a>
                 </div>
               </div>
-              <div class="panel-body report-form" id="<%= activity.name %>">
+
+
+
+
+              <!-- Modal --------------------------------->
+              <div class="modal fade" id="modal-<%= activity.name %>" tabindex="-1"
+                role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title"><%= activity.name %></h4>
+                    </div>
+                    <div class="modal-body">
+
+
+              <!-- Options ------------------------------->
+              <div class="panel-body" >
                 <% options.where(activity_id: activity.id).each do |option| %>
                   <%= f.label option.name %>
                   <% if option.multiple %>
@@ -44,12 +66,25 @@
                 <% end %>
                 <% counter += 1 %>
 
+                <%= f.submit "Salvar", class: "btn btn-default" %>
               </div>
+              <!--  --------------------------------------->
+
+            </div>
+            <div class="modal-footer">
+              <!-- <%= button_tag "Reset", type: :reset, class:"btn btn-default" %> -->
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--  -------------------------------------->
+
+
             </div>
           <% end %>
         </div>
       </div>
     <% end %>
   </div>
-  <%= f.submit "Salvar", class: "btn btn-default" %>
 </div>

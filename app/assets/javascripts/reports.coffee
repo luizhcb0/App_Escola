@@ -52,6 +52,10 @@ $(document).on "turbolinks:load", ->
   ).on "ajax:error", (e, xhr, status, error) ->
     $(this).after "<p style='color:red;'>An error occured, please try again later.</p>"
 
+  # Resets the form after the modal is closed 
+  $('.modal').on('hidden.bs.modal', () ->
+    $('form')[0].reset()
+  )
 
 
 # NOT USED ANYMORE DUE MULTIPE SELECTION

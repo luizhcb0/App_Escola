@@ -20,7 +20,7 @@
                   <img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt="">
                 </div>
               <% end %>
-              
+
             <!-- <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal1">
               <span class="glyphicon glyphicon-level-up" aria-hidden="true"></span>
             </button> -->
@@ -86,6 +86,12 @@
       <div class="messages">
         <%= render "messages/form", message: Message.new %>
       </div>
+
+      <% if is_user("professor") %>
+        <%= link_to "Enviar Relatórios",
+          send_all_reports_path(classroom_id: current_user.classroom.id),
+          method: :post, class: "btn btn-default" %>
+      <% end %>
 
     </div>
 

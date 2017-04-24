@@ -14,6 +14,17 @@ class ReportsController < ApplicationController
     redirect_to student_report_path(params[:student_id],params[:date])
   end
 
+  def send_all
+    classroom = Classroom.find(params[:classroom_id])
+    classroom.students.each do |std|
+      if report = Report.find_by_student_date(std.id)
+        report.update_attributes(draft: false)
+      end
+    end if !classroom.nil?
+    flash[:success] = "Relatório enviado com sucesso"
+    redirect_to new_report_path
+  end
+
   def new
     @report = Report.new
     Activity.all.each do |activity|
@@ -25,10 +36,16 @@ class ReportsController < ApplicationController
     @reports = Array.new
     if !params[:student_ids].nil?
       params[:student_ids].each do |student_id|
-        @reports << @report = Report.new(report_params(student_id))
+        std_report = Report.find_by_student_date(student_id)
+        if (std_report.nil?)
+          @reports << Report.new(report_params(student_id))
+        else
+          new_report = Report.new(report_params(student_id))
+          std_report.suboptions << new_report.suboptions
+          std_report.report_notes << new_report.report_notes
+          @reports << std_report
+        end
       end
-    else
-      @reports << @report = Report.new(report_params(nil))
     end
     Report.transaction do
       success = @reports.map(&:save)
@@ -36,17 +53,13 @@ class ReportsController < ApplicationController
       unless success.all?
         errored = @reports.select {|b| !b.errors.blank? }
         # do something with the errored values
-        flash[:error] = "Relatório não pôde ser enviado"
-        render :new
+        flash[:error] = "Rascunho não pôde ser salvo"
         raise ActiveRecord::Rollback
       else
-        flash[:success] = "Relatório enviado com sucesso"
-        redirect_to new_report_path
+        flash[:success] = "Rascunho salvo com sucesso"
       end
     end
-    # Report.transaction do
-    #   @reports.each(&:save!)
-    # end
+    redirect_to new_report_path
   end
 
   def edit
@@ -75,7 +88,6 @@ class ReportsController < ApplicationController
   # Based on params :student_id and :date, finds the correspondent report
   private
   def find_report_from_params
-    Report.where(student_id: params[:student_id], date: params[:date]).first
+    Report.find_by_student_date(params[:student_id], params[:date])
   end
-
 end
