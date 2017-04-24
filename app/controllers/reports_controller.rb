@@ -16,12 +16,20 @@ class ReportsController < ApplicationController
 
   def send_all
     classroom = Classroom.find(params[:classroom_id])
-    classroom.students.each do |std|
-      if report = Report.find_by_student_date(std.id)
-        report.update_attributes(draft: false)
+    Report.transaction do
+      success = classroom.students.map do |std|
+        (report = Report.find_by_student_date(std.id)) ?
+          report.update_attributes(draft: false) : true
+      end
+
+      if !success.all?
+        flash[:error] = "Houve um erro ao enviar os relatorios"
+        raise ActiveRecord::Rollback
+      else
+        flash[:success] = "Relatórios enviados com sucesso"
       end
     end if !classroom.nil?
-    flash[:success] = "Relatório enviado com sucesso"
+
     redirect_to new_report_path
   end
 
@@ -50,7 +58,9 @@ class ReportsController < ApplicationController
     Report.transaction do
       success = @reports.map(&:save)
       #success = @reports.map(&:save!) --> Force Model validation
-      unless success.all?
+      if @reports.empty?
+        flash[:error] = "Pelo menos um aluno deve ser selecionado"
+      elsif !success.all?
         errored = @reports.select {|b| !b.errors.blank? }
         # do something with the errored values
         flash[:error] = "Rascunho não pôde ser salvo"
