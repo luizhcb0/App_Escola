@@ -3,6 +3,13 @@ require 'rails_helper'
 RSpec.describe Student, type: :model do
   describe "Validations" do
     it { should validate_presence_of(:name) }
+    it { should validate_attachment_content_type(:avatar).
+                allowing('image/jpeg', 'image/gif', 'image/png').
+                rejecting('text/plain', 'text/xml') }
+  end
+
+  describe "Attachments" do
+    it { should have_attached_file(:avatar) }
   end
 
   describe "Associations" do
