@@ -32,6 +32,8 @@ gem "cocoon"
 # Set users
 # gem "devise"
 
+# Used to handle images
+gem "paperclip", "~> 5.1.0"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

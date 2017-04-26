@@ -17,7 +17,8 @@
               <%= label_tag "check_#{student.id}" do %>
                 <div class="std_label"><%= student.name %></div>
                 <div class="std_img thumbnail">
-                  <img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt="">
+                  <%= image_tag student.avatar.url %>
+                  <!-- <img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt=""> -->
                 </div>
               <% end %>
 

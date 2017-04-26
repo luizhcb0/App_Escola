@@ -16,7 +16,7 @@ module StrongParamsHolder
   end
 
   def student_params
-    params.require(:student).permit(:name, :address, :birthday)
+    params.require(:student).permit(:name, :address, :birthday, :avatar)
   end
 
   def classroom_params
