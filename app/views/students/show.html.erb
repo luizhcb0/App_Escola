@@ -5,6 +5,15 @@
     <div class="col-sm-6 col-sm-offset-3">
       <table class="table">
         <tbody>
+          <!-- Show avatar -->
+          <tr>
+            <div>
+              <div class="img-thumbnail text-center">
+                <%= image_tag @student.avatar.url, :size => "200x200" %>
+              </div>
+            </div>
+          </tr>
+          
           <tr>
             <td>Student Name:</td>
             <td><%= @student.name %></td>
