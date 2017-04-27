@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406130841) do
+ActiveRecord::Schema.define(version: 20170427145910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,20 @@ ActiveRecord::Schema.define(version: 20170406130841) do
   create_table "classrooms_students", id: false, force: :cascade do |t|
     t.integer "classroom_id", null: false
     t.integer "student_id",   null: false
+  end
+
+  create_table "clips", force: :cascade do |t|
+    t.string   "media_file_name"
+    t.string   "media_content_type"
+    t.integer  "media_file_size"
+    t.datetime "media_updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  create_table "clips_reports", id: false, force: :cascade do |t|
+    t.integer "clip_id",   null: false
+    t.integer "report_id", null: false
   end
 
   create_table "message_students", force: :cascade do |t|
@@ -151,6 +165,8 @@ ActiveRecord::Schema.define(version: 20170406130841) do
   add_foreign_key "classrooms_messages", "messages", on_delete: :cascade
   add_foreign_key "classrooms_students", "classrooms", on_delete: :cascade
   add_foreign_key "classrooms_students", "students", on_delete: :cascade
+  add_foreign_key "clips_reports", "clips", on_delete: :cascade
+  add_foreign_key "clips_reports", "reports", on_delete: :cascade
   add_foreign_key "message_students", "messages", on_delete: :cascade
   add_foreign_key "message_students", "students", on_delete: :cascade
   add_foreign_key "options", "activities", on_delete: :cascade
