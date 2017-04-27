@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :reports, only: [:new, :create] do
     post 'search', on: :collection
     post 'send_all', on: :collection
+    post 'send_clip', on: :collection
   end
 
   resources :classrooms
