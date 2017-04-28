@@ -34,12 +34,15 @@ $(document).on "turbolinks:load", ->
         return
       return
 
-  # Selected students for reports will be selected for messages
+  # Selected students for reports will be selected for messages and clips
   $('input[type="checkbox"][name="student_ids[]"]').change ->
     if (this.checked)
       $(".message_form #"+this.value).val(this.value)
+      $("#s"+this.value).val(this.value)
     else
       $(".message_form #"+this.value).val("")
+      $("#s"+this.value).val("")
+      # removes the check from 'select_all' check box
       $('#select_all').attr('checked', false);
       return
 
@@ -52,7 +55,7 @@ $(document).on "turbolinks:load", ->
   ).on "ajax:error", (e, xhr, status, error) ->
     $(this).after "<p style='color:red;'>An error occured, please try again later.</p>"
 
-  # Resets the form after the modal is closed 
+  # Resets the form after the modal is closed
   $('.modal').on('hidden.bs.modal', () ->
     $('form')[0].reset()
   )
