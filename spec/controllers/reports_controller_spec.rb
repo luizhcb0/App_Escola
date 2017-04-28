@@ -86,19 +86,35 @@ RSpec.describe ReportsController, type: :controller do
     let(:reports) { 3.times.map { create(:report) } }
     let(:student_ids) { reports.map { |rep| rep.student.id } }
     let(:photo) { Rails.root.join('spec', 'medias', 'test.png') }
-    before(:each) do
-      post :send_clip, params: { student_ids: student_ids, media: fixture_file_upload(photo) }
+
+    context "reports exist" do
+      before(:each) do
+        post :send_clip, params: { student_ids: student_ids, media: fixture_file_upload(photo) }
+      end
+
+      it "saves the clip" do
+        expect(reports[0].clips[0].reports).to eq reports
+        expect(reports[0].clips[0]).to have_attached_file(:media)
+        expect(reports[1].clips[0]).to have_attached_file(:media)
+        expect(reports[2].clips[0]).to have_attached_file(:media)
+      end
+
+      it "redirects to the new_report_path" do
+        expect(response).to redirect_to new_report_path
+      end
     end
 
-    it "saves the clip" do
-      expect(reports[0].clips[0].reports).to eq reports
-      expect(reports[0].clips[0]).to have_attached_file(:media)
-      expect(reports[1].clips[0]).to have_attached_file(:media)
-      expect(reports[2].clips[0]).to have_attached_file(:media)
-    end
+    context "report does not exist yet" do
+      let (:student) { create(:student) }
+      before(:each) do
+        post :send_clip, params: { student_ids: [student.id], media: fixture_file_upload(photo) }
+      end
 
-    it "redirects to the new_report_path" do
-      expect(response).to redirect_to new_report_path
+      it "saves the clip" do
+        expect(student.reports).to_not eq nil
+        expect(Clip.all.size).to eq 1
+        expect(Clip.all[0].reports[0].student).to eq student
+      end
     end
   end
 
