@@ -121,7 +121,7 @@
             <div class="modal-body">
 
             <% students.each do |student| %>
-              <%= hidden_field_tag "student_ids[]", nil, {multiple: true, id: "s#{student.id}"}%>
+              <%= hidden_field_tag "student_ids[]", nil, {multiple: true, id: "clip-student#{student.id}"}%>
             <% end %>
             <%= file_field_tag :media, class:"form-control" %>
 

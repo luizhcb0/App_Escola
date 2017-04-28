@@ -38,10 +38,10 @@ $(document).on "turbolinks:load", ->
   $('input[type="checkbox"][name="student_ids[]"]').change ->
     if (this.checked)
       $(".message_form #"+this.value).val(this.value)
-      $("#s"+this.value).val(this.value)
+      $("#clip-student"+this.value).val(this.value)
     else
       $(".message_form #"+this.value).val("")
-      $("#s"+this.value).val("")
+      $("#clip-student"+this.value).val("")
       # removes the check from 'select_all' check box
       $('#select_all').attr('checked', false);
       return
