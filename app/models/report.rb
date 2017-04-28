@@ -13,7 +13,7 @@ class Report < ApplicationRecord
   end
 
   # Validates the existence of suboptions to save
-  validate :at_least_one_suboption
+  # validate :at_least_one_suboption
 
   # Callback to set the read proprerty false on Create
   before_create :set_date
@@ -28,9 +28,9 @@ class Report < ApplicationRecord
     self.draft = true if self.draft.nil?
   end
 
-  def at_least_one_suboption
-    if suboptions.size < 1
-      errors.add :base, "The report can't be empty"
-    end
-  end
+  # def at_least_one_suboption
+  #   if suboptions.size < 1
+  #     errors.add :base, "The report can't be empty"
+  #   end
+  # end
 end
