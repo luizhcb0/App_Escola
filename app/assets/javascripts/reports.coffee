@@ -60,14 +60,14 @@ $(document).on "turbolinks:load", ->
   $(".absence").click ->
     $id = $(this).attr('id').replace('absence_','')
     $.ajax '/set_presence/'+$id+'/true',
-        type: 'POST'
+        type: 'PATCH'
         success: ->
           # alert("oi")
 
   $(".presence").click ->
     $id = $(this).attr('id').replace('presence_','')
     $.ajax '/set_presence/'+$id+'/false',
-        type: 'POST'
+        type: 'PATCH'
         success: ->
           # alert("oi")
 
