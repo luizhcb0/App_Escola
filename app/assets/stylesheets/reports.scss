@@ -48,13 +48,43 @@
 //   opacity: 1;
 // }
 
+.absence {
+  border: solid 1px #337ab7;
+  border-radius: 25%;
+  padding-right: 2%;
+  padding-left: 2%;
+  float: right;
+  margin-bottom: 2%;
+
+}
+
+.absence:hover {
+  color: #337ab7;
+
+}
+
+.presence {
+  border: solid 1px #337ab7;
+  border-radius: 25%;
+  padding-right: 3%;
+  padding-left: 3%;
+  float: right;
+  margin-bottom: 2%;
+
+}
+
+.presence:hover {
+  color: #337ab7;
+
+}
+
 .report-form {
   display: none;
 }
 
 @media (min-width: 768px) {
   .right_forms {
-    height: 70vh;
+    height: 30vh;
     overflow-y: scroll;
   }
 }

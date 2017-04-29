@@ -95,6 +95,13 @@ class ReportsController < ApplicationController
     redirect_to root_path
   end
 
+  def set_presence
+    @student = Student.find(params[:id])
+    @student.update_attributes(absence: params[:status])
+    redirect_to new_report_path
+  end
+
+
   # Based on params :student_id and :date, finds the correspondent report
   private
   def find_report_from_params

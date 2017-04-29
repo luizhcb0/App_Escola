@@ -1,7 +1,7 @@
 module ReportsHelper
 
   def students
-    students = Student.includes(:classrooms).where(classrooms: {id: current_user.classroom.id })
+    students = Student.includes(:classrooms).where(classrooms: {id: current_user.classroom.id }).order(:name)
   end
 
   def categories
