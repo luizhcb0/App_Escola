@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 20170406130841) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "absence",             null: false
   end
 
   create_table "suboptions", force: :cascade do |t|

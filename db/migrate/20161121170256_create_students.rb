@@ -5,6 +5,7 @@ class CreateStudents < ActiveRecord::Migration[5.0]
       t.string :address
       t.date :birthday
       t.attachment :avatar
+      t.boolean :absence, null: false
     end
   end
 end
