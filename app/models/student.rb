@@ -14,4 +14,11 @@ class Student < ApplicationRecord
     content_type: ["image/jpeg", "image/gif", "image/png"]
 
   validates :name, presence: true
+
+  # Callback to set the absence attribute false on Create
+  before_create :set_presence
+
+  def set_presence
+    self.absence = false
+  end
 end

@@ -41,6 +41,15 @@ class StudentsController < ApplicationController
     end
   end
 
+  def set_presence
+    @student = Student.find(params[:id])
+    if @student.update_attribute(:absence, params[:status])
+      redirect_to new_report_path
+    else
+      redirect_to :index
+    end
+  end
+
   def destroy
     @student = Student.find(params[:id])
     @student.destroy

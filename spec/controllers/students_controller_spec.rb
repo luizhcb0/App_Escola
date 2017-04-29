@@ -114,7 +114,7 @@ RSpec.describe StudentsController, type: :controller do
 
   describe "PATCH #update" do
     let(:student) { assigns(:student) }
-    
+
     context 'when valid' do
       before(:each) do
         student = create(:student, users: [(create(:user))])
@@ -156,6 +156,48 @@ RSpec.describe StudentsController, type: :controller do
         expect(student.users.first.email).to_not eq "abc.com"
       end
     end
+  end
+
+  describe "PATCH #set_presence" do
+    let(:student) { assigns(:student) }
+
+    context "when student is present" do
+      before(:each) do
+        student = create(:student)
+        patch :set_presence,
+          params: {
+            id: student.id, status: "false"
+          }
+      end
+
+      it "should set absence to false" do
+        expect(student.absence).to be false
+      end
+
+      it "redirects to the new_report_path" do
+        expect(response).to redirect_to new_report_path
+      end
+    end
+
+    context "when student is absent" do
+      before(:each) do
+        student = create(:student)
+        patch :set_presence,
+          params: {
+            id: student.id, status: "true"
+          }
+      end
+
+      # Did not understant why it is not working... Callback??
+      it "should set absence to true" do
+        expect(student.absence).to eq true
+      end
+
+      it "redirects to the new_report_path" do
+        expect(response).to redirect_to new_report_path
+      end
+    end
+
   end
 
   describe "DELETE #destroy" do

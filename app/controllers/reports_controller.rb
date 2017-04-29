@@ -95,6 +95,7 @@ class ReportsController < ApplicationController
     redirect_to root_path
   end
 
+
   # Based on params :student_id and :date, finds the correspondent report
   private
   def find_report_from_params
