@@ -33,6 +33,6 @@ Rails.application.routes.draw do
 
   post '/read/', to: 'message_students#read', as: 'read'
 
-  post '/set_presence/:id/:status', to: 'reports#set_presence', as: 'set_presence'
+  post '/set_presence/:student_id/:status', to: 'reports#set_presence', as: 'set_presence'
 
 end

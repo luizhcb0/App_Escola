@@ -12,6 +12,13 @@ RSpec.describe Student, type: :model do
     it { should have_attached_file(:avatar) }
   end
 
+  describe "Attributes" do
+    it "should not be absent" do
+      student = create(:student)
+      expect(student.absence).to be false
+    end
+  end
+
   describe "Associations" do
     it { should have_many(:reports) }
     it { should have_many(:student_users).dependent(:destroy) }

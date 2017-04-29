@@ -81,6 +81,41 @@ RSpec.describe ReportsController, type: :controller do
     end
   end
 
+  describe "POST #set_presence" do
+
+    context "when student is present" do
+      let!(:student) { create(:student) }
+      before(:each) do
+        post :set_presence, params: { status: 'false', student_id: student.id }
+      end
+
+      it "should set absence to false" do
+        expect(student.absence).to be false
+      end
+
+      it "redirects to the new_report_path" do
+        expect(response).to redirect_to new_report_path
+      end
+    end
+
+    context "when student is absent" do
+      let!(:student) { create(:student) }
+      before(:each) do
+        post :set_presence, params: { status: 'true', student_id: student.id }
+      end
+
+      # Did not understant why it is not working... Callback??
+      it "should set absence to true" do
+        expect(student.absence).to be true
+      end
+
+      it "redirects to the new_report_path" do
+        expect(response).to redirect_to new_report_path
+      end
+    end
+
+  end
+
   describe "GET #new" do
     before(:each) do
       get :new

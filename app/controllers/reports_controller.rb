@@ -96,7 +96,7 @@ class ReportsController < ApplicationController
   end
 
   def set_presence
-    @student = Student.find(params[:id])
+    @student = Student.find(params[:student_id])
     @student.update_attributes(absence: params[:status])
     redirect_to new_report_path
   end
