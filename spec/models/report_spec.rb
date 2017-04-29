@@ -5,11 +5,12 @@ RSpec.describe Report, type: :model do
     it { should belong_to(:student) }
     it { should have_and_belong_to_many(:suboptions) }
     it { should have_many(:report_notes) }
+    it { should have_and_belong_to_many(:clips) }
 
-    it "Should validate if have at least one suboption" do
-      report = Report.new(student: create(:student))
-      expect(report.save).to be false
-    end
+    # it "Should validate if have at least one suboption" do
+    #   report = Report.new(student: create(:student))
+    #   expect(report.save).to be false
+    # end
   end
 
   describe "Delete - Associations consistency" do

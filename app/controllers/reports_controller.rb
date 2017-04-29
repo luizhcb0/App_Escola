@@ -33,6 +33,22 @@ class ReportsController < ApplicationController
     redirect_to new_report_path
   end
 
+  def send_clip
+    clip = Clip.new(media: params[:media])
+    reports = params[:student_ids].reject(&:empty?).map do |std_id|
+      Report.find_or_initialize_by(student_id: std_id, date: Date.today)
+    end
+    clip.reports = reports
+
+    if clip.save
+      flash[:success] = "Midia enviada com sucesso!"
+    else
+      flash[:error] = "Houve um erro ao enviar midia."
+    end
+
+    redirect_to new_report_path
+  end
+
   def new
     @report = Report.new
     Activity.all.each do |activity|
