@@ -1,108 +1,93 @@
 <div class="row">
-  <div class="col-sm-10 col-sm-offset-1">
+
+  <div class="col-sm-10 col-sm-offset-1" id="new-activity">
+    <button type="button" class="btn btn-default btn-new-activity">Nova Atividade</button>
+  </div>
+
+  <div class="col-sm-10 col-sm-offset-1" id="category-container">
     <% categories.each do |category| %>
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-          <h4 class="panel-title">
-            <a onclick="togglePanel($(this));" class="<%= category.name %>">
-              <%= category.name %>
-            </a>
-          </h4>
-        </div>
-        <div class="panel-body report-form" id="<%= category.name %>">
-          <% counter = 0 %>
-          <% activities.where(activity_category_id: category.id).each do |activity| %>
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab">
-                <div class="panel-title">
-                  <!-- <a onclick="togglePanel($(this));" class="<%= activity.name %>">
-                    <%= activity.name %>
-                  </a> -->
-                  <a type="button"  data-toggle="modal" data-target="#modal-<%= activity.name%>">
-                    <%= activity.name %>
-                  </a>
-                </div>
-              </div>
-
-
-              <!-- Modal --------------------------------->
-              <div class="modal fade" id="modal-<%= activity.name %>" tabindex="-1"
-                role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <h4 class="modal-title"><%= activity.name %></h4>
-                    </div>
-                    <div class="modal-body">
-
-
-              <!-- Options ------------------------------->
-              <div class="panel-body" >
-                <% options.where(activity_id: activity.id).each do |option| %>
-                  <%= f.label option.name %>
-                  <% if option.multiple %>
-                    <% suboptions.where(option_id: option.id).each do |suboption| %>
-                      <div class="form-group">
-                        <%= f.label suboption.name %>
-                        <%= f.check_box "suboption_ids", {:multiple => true}, suboption.id, nil  %>
-                      </div>
-                    <% end %>
-                  <% else %>
-                    <% sub_array = suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
-                    <%= select_tag "report[suboption_ids][]", options_for_select(sub_array,
-                      @report.suboption_ids), {class: "form-control", :include_blank => ''}  %>
-                  <% end %>
-                <% end %>
-
-                <%= f.fields_for :report_notes, report_notes[counter] do |note| %>
-                  <%= note.hidden_field :activity_id, value: activity.id %>
-                  <%= note.label :text, "Obs: " %><br/>
-                  <%= note.text_area :text, class: "form-control" %>
-                <% end %>
-                <% counter += 1 %>
-
-                <%= f.submit "Salvar", class: "btn btn-default" %>
-              </div>
-              <!--  --------------------------------------->
-
-            </div>
-            <div class="modal-footer">
-              <!-- <%= button_tag "Reset", type: :reset, class:"btn btn-default" %> -->
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--  -------------------------------------->
-
-
-            </div>
-          <% end %>
-        </div>
-      </div>
+      <button type="button" class="btn btn-default btn-category"><%= category.name %></button>
     <% end %>
 
     <!-- Send annexes to students   ---->
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab">
-        <h4 class="panel-title">
-          <a data-toggle="modal" data-target="#modal-clip">
-            <i class="fa fa-camera"></i> / <i class="fa fa-video-camera"></i>
-          </a>
-        </h4>
-      </div>
-    </div>
+    <button type="button" class="btn btn-default btn-clip" data-toggle="modal" data-target="#modal-clip">
+      <i class="fa fa-camera"></i> / <i class="fa fa-video-camera"></i>
+    </button>
     <!--------------->
+
+    <button type="button" class="btn btn-default" id="back-new">Voltar</button>
+
   </div>
 
+  <% categories.each do |category| %>
+    <div class="col-sm-10 col-sm-offset-1 activity" id="<%= category.name %>">
+      <% counter = 0 %>
+      <% activities.where(activity_category_id: category.id).each do |activity| %>
 
-  <% if is_user("professor") %>
-    <%= link_to "Enviar Relatórios",
-          send_all_reports_path(classroom_id: current_user.classroom.id),
-          method: :post, class: "btn btn-default" %>
+        <button type="button" class="btn btn-default btn-activity" id="<%= activity.name %>" data-toggle="modal" data-target="#modal-<%= activity.name%>">
+          <%= activity.name %>
+        </button>
+
+
+        <!-- Modal --------------------------------->
+        <div class="modal fade" id="modal-<%= activity.name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><%= activity.name %></h4>
+              </div>
+
+              <div class="modal-body">
+
+                <!-- Options ------------------------------->
+                <div class="panel-body" >
+                  <% options.where(activity_id: activity.id).each do |option| %>
+                    <%= f.label option.name %>
+                    <% if option.multiple %>
+                      <% suboptions.where(option_id: option.id).each do |suboption| %>
+                        <div class="form-group">
+                          <%= f.label suboption.name %>
+                          <%= f.check_box "suboption_ids", {:multiple => true}, suboption.id, nil  %>
+                        </div>
+                      <% end %>
+                    <% else %>
+                      <% sub_array = suboptions.where(option_id: option.id).map { |s| [s.name, s.id] } %>
+                      <%= select_tag "report[suboption_ids][]", options_for_select(sub_array,
+                        @report.suboption_ids), {class: "form-control", :include_blank => ''}  %>
+                    <% end %>
+                  <% end %>
+
+                  <%= f.fields_for :report_notes, report_notes[counter] do |note| %>
+                    <%= note.hidden_field :activity_id, value: activity.id %>
+                    <%= note.label :text, "Obs: " %><br/>
+                    <%= note.text_area :text, class: "form-control" %>
+                  <% end %>
+                  <% counter += 1 %>
+
+                  <%= f.submit "Salvar", class: "btn btn-default" %>
+                </div>
+                <!--  --------------------------------------->
+
+              </div>
+
+              <div class="modal-footer">
+                <!-- <%= button_tag "Reset", type: :reset, class:"btn btn-default" %> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!--  -------------------------------------->
+
+      <% end %>
+
+      <button type="button" class="btn btn-default back-category">Voltar</button>
+
+    </div>
   <% end %>
 
 </div>

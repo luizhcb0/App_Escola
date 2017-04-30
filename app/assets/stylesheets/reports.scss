@@ -135,3 +135,13 @@
 input.student_check[type=checkbox] {
   display: none;
 }
+
+.btn-category, .btn-new-activity, .btn-activity, .btn-clip {
+  width: 100%;
+  font-weight: bold !important;
+  margin-bottom: 8% !important;
+}
+
+#category-container, .activity {
+  display: none;
+}

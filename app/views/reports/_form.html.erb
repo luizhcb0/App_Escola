@@ -80,10 +80,12 @@
     </h3>
     <div class="right_forms">
 
+      <!-- Select all Students -->
       <div class="form-group">
         <%= check_box_tag :select_all %>
         <%= label_tag :select_all, "Selecionar todos" %>
       </div>
+      <!--  ------------>
 
       <!-- Categories -->
       <div class="categories">
@@ -177,6 +179,18 @@
       <% end %>
 
     </div>
+
+  </div>
+
+  <div class="col-sm-3">
+
+    <!-- Send all reports -->
+    <% if is_user("professor") %>
+      <%= link_to "Enviar Relatórios",
+            send_all_reports_path(classroom_id: current_user.classroom.id),
+            method: :post, class: "btn btn-default" %>
+    <% end %>
+    <!--  -------------------------------------->
 
   </div>
 
