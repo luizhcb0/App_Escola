@@ -97,18 +97,6 @@
       </div>
       <!--  ---------->
 
-      <!-- Send annexes to students   ---->
-      <div class="row">
-      <div class="col-sm-10 col-sm-offset-1">
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab">
-          <a type="button" class="panel-title" data-toggle="modal" data-target="#modal-clip">
-            <i class="fa fa-camera"></i> / <i class="fa fa-video-camera"></i>
-          </a>
-        </div>
-      </div>
-      </div>
-      </div>
 
       <!-- Modal -->
       <div class="modal fade" id="modal-clip" tabindex="-1"
@@ -140,12 +128,6 @@
         </div>
       </div>
       <!-- ------------------------------->
-
-      <% if is_user("professor") %>
-        <%= link_to "Enviar Relatórios",
-              send_all_reports_path(classroom_id: current_user.classroom.id),
-              method: :post, class: "btn btn-default" %>
-      <% end %>
 
     </div>
 
