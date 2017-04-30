@@ -28,9 +28,27 @@
   margin-bottom: 15%;
 }
 
-.std_label {
-  min-height: 2vw;
+@media (min-width: 992px) {
+  .std_label {
+    min-height: 2vw;
+    font-size: 1vw;
+  }
 }
+
+@media (max-width: 991px) {
+  .std_label {
+    min-height: 2vw;
+    font-size: 2vw;
+  }
+}
+
+@media (max-width: 531px) {
+  .std_label {
+    min-height: 2vw;
+    font-size: 3vw;
+  }
+}
+
 
 .std_icons {
   float: left;
