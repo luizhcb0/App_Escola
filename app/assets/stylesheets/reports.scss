@@ -49,33 +49,38 @@
 // }
 
 .absence {
-  border: solid 1px #337ab7;
+  border: solid 1px #b7337a;
   border-radius: 25%;
   padding-right: 2%;
   padding-left: 2%;
   float: right;
   margin-bottom: 2%;
-
+  color: #fff;
+  background-color: #b7337a;
+  font-size: 74%;
 }
 
 .absence:hover {
-  color: #337ab7;
-
+  color: #b7337a;
+  background-color: #fff;
 }
 
 .presence {
-  border: solid 1px #337ab7;
+  border: solid 1px #33b77a;
   border-radius: 25%;
   padding-right: 3%;
   padding-left: 3%;
   float: right;
   margin-bottom: 2%;
+  color: #fff;
+  background-color: #33b77a;
+  font-size: 74%;
 
 }
 
 .presence:hover {
-  color: #337ab7;
-
+  color: #33b77a;
+  background-color: #fff;
 }
 
 .report-form {

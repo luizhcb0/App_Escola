@@ -65,5 +65,18 @@
 .navbar-default .navbar-nav .open .dropdown-menu > li > a {
   color: #337ab7;
   background-color: #fff;
+}
 
+.navbar-default .navbar-toggle {
+  border: 1px solid #fff;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #438ac7;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  color: #fff;
+  background-color: #fff;
 }
