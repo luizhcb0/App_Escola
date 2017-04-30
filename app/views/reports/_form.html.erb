@@ -16,11 +16,11 @@
                   {id: "check_#{student.id}", class: "student_check"} %>
 
                 <%= label_tag "check_#{student.id}" do %>
+
+                  <div class="absence" id="absence_<%= student.id %>">X</div>
                   <div class="std_label"><%= student.name %></div>
+
                   <div class="std_img thumbnail">
-
-                    <div class="absence" id="absence_<%= student.id %>">X</div>
-
                     <%= image_tag student.avatar.url %>
                     <!-- <img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt=""> -->
                   </div>
@@ -152,13 +152,11 @@
                 {id: "check_#{student.id}", class: "student_check"} %>
 
               <%= label_tag "check_#{student.id}" do %>
+                <div class="presence" id="presence_<%= student.id %>">
+                  <i class="fa fa-long-arrow-up"></i>
+                </div>
                 <div class="std_label"><%= student.name %></div>
                 <div class="std_img thumbnail">
-
-                  <div class="presence" id="presence_<%= student.id %>">
-                    <i class="fa fa-long-arrow-up"></i>
-                  </div>
-
                   <%= image_tag student.avatar.url %>
                   <!-- <img src="http://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" alt=""> -->
                 </div>
