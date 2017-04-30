@@ -1,3 +1,19 @@
 // Place all the styles related to the Sesssions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.sign-in {
+  background-color: #33b77a !important;
+  color: #fff !important;
+  border-color: #23a75a !important;
+}
+
+.sign-in:hover {
+  background-color: #23a75a !important;
+}
+
+.input-group-addon {
+  background-color: #438ac7 !important;
+  color: #fff !important;
+  border-color: #337ab7 !important;
+}
