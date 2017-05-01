@@ -47,4 +47,8 @@ module StrongParamsHolder
     params.require(:report).permit(:student_id, :date, suboption_ids: [],
       report_notes_attributes: [:id, :activity_id, :report_id, :text, :_destroy])
   end
+
+  def clip_params
+    params.require(:clip).permit(:title, :description, :media)
+  end
 end
