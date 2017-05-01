@@ -64,15 +64,33 @@ $(document).on "turbolinks:load", ->
     $id = $(this).attr('id').replace('absence_','')
     $.ajax '/set_presence/'+$id+'/true',
         type: 'PATCH'
-        success: ->
+        # success: ->
           # alert("oi")
 
   $(".presence").click ->
     $id = $(this).attr('id').replace('presence_','')
     $.ajax '/set_presence/'+$id+'/false',
         type: 'PATCH'
-        success: ->
+        # success: ->
           # alert("oi")
+
+
+  $("#new-activity").click ->
+    $(this).css('display','none')
+    $('#category-container').css('display','block')
+
+  $(".btn-category").click ->
+    $category = $(this).text()
+    $('#category-container').css('display','none')
+    $('#'+$category).css('display','block')
+
+  $("#back-new").click ->
+    $('#category-container').css('display','none')
+    $('#new-activity').css('display','block')
+
+  $(".back-category").click ->
+    $('.activity').css('display','none')
+    $('#category-container').css('display','block')
 
 # NOT USED ANYMORE DUE MULTIPE SELECTION
   # @selected = (element) ->
@@ -97,4 +115,3 @@ $(document).on "turbolinks:load", ->
   #     $(this).removeClass('selected')
   #   # alert $('#student_id').val()
   # return
-return

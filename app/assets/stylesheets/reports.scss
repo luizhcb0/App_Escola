@@ -28,9 +28,27 @@
   margin-bottom: 15%;
 }
 
-.std_label {
-  min-height: 2vw;
+@media (min-width: 992px) {
+  .std_label {
+    min-height: 2vw;
+    font-size: 1vw;
+  }
 }
+
+@media (max-width: 991px) {
+  .std_label {
+    min-height: 2vw;
+    font-size: 2vw;
+  }
+}
+
+@media (max-width: 531px) {
+  .std_label {
+    min-height: 2vw;
+    font-size: 3vw;
+  }
+}
+
 
 .std_icons {
   float: left;
@@ -63,6 +81,7 @@
 .absence:hover {
   color: #b7337a;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .presence {
@@ -81,6 +100,7 @@
 .presence:hover {
   color: #33b77a;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .report-form {
@@ -89,7 +109,7 @@
 
 @media (min-width: 768px) {
   .right_forms {
-    height: 36vh;
+    height: 38vh;
     overflow-y: scroll;
   }
 }
@@ -116,4 +136,63 @@
 
 input.student_check[type=checkbox] {
   display: none;
+}
+
+.btn-category, .btn-new-activity, .btn-activity, .btn-clip {
+  width: 100%;
+  font-weight: bold !important;
+  margin-bottom: 7% !important;
+  // padding: 2% !important;
+}
+
+#category-container, .activity {
+  display: none;
+}
+
+.category-class-1 {
+  color: #fff !important;
+  background-color: #438ac7 !important;
+  border-color: #337ab7 !important;
+}
+.category-class-1:hover {
+  background-color: #3070b0 !important;
+  border-color: #2065a0 !important;
+}
+.category-class-1:active {
+  background-color: #2060a0 !important;
+}
+.category-class-1:focus {
+  background-color: #337ab7 !important;
+}
+
+.category-class-2 {
+  color: #8a6d3b !important;
+  background-color: #fcf8e3 !important;
+  border-color: #faebcc !important;
+}
+.category-class-2:hover {
+  background-color: #ece8d3 !important;
+  border-color: #e5d5b6 !important;
+}
+.category-class-2:active {
+  background-color: #dcd8c3 !important;
+}
+.category-class-2:focus {
+  background-color: #ece8d3 !important;
+}
+
+.category-class-3 {
+  color: #3c763d !important;
+  background-color: #dff0d8 !important;
+  border-color: #d6e9c6 !important;
+}
+.category-class-3:hover {
+  background-color: #cfe0c8 !important;
+  border-color: #c0d0b0 !important;
+}
+.category-class-3:active {
+  background-color: #bfd0b8 !important;
+}
+.category-class-3:focus {
+  background-color: #cfe0c8 !important;
 }
