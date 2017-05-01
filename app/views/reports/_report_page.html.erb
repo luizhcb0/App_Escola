@@ -58,7 +58,7 @@
   <!--  ----------------------------------------->
 
   <% prev_cat = (prev_item.empty?) ? 0 : prev_item["activity_category_id"] %>
-  <!-- show notes of activities not mentioned --->
+  <!-- Show NOTES of activities NOT MENTIONED --->
   <% notes_a.each do |note| %>
     <% if note.activity_id != -1 %>
       <!-- open -->
@@ -67,8 +67,18 @@
       <!-- close -->
       <%= render "report_activity_footer",
         note: mark_notes_for(note.activity_id, notes_a), break_line: false %>
-
     <% end %>
+  <% end %>
+  <!--  ----------------------------------------->
+
+  <!-- Show Images/Videos ----------------------->
+  <% report.clips.each do |clip| %>
+    <!-- open -->
+    <%= render "report_activity_header", panel: panels[rand(3)%3], title: "Fotos/Videos" %>
+    <!-- image -->
+    <%= image_tag clip.media.url, style: "display: block; margin: auto; width: 90%;" %>
+    <!-- close -->
+    <%= render "report_activity_footer", note: [], break_line: false %>
   <% end %>
   <!--  ----------------------------------------->
 
