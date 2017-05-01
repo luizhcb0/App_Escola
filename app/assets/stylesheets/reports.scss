@@ -109,7 +109,7 @@
 
 @media (min-width: 768px) {
   .right_forms {
-    height: 36vh;
+    height: 38vh;
     overflow-y: scroll;
   }
 }
@@ -141,7 +141,8 @@ input.student_check[type=checkbox] {
 .btn-category, .btn-new-activity, .btn-activity, .btn-clip {
   width: 100%;
   font-weight: bold !important;
-  margin-bottom: 8% !important;
+  margin-bottom: 7% !important;
+  // padding: 2% !important;
 }
 
 #category-container, .activity {
