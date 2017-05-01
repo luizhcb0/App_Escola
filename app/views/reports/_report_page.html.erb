@@ -74,11 +74,11 @@
   <!-- Show Images/Videos ----------------------->
   <% report.clips.each do |clip| %>
     <!-- open -->
-    <%= render "report_activity_header", panel: panels[rand(3)%3], title: "Fotos/Videos" %>
+    <%= render "report_activity_header", panel: panels[rand(3)%3], title: clip.title %>
     <!-- image -->
     <%= image_tag clip.media.url, style: "display: block; margin: auto; width: 90%;" %>
     <!-- close -->
-    <%= render "report_activity_footer", note: [], break_line: false %>
+    <%= render "report_activity_footer", note: clip.description, break_line: false %>
   <% end %>
   <!--  ----------------------------------------->
 

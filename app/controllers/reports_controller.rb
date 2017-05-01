@@ -34,7 +34,7 @@ class ReportsController < ApplicationController
   end
 
   def send_clip
-    clip = Clip.new(media: params[:media])
+    clip = Clip.new(clip_params)
     reports = params[:student_ids].reject(&:empty?).map do |std_id|
       Report.find_or_initialize_by(student_id: std_id, date: Date.today)
     end

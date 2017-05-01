@@ -1,4 +1,4 @@
-    <% if !note.empty? %>
+    <% if !note.nil? && !note.empty? %>
       <%= "<br>".html_safe if break_line %>
       <b>Obs.:</b> <%= note.html_safe %>
     <% end %>

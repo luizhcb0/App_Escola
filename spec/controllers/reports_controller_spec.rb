@@ -89,7 +89,8 @@ RSpec.describe ReportsController, type: :controller do
 
     context "reports exist" do
       before(:each) do
-        post :send_clip, params: { student_ids: student_ids, media: fixture_file_upload(photo) }
+        post :send_clip, params: { student_ids: student_ids,
+          clip: { media: fixture_file_upload(photo) } }
       end
 
       it "saves the clip" do
@@ -107,7 +108,8 @@ RSpec.describe ReportsController, type: :controller do
     context "report does not exist yet" do
       let (:student) { create(:student) }
       before(:each) do
-        post :send_clip, params: { student_ids: [student.id], media: fixture_file_upload(photo) }
+        post :send_clip, params: { student_ids: [student.id],
+          clip: { media: fixture_file_upload(photo) } }
       end
 
       it "saves the clip" do

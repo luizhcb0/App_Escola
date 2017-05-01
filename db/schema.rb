@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20170427145910) do
   end
 
   create_table "clips", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
     t.string   "media_file_name"
     t.string   "media_content_type"
     t.integer  "media_file_size"

@@ -97,7 +97,7 @@
       </div>
       <!--  ---------->
 
-
+      <!-- Clips ------------------------>
       <!-- Modal -->
       <div class="modal fade" id="modal-clip" tabindex="-1"
         role="dialog" aria-labelledby="myModalLabel">
@@ -116,7 +116,21 @@
             <% students.each do |student| %>
               <%= hidden_field_tag "student_ids[]", nil, {multiple: true, id: "clip-student#{student.id}"}%>
             <% end %>
-            <%= file_field_tag :media, class:"form-control" %>
+
+            <div class="form-group">
+            <%= label_tag "clip[title]", "Titulo", class:"control-label" %>
+            <%= text_field_tag "clip[title]", "", class:"form-control" %>
+            </div>
+
+            <div class="form-group">
+            <%= label_tag "clip[description]", "Descrição", class:"control-label" %>
+            <%= text_area_tag "clip[description]", "", class:"form-control" %>
+            </div>
+
+            <div class="form-group">
+            <%= label_tag "clip[media]", "Arquivo", class:"control-label" %>
+            <%= file_field_tag "clip[media]", class:"form-control" %>
+            </div>
 
             </div>
             <div class="modal-footer">
