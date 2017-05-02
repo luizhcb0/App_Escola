@@ -9,7 +9,7 @@ class Student < ApplicationRecord
   has_many :messages, through: :message_students
 
   has_attached_file :avatar,
-    default_url: ActionController::Base.helpers.asset_path("no_avatar.png")
+    default_url: "https://avatars.io/instagram/no_avatar"
   validates_attachment_content_type :avatar,
     content_type: ["image/jpeg", "image/gif", "image/png"]
 
