@@ -49,6 +49,13 @@
   }
 }
 
+@media (max-width: 461px) {
+  .std_label {
+    min-height: 5vw;
+    font-size: 2.8vw;
+  }
+}
+
 
 .std_icons {
   float: left;
