@@ -35,5 +35,11 @@ Rails.application.routes.draw do
   post '/read/', to: 'message_students#read', as: 'read'
 
   patch '/set_presence/:id/:status', to: 'students#set_presence', as: 'set_presence'
+  
+  namespace :api do
+    namespace :v1 do
+      resources :students
+    end
+  end
 
 end
