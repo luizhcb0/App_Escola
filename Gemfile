@@ -35,6 +35,11 @@ gem "cocoon"
 # Used to handle images
 gem "paperclip", "~> 5.1.0"
 
+# Json Serialization
+gem 'active_model_serializers'
+# More Json filtering Options
+#gem 'active_hash_relation'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
