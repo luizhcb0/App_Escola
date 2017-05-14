@@ -116,7 +116,7 @@
 
 @media (min-width: 768px) {
   .right_forms {
-    height: 38vh;
+    height: 55vh;
     overflow-y: scroll;
   }
 }
@@ -158,48 +158,74 @@ input.student_check[type=checkbox] {
 
 .category-class-1 {
   color: #fff !important;
-  background-color: #438ac7 !important;
-  border-color: #337ab7 !important;
+  background-color: #04c738 !important;
+  border-color: #009b29 !important;
 }
 .category-class-1:hover {
-  background-color: #3070b0 !important;
-  border-color: #2065a0 !important;
+  background-color: #04b728 !important;
+  border-color: #008b19 !important;
 }
 .category-class-1:active {
-  background-color: #2060a0 !important;
+  background-color: #008b19 !important;
 }
 .category-class-1:focus {
-  background-color: #337ab7 !important;
+  background-color: #04b728 !important;
 }
 
 .category-class-2 {
-  color: #8a6d3b !important;
-  background-color: #fcf8e3 !important;
-  border-color: #faebcc !important;
+  color: #fff !important;
+  background-color: #0a84ad !important;
+  border-color: #046382 !important;
 }
 .category-class-2:hover {
-  background-color: #ece8d3 !important;
-  border-color: #e5d5b6 !important;
+  background-color: #0a749d !important;
+  border-color: #045372 !important;
 }
 .category-class-2:active {
-  background-color: #dcd8c3 !important;
+  background-color: #045372 !important;
 }
 .category-class-2:focus {
-  background-color: #ece8d3 !important;
+  background-color: #0a84ad !important;
 }
 
 .category-class-3 {
-  color: #3c763d !important;
-  background-color: #dff0d8 !important;
-  border-color: #d6e9c6 !important;
+  color: #fff !important;
+  background-color: #ff9d35 !important;
+  border-color: #d06b00 !important;
 }
 .category-class-3:hover {
-  background-color: #cfe0c8 !important;
-  border-color: #c0d0b0 !important;
+  background-color: #ef8d25 !important;
+  border-color: #d05b00 !important;
 }
 .category-class-3:active {
-  background-color: #bfd0b8 !important;
+  background-color: #d05b00 !important;
 }
 .category-class-3:focus {
-  background-color: #cfe0c8 !important;
+  background-color: #ff9d35 !important;
+}
+
+
+// ************************************************************
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background-color: #68cbff !important;
+  color: #fff !important;
+  border: 1px solid #11a9fb !important;
+  border-bottom-color: transparent !important;
+}
+
+.nav-tabs > li > a:hover {
+  background-color: #11a9fb !important;
+  color: #fff !important;
+  border: 1px solid #11a9fb !important;
+}
+
+.nav-tabs, .page-header {
+  border-bottom: 1px solid #11a9fb !important;
+}
+
+// ***************************************************************
+
+#students, #absents {
+  color: #046382 !important;
 }
