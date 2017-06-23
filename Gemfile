@@ -31,6 +31,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem "cocoon"
 # Set users
 # gem "devise"
+gem 'active_model_serializers'
 
 # Used to handle images
 gem "paperclip", "~> 5.1.0"
